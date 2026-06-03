@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bioélectricité — Biophysique PASS · Constance</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  [data-theme="dark"]{--bg:#080c0a;--surface:#0f1612;--border:#1a2620;--accent:#34d399;--accent2:#6ee7b7;--accent3:#f472b6;--text:#e2e8f0;--muted:#64748b;--warn:#fbbf24;--item-text:#cbd5e1;--def-bg:rgba(52,211,153,0.05);--def-border:rgba(52,211,153,0.18);--ex-bg:rgba(251,191,36,0.05);--ex-border:rgba(251,191,36,0.2);--ex-color:#fde68a;--formula-bg:rgba(52,211,153,0.08);--formula-border:rgba(52,211,153,0.25);--formula-color:#6ee7b7;--progress-track:rgba(255,255,255,0.06);--toggle-bg:#1a2620;--quiz-bg:#090e0c;--quiz-opt:rgba(255,255,255,0.03);--quiz-opt-hover:rgba(255,255,255,0.07);--correct:rgba(52,211,153,0.12);--correct-border:#34d399;--wrong:rgba(244,114,182,0.12);--wrong-border:#f472b6;--tip-bg:rgba(52,211,153,0.06);--tip-border:rgba(52,211,153,0.2);--tip-color:#6ee7b7;--notion-bg:#0f1612;--notion-border:#1a2620;}
+  [data-theme="light"]{--bg:#f2faf6;--surface:#fff;--border:#d4ede2;--accent:#059669;--accent2:#047857;--accent3:#db2777;--text:#1e1b18;--muted:#6b7280;--warn:#d97706;--item-text:#374151;--def-bg:rgba(5,150,105,0.04);--def-border:rgba(5,150,105,0.18);--ex-bg:rgba(217,119,6,0.05);--ex-border:rgba(217,119,6,0.18);--ex-color:#92400e;--formula-bg:rgba(5,150,105,0.07);--formula-border:rgba(5,150,105,0.25);--formula-color:#065f46;--progress-track:rgba(0,0,0,0.07);--toggle-bg:#d4ede2;--quiz-bg:#e8f6ee;--quiz-opt:rgba(0,0,0,0.02);--quiz-opt-hover:rgba(0,0,0,0.05);--correct:rgba(5,150,105,0.1);--correct-border:#059669;--wrong:rgba(219,39,119,0.08);--wrong-border:#db2777;--tip-bg:rgba(5,150,105,0.06);--tip-border:rgba(5,150,105,0.2);--tip-color:#065f46;--notion-bg:#fff;--notion-border:#d4ede2;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',serif;min-height:100vh;transition:background .3s,color .3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);backdrop-filter:blur(12px);background:rgba(8,12,10,0.85);}
+  [data-theme="light"] nav{background:rgba(242,250,246,0.88);}
+  .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--accent);text-decoration:none;}
+  .nav-back{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+  .nav-back:hover{color:var(--text);}
+  .theme-toggle{background:var(--toggle-bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s;user-select:none;line-height:1;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--text);}
+  header{padding:100px 52px 40px;border-bottom:1px solid var(--border);max-width:800px;margin:0 auto;}
+  .breadcrumb{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;}
+  .breadcrumb a{color:var(--muted);text-decoration:none;}
+  .breadcrumb a:hover{color:var(--accent);}
+  .ch-badge{display:inline-block;background:rgba(52,211,153,.08);border:1px solid rgba(52,211,153,.2);color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:14px;}
+  h1{font-family:'Libre Baskerville',serif;font-size:clamp(28px,4.5vw,48px);font-weight:700;line-height:1.1;}
+  .ch-subtitle{margin-top:8px;color:var(--muted);font-size:14px;}
+  .progress-wrap{margin-top:22px;max-width:320px;display:flex;flex-direction:column;gap:12px;}
+  .prog-row{display:flex;flex-direction:column;gap:5px;}
+  .prog-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;}
+  .prog-track{height:4px;background:var(--progress-track);border-radius:100px;overflow:hidden;}
+  .prog-fill{height:100%;border-radius:100px;transition:width .4s ease;}
+  .fill-read{background:var(--accent2);}
+  .mastery-bar{display:flex;height:4px;border-radius:100px;overflow:hidden;gap:2px;}
+  .bar-ok{background:var(--accent);transition:flex .5s ease;flex:0;}
+  .bar-ko{background:var(--accent3);transition:flex .5s ease;flex:0;}
+  .bar-grey{background:var(--progress-track);transition:flex .5s ease;flex:1;}
+  .legend-row{display:flex;gap:14px;margin-top:5px;}
+  .leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);}
+  .leg-dot{width:7px;height:7px;border-radius:50%;}
+  main{padding:48px 52px;max-width:800px;margin:0 auto;}
+  .section-sep{display:flex;align-items:center;gap:14px;margin:40px 0 22px;}
+  .section-sep-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;}
+  .section-sep-line{flex:1;height:1px;background:var(--border);}
+  .sep-priority .section-sep-label{color:var(--accent3);}
+  .sep-important .section-sep-label{color:var(--warn);}
+  .sep-base .section-sep-label{color:var(--accent2);}
+  .notion{background:var(--notion-bg);border:1px solid var(--notion-border);border-radius:14px;padding:22px 24px;margin-bottom:12px;border-left:4px solid transparent;transition:opacity .2s;}
+  .notion.priority{border-left-color:var(--accent3);}
+  .notion.important{border-left-color:var(--warn);}
+  .notion.base{border-left-color:var(--accent2);}
+  .notion.read{opacity:.55;}
+  .notion.mastered{box-shadow:0 0 0 1.5px var(--accent);}
+  .notion.to-review{box-shadow:0 0 0 1.5px var(--accent3);}
+  .notion-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:10px;}
+  .notion-left{display:flex;align-items:flex-start;gap:10px;flex:1;}
+  .check-btn{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all .2s;color:transparent;cursor:pointer;background:transparent;user-select:none;}
+  .notion.read .check-btn{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+  .quiz-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;flex-shrink:0;margin-top:3px;display:none;}
+  .quiz-badge.show{display:inline-block;}
+  .quiz-badge.ok{background:rgba(52,211,153,.12);color:var(--accent);}
+  .quiz-badge.ko{background:rgba(244,114,182,.12);color:var(--accent3);}
+  .notion-title{font-family:'Libre Baskerville',serif;font-size:16px;font-weight:700;color:var(--text);}
+  .notion-def{font-size:14px;line-height:1.75;color:var(--item-text);}
+  .notion-def strong{color:var(--text);font-weight:700;}
+  .def-box{margin-top:14px;padding:14px 16px;background:var(--def-bg);border:1px solid var(--def-border);border-radius:10px;font-size:13px;line-height:1.7;color:var(--item-text);}
+  .def-box strong{color:var(--text);font-weight:700;}
+  .def-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+  .formula-box{margin-top:12px;padding:14px 18px;background:var(--formula-bg);border:1px solid var(--formula-border);border-radius:10px;text-align:center;}
+  .formula-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--formula-color);opacity:.7;margin-bottom:6px;}
+  .formula-main{font-size:17px;color:var(--formula-color);font-family:'Libre Baskerville',serif;font-style:italic;}
+  .formula-detail{font-size:11px;color:var(--formula-color);opacity:.65;margin-top:5px;}
+  .example-box{margin-top:12px;padding:13px 16px;background:var(--ex-bg);border:1px solid var(--ex-border);border-radius:10px;font-size:13px;line-height:1.65;color:var(--ex-color);}
+  .example-box::before{content:"🩺 Exemple médical — ";font-weight:700;}
+  .example-box strong{font-weight:700;}
+  .tip-box{margin-top:32px;padding:14px 16px;background:var(--tip-bg);border:1px solid var(--tip-border);border-radius:10px;font-size:13px;color:var(--tip-color);line-height:1.65;}
+  .tip-box::before{content:"💡 Conseil strat — ";font-weight:700;}
+  .quiz-section{margin-top:48px;padding-top:32px;border-top:1px solid var(--border);}
+  .quiz-title{font-family:'Libre Baskerville',serif;font-size:18px;font-weight:700;margin-bottom:20px;}
+  .quiz-title::before{content:"🎯 Quiz — ";}
+  .quiz-card{background:var(--quiz-bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;}
+  .quiz-q{font-size:14px;line-height:1.65;color:var(--item-text);margin-bottom:14px;font-weight:500;}
+  .quiz-options{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
+  .quiz-opt{padding:11px 15px;background:var(--quiz-opt);border:1px solid var(--border);border-radius:9px;font-size:13px;cursor:pointer;transition:all .15s;color:var(--item-text);text-align:left;font-family:'Source Serif 4',serif;line-height:1.4;}
+  .quiz-opt:hover:not(:disabled){background:var(--quiz-opt-hover);border-color:var(--muted);}
+  .quiz-opt.correct{background:var(--correct);border-color:var(--correct-border);color:var(--accent);}
+  .quiz-opt.wrong{background:var(--wrong);border-color:var(--wrong-border);color:var(--accent3);}
+  .quiz-opt:disabled{cursor:default;}
+  .quiz-feedback{font-size:13px;line-height:1.55;padding:11px 14px;border-radius:9px;margin-top:6px;display:none;}
+  .quiz-feedback.show{display:block;}
+  .quiz-feedback.ok{background:var(--correct);color:var(--accent);border:1px solid var(--correct-border);}
+  .quiz-feedback.ko{background:var(--wrong);color:var(--accent3);border:1px solid var(--wrong-border);}
+  .quiz-next{margin-top:10px;background:none;border:1px solid var(--border);border-radius:8px;padding:8px 18px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;font-family:'Source Serif 4',serif;transition:all .2s;display:none;}
+  .quiz-next.show{display:inline-block;}
+  .quiz-next:hover{border-color:var(--accent);color:var(--accent);}
+  .quiz-score{font-size:12px;color:var(--muted);margin-top:10px;font-weight:600;}
+  .ch-nav{display:flex;justify-content:space-between;margin-top:48px;padding-top:28px;border-top:1px solid var(--border);}
+  .ch-nav a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s;}
+  .ch-nav a:hover{color:var(--accent);}
+  footer{border-top:1px solid var(--border);padding:24px 52px;max-width:800px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:48px;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--accent);}
+  .footer-copy{font-size:11px;color:var(--muted);}
+  @media(max-width:600px){header,main,footer{padding-left:20px;padding-right:20px;}header{padding-top:80px;}nav{padding:.9rem 1.2rem;}.theme-toggle{top:14px;right:14px;}footer{flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="passdashboard.html">Constance</a>
+  <a class="nav-back" href="passbiophysique.html">← Biophysique</a>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button>
+</nav>
+<header>
+  <div class="breadcrumb"><a href="passbiophysique.html">Biophysique</a> · Chapitre 05</div>
+  <div class="ch-badge">Chapitre 05</div>
+  <h1>Bioélectricité</h1>
+  <div class="ch-subtitle">ECG · EEG · EMG · Potentiel d'action cardiaque · Défibrillation</div>
+  <div class="progress-wrap">
+    <div class="prog-row">
+      <div class="prog-label"><span>Notions lues</span><span id="readCount">0 / 6</span></div>
+      <div class="prog-track"><div class="prog-fill fill-read" id="readBar" style="width:0%"></div></div>
+    </div>
+    <div class="prog-row">
+      <div class="prog-label"><span>Maîtrise — basée sur le quiz</span><span id="masteryCount">Fais le quiz ↓</span></div>
+      <div class="mastery-bar"><div class="bar-ok" id="barOk"></div><div class="bar-ko" id="barKo"></div><div class="bar-grey" id="barGrey"></div></div>
+      <div class="legend-row">
+        <div class="leg"><div class="leg-dot" style="background:var(--accent)"></div>Maîtrisé</div>
+        <div class="leg"><div class="leg-dot" style="background:var(--accent3)"></div>À revoir</div>
+        <div class="leg"><div class="leg-dot" style="background:var(--progress-track)"></div>Non testé</div>
+      </div>
+    </div>
+  </div>
+</header>
+<main>
+
+  <div class="section-sep sep-priority"><div class="section-sep-label">🔴 Incontournables</div><div class="section-sep-line"></div></div>
+  <div class="notion priority" id="n0">
+    <div class="notion-top">
+      <div class="notion-left"><div class="check-btn" id="chk0" onclick="toggleRead(0)"></div><div class="notion-title">ECG — Électrocardiogramme</div></div>
+      <div class="quiz-badge" id="qbadge0"></div>
+    </div>
+    <div class="notion-def">L'<strong>ECG</strong> mesure l'activité électrique cardiaque en enregistrant les différences de potentiel générées par les dépolarisations et repolarisations successives du muscle cardiaque, via des électrodes placées sur la peau.</div>
+    <div class="def-box"><div class="def-label">Les ondes ECG — à mémoriser absolument</div><strong>Onde P</strong> : dépolarisation auriculaire (conduction SA → AV). Durée normale < 120 ms.<br><strong>Espace PR</strong> : délai de conduction auriculo-ventriculaire (nœud AV). Normal : 120–200 ms.<br><strong>Complexe QRS</strong> : dépolarisation ventriculaire. Normal < 120 ms. Élargissement → bloc de branche.<br><strong>Onde T</strong> : repolarisation ventriculaire. Aplatissement ou inversion → ischémie.<br><strong>Espace QT</strong> : durée totale de la systole électrique ventriculaire.</div>
+    <div class="example-box">Le <strong>sus-décalage du segment ST</strong> est le signe électrocardiographique de l'<strong>infarctus du myocarde en cours</strong> (STEMI). Il reflète une lésion ischémique transmurale aiguë. C'est une urgence absolue → coronarographie en < 90 minutes pour déboucher l'artère coupable.</div>
+  </div>
+  <div class="notion priority" id="n1">
+    <div class="notion-top">
+      <div class="notion-left"><div class="check-btn" id="chk1" onclick="toggleRead(1)"></div><div class="notion-title">Propagation du potentiel d'action cardiaque</div></div>
+      <div class="quiz-badge" id="qbadge1"></div>
+    </div>
+    <div class="notion-def">Le cœur possède un <strong>système de conduction intrinsèque</strong> qui assure la propagation ordonnée et coordonnée de l'influx électrique des oreillettes vers les ventricules. Ce système garantit que les oreillettes se contractent avant les ventricules.</div>
+    <div class="def-box"><div class="def-label">Le trajet de l'influx</div><strong>1. Nœud sinusal (SA)</strong> → pace-maker naturel (70 bpm). Situé dans l'oreillette droite.<br><strong>2. Oreillettes</strong> → dépolarisation auriculaire (onde P).<br><strong>3. Nœud AV</strong> → délai obligatoire de 120–200 ms → permet le remplissage ventriculaire.<br><strong>4. Faisceau de His</strong> → branches droite et gauche.<br><strong>5. Réseau de Purkinje</strong> → myocarde ventriculaire → contraction quasi-simultanée (QRS).</div>
+    <div class="example-box">Le <strong>bloc auriculo-ventriculaire (BAV) du 3ème degré</strong> (bloc complet) : le nœud AV ne conduit plus du tout → les oreillettes et ventricules battent à des fréquences indépendantes. Les ventricules utilisent un rythme d'échappement lent (~30–40 bpm) → syncopes, arrêt cardiaque. Traitement : <strong>pose de pacemaker</strong>.</div>
+  </div>
+  <div class="notion priority" id="n2">
+    <div class="notion-top">
+      <div class="notion-left"><div class="check-btn" id="chk2" onclick="toggleRead(2)"></div><div class="notion-title">Défibrillation et cardioversion</div></div>
+      <div class="quiz-badge" id="qbadge2"></div>
+    </div>
+    <div class="notion-def">La <strong>défibrillation</strong> consiste à délivrer un choc électrique intense et bref (360 J en monophasique, 200 J en biphasique) à travers le thorax pour <strong>dépolariser simultanément l'ensemble du myocarde</strong>, interrompant les circuits de fibrillation et permettant au nœud sinusal de reprendre le contrôle.</div>
+    <div class="def-box"><div class="def-label">Fibrillation vs Flutter</div><strong>Fibrillation ventriculaire (FV)</strong> : activité électrique chaotique → pas de contraction coordonnée → arrêt circulatoire → défibrillation immédiate (choc non synchronisé).<br><strong>Flutter/fibrillation auriculaire (FA)</strong> : activité auriculaire rapide et désorganisée → débit cardiaque réduit → cardioversion électrique synchronisée (synchronisée sur le QRS pour éviter de tomber sur le T).</div>
+    <div class="example-box">Les <strong>défibrillateurs automatiques externes (DAE)</strong> sont présents dans les lieux publics depuis 2007 en France. Ils analysent automatiquement le rythme et délivrent le choc si nécessaire, avec des instructions vocales. Leur utilisation précoce (< 3–5 min après la FV) améliore la survie de ~10% par minute gagnée.</div>
+  </div>
+  <div class="notion priority" id="n3">
+    <div class="notion-top">
+      <div class="notion-left"><div class="check-btn" id="chk3" onclick="toggleRead(3)"></div><div class="notion-title">Loi d'Ohm en électrophysiologie</div></div>
+      <div class="quiz-badge" id="qbadge3"></div>
+    </div>
+    <div class="notion-def">Les membranes cellulaires se comportent comme des circuits électriques. La <strong>loi d'Ohm (I = U/R)</strong> s'applique : le courant ionique (I) à travers un canal est proportionnel au potentiel membranaire (U) et inversement proportionnel à la résistance du canal (R). La <strong>conductance G = 1/R</strong> varie selon l'état des canaux.</div>
+    <div class="def-box"><div class="def-label">Membrane = circuit RC</div>La membrane est modélisée comme un <strong>condensateur C</strong> (stocke les charges séparées par la membrane lipidique) en parallèle avec une <strong>résistance R</strong> (les canaux ioniques). Ce modèle explique la constante de temps τ = RC qui gouverne la vitesse de dépolarisation.</div>
+    <div class="formula-box"><div class="formula-label">Formule clé</div><div class="formula-main">I = U / R = U × G</div><div class="formula-detail">G = conductance (Siemens) · R = résistance membranaire · U = différence de potentiel</div></div>
+    <div class="example-box">Les <strong>patch-clamp</strong> permettent de mesurer le courant ionique à travers un seul canal ionique (quelques picoampères). Développée par Neher et Sakmann (Prix Nobel 1991), cette technique a révolutionné la compréhension des canaux ioniques et permet de tester les médicaments agissant sur les canaux (antiarythmiques, anesthésiques).</div>
+  </div>
+  <div class="section-sep sep-important"><div class="section-sep-label">🟡 Importants</div><div class="section-sep-line"></div></div>
+  <div class="notion important" id="n4">
+    <div class="notion-top">
+      <div class="notion-left"><div class="check-btn" id="chk4" onclick="toggleRead(4)"></div><div class="notion-title">EEG — Électroencéphalogramme</div></div>
+      <div class="quiz-badge" id="qbadge4"></div>
+    </div>
+    <div class="notion-def">L'<strong>EEG</strong> enregistre l'activité électrique cérébrale par des électrodes placées sur le scalp. Il mesure les potentiels de surface générés par les courants synaptiques des neurones corticaux. Les rythmes EEG sont classés selon leur fréquence et sont correlés aux états de vigilance.</div>
+    <div class="def-box"><div class="def-label">Rythmes cérébraux</div><strong>Delta (0,5–4 Hz)</strong> : sommeil profond, coma, nourrisson.<br><strong>Thêta (4–8 Hz)</strong> : somnolence, méditation, enfant.<br><strong>Alpha (8–13 Hz)</strong> : éveil calme, yeux fermés — signature de la relaxation.<br><strong>Bêta (13–30 Hz)</strong> : éveil actif, concentration, anxiété.<br><strong>Gamma (> 30 Hz)</strong> : traitement cognitif complexe, attention.</div>
+    <div class="example-box">L'<strong>EEG</strong> est essentiel pour diagnostiquer les <strong>épilepsies</strong> (décharges épileptiformes = pointes, pointe-ondes) et pour évaluer le <strong>coma</strong>. L'<strong>EEG plat</strong> (silence électroencéphalique) persistant, avec les critères légaux requis, est un critère de mort encéphalique en France → autorisation de prélèvement d'organes.</div>
+  </div>
+  <div class="section-sep sep-base"><div class="section-sep-label">🔵 Base</div><div class="section-sep-line"></div></div>
+  <div class="notion base" id="n5">
+    <div class="notion-top">
+      <div class="notion-left"><div class="check-btn" id="chk5" onclick="toggleRead(5)"></div><div class="notion-title">EMG — Électromyogramme</div></div>
+      <div class="quiz-badge" id="qbadge5"></div>
+    </div>
+    <div class="notion-def">L'<strong>EMG</strong> (électromyographie) enregistre l'activité électrique des muscles via des électrodes de surface ou des aiguilles. Il permet d'étudier la transmission neuromusculaire et de distinguer les atteintes musculaires (myopathies) des atteintes nerveuses (neuropathies).</div>
+    <div class="def-box"><div class="def-label">EMG vs Vitesse de conduction nerveuse (VCN)</div><strong>EMG</strong> : analyse les potentiels d'unité motrice (PUM) au repos et à l'effort. Myopathie → PUM de courte durée et petite amplitude. Neuropathie → PUM de grande durée et grande amplitude (réinnervation).<br><strong>VCN</strong> : stimulation du nerf + recueil du potentiel évoqué. Démyélinisation → VCN diminuée. Axonopathie → amplitude diminuée.</div>
+    <div class="example-box">Dans la <strong>sclérose latérale amyotrophique (SLA)</strong>, l'EMG montre simultanément des signes de dénervation (atteinte du neurone moteur périphérique) et des fasciculations dans plusieurs territoires. C'est un examen crucial pour le diagnostic, qui confirme l'atteinte diffuse du système moteur.</div>
+  </div>
+  <div class="tip-box">L'ECG revient à la fois en biophysique ET en cardiologie. Mémoriser l'ordre des ondes P-QRS-T et ce que chacune représente te vaut des points dans deux UE différentes.</div>
+  <div class="quiz-section">
+    <div class="quiz-title">Bioélectricité</div>
+    <div id="quiz-container"></div>
+    <div class="quiz-score" id="quiz-score"></div>
+  </div>
+  <a href="passbiophysiqueqcm.html" style="display:flex;align-items:center;justify-content:space-between;background:rgba(52,211,153,0.06);border:1px solid rgba(52,211,153,0.22);border-radius:12px;padding:16px 20px;text-decoration:none;margin-top:16px;transition:all .2s;" onmouseover="this.style.borderColor='rgba(52,211,153,0.5)'" onmouseout="this.style.borderColor='rgba(52,211,153,0.22)'">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:4px;">🎯 Entraînement complet</div>
+      <div style="font-size:14px;font-weight:600;color:var(--text);">QCM Biophysique — tous chapitres</div>
+    </div>
+    <div style="font-size:16px;color:var(--accent);">→</div>
+  </a>
+  <div class="ch-nav"><a href="passbiophysiqueimagerie.html">← Chapitre 04 — Imagerie médicale</a><a href="passbiophysique.html">↑ Retour aux chapitres</a></div>
+</main>
+<footer>
+  <div class="footer-logo">Constance</div>
+  <div class="footer-copy">© Constance | @constance.cgh · Programme PASS gratuit · Tous droits réservés</div>
+</footer>
+<script>
+const TOTAL=6;
+const STORAGE_READ='bio_bioelec_read';
+const STORAGE_MASTERY='bio_bioelec_mastery';
+let readState=JSON.parse(localStorage.getItem(STORAGE_READ)||'[]');
+function toggleRead(i){const idx=readState.indexOf(i);if(idx===-1)readState.push(i);else readState.splice(idx,1);localStorage.setItem(STORAGE_READ,JSON.stringify(readState));applyRead();}
+function applyRead(){for(let i=0;i<TOTAL;i++){const n=document.getElementById('n'+i);const b=document.getElementById('chk'+i);if(!n||!b)continue;if(readState.includes(i)){n.classList.add('read');b.textContent='✓';}else{n.classList.remove('read');b.textContent='';}}const done=readState.length;document.getElementById('readCount').textContent=done+' / '+TOTAL;document.getElementById('readBar').style.width=Math.round((done/TOTAL)*100)+'%';}
+let mastery=JSON.parse(localStorage.getItem(STORAGE_MASTERY)||'{}');
+function applyMastery(){let nOk=0,nKo=0;for(let i=0;i<TOTAL;i++){const n=document.getElementById('n'+i);const b=document.getElementById('qbadge'+i);if(!n||!b)continue;n.classList.remove('mastered','to-review');b.className='quiz-badge';b.textContent='';if(mastery[i]==='ok'){n.classList.add('mastered');b.className='quiz-badge show ok';b.textContent='✓ Maîtrisé';nOk++;}else if(mastery[i]==='ko'){n.classList.add('to-review');b.className='quiz-badge show ko';b.textContent='✗ À revoir';nKo++;}}const nG=TOTAL-nOk-nKo;document.getElementById('barOk').style.flex=nOk;document.getElementById('barKo').style.flex=nKo;document.getElementById('barGrey').style.flex=Math.max(nG,.2);if(nOk+nKo>0)document.getElementById('masteryCount').textContent=nOk+' ✓ · '+nKo+' ✗ · '+nG+' non testés';}
+const quizData=[{"ni": 0, "q": "L'onde P de l'ECG correspond à :", "opts": ["La dépolarisation ventriculaire", "La repolarisation auriculaire", "La dépolarisation auriculaire", "La repolarisation ventriculaire"], "a": 2, "exp": "P = dépolarisation auriculaire. QRS = dépolarisation ventriculaire (masque la repolarisation auriculaire). T = repolarisation ventriculaire. Ordre à mémoriser : P → PR → QRS → ST → T."}, {"ni": 1, "q": "Le délai au nœud AV (120–200 ms) est indispensable pour :", "opts": ["Accélérer la dépolarisation ventriculaire", "Permettre aux oreillettes de se contracter et aux ventricules de se remplir avant la systole ventriculaire", "Bloquer toute activité électrique entre les battements", "Déclencher la repolarisation auriculaire"], "a": 1, "exp": "Le délai AV permet que les oreillettes finissent de se contracter et que les ventricules se remplissent (90% du remplissage est passif, 10% est actif par la systole auriculaire). Sans ce délai, les oreillettes et ventricules se contracteraient simultanément → remplissage insuffisant → débit réduit."}, {"ni": 2, "q": "La défibrillation interrompt la fibrillation ventriculaire en :", "opts": ["Stimulant le nœud SA à haute fréquence", "Dépolarisant simultanément tout le myocarde → permettant au nœud SA de reprendre le contrôle", "Augmentant la pression artérielle", "Injectant de l'adrénaline directement dans le cœur"], "a": 1, "exp": "Le choc électrique (200–360 J) dépolarise simultanément toutes les cellules myocardiques, interrompant les circuits de réentrée chaotiques. L'espoir est que le nœud sinusal reprenne ensuite le rôle de pace-maker avec un rythme organisé."}, {"ni": 3, "q": "La conductance G d'un canal ionique est :", "opts": ["Identique à sa résistance R", "L'inverse de sa résistance R (G = 1/R)", "Proportionnelle au potentiel membranaire", "Exprimée en Ohms"], "a": 1, "exp": "G = 1/R en Siemens (S). La conductance mesure la facilité de passage du courant. Un canal ouvert a une conductance élevée (faible résistance). Un canal fermé → G ≈ 0 → pas de courant ionique."}, {"ni": 4, "q": "Le rythme alpha à l'EEG (8–13 Hz) correspond à :", "opts": ["Le sommeil profond", "L'éveil calme et la relaxation, yeux fermés", "L'activité cérébrale intense", "Les crises épileptiques"], "a": 1, "exp": "Le rythme alpha est la signature de l'éveil tranquille, yeux fermés, sans activité cognitive intense. Il disparaît à l'ouverture des yeux (désynchronisation) ou lors d'une tâche mentale (remplacement par le bêta). Amplitude maximale en occipital."}, {"ni": 5, "q": "En EMG, une neuropathie périphérique se manifeste par :", "opts": ["Des PUM de courte durée et petite amplitude", "Une vitesse de conduction nerveuse diminuée (démyélinisation) ou une amplitude réduite (axonopathie)", "Une absence totale de signal électrique", "Des potentiels de fibrillation uniquement"], "a": 1, "exp": "Neuropathie : si démyélinisation (SEP, Guillain-Barré) → VCN diminuée. Si axonopathie (diabète, chimiothérapie) → amplitude du PAC diminuée mais VCN peu affectée. Le type de neuropathie guide le diagnostic étiologique et le pronostic."}];
+let quizState=null;
+function initQuiz(){if(quizState)return;quizState={idx:0,score:0};renderQ();}
+function renderQ(){const c=document.getElementById('quiz-container');if(quizState.idx>=quizData.length){c.innerHTML=`<div class="quiz-card" style="text-align:center;padding:28px;"><div style="font-size:40px;margin-bottom:12px;">${quizState.score>=Math.ceil(quizData.length*.8)?'🏆':quizState.score>=Math.ceil(quizData.length*.6)?'💪':'📚'}</div><div style="font-family:'Libre Baskerville',serif;font-size:22px;font-weight:700;">${quizState.score} / ${quizData.length}</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Les badges sont mis à jour sur chaque notion ci-dessus.</div></div>`;document.getElementById('quiz-score').textContent='';return;}const q=quizData[quizState.idx];c.innerHTML=`<div class="quiz-card"><div class="quiz-q">Q${quizState.idx+1}/${quizData.length} — ${q.q}</div><div class="quiz-options">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answer(${i})">${o}</button>`).join('')}</div><div class="quiz-feedback" id="qfb"></div><button class="quiz-next" id="qnext" onclick="nextQ()">Question suivante →</button></div>`;document.getElementById('quiz-score').textContent='Score : '+quizState.score+' / '+quizState.idx;}
+function answer(i){const q=quizData[quizState.idx];document.querySelectorAll('.quiz-opt').forEach(o=>o.disabled=true);const correct=i===q.a;if(correct){quizState.score++;document.querySelectorAll('.quiz-opt')[i].classList.add('correct');}else{document.querySelectorAll('.quiz-opt')[i].classList.add('wrong');document.querySelectorAll('.quiz-opt')[q.a].classList.add('correct');}document.getElementById('qfb').textContent=(correct?'✓ Correct ! ':'✗ Incorrect. ')+q.exp;document.getElementById('qfb').className='quiz-feedback show '+(correct?'ok':'ko');document.getElementById('qnext').className='quiz-next show';document.getElementById('quiz-score').textContent='Score : '+quizState.score+' / '+(quizState.idx+1);mastery[q.ni]=correct?'ok':'ko';localStorage.setItem(STORAGE_MASTERY,JSON.stringify(mastery));applyMastery();}
+function nextQ(){quizState.idx++;renderQ();}
+function toggleTheme(){const h=document.documentElement,b=document.getElementById('themeBtn');if(h.dataset.theme==='dark'){h.dataset.theme='light';b.textContent='🌙 Mode sombre';}else{h.dataset.theme='dark';b.textContent='☀️ Mode clair';}}
+window.addEventListener('DOMContentLoaded',()=>{applyRead();applyMastery();});
+const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting)initQuiz();},{threshold:0.1});
+obs.observe(document.querySelector('.quiz-section'));
+</script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anatomie PASS — Constance</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  [data-theme="dark"]{--bg:#0a0a0f;--surface:#13131a;--border:#1e1e2e;--accent:#f472b6;--accent2:#a78bfa;--accent3:#f472b6;--text:#e2e8f0;--muted:#64748b;--warn:#fbbf24;--progress-track:rgba(255,255,255,0.06);--toggle-bg:#1e1e2e;--card-hover:#1a1422;}
+  [data-theme="light"]{--bg:#fff5f8;--surface:#fff;--border:#fce7f3;--accent:#db2777;--accent2:#7c3aed;--accent3:#db2777;--text:#1e1b18;--muted:#6b7280;--warn:#d97706;--progress-track:rgba(0,0,0,0.07);--toggle-bg:#fce7f3;--card-hover:#fdf2f8;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',serif;min-height:100vh;transition:background .3s,color .3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);backdrop-filter:blur(12px);background:rgba(10,10,15,0.85);}
+  [data-theme="light"] nav{background:rgba(255,245,248,0.88);}
+  .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--accent);text-decoration:none;}
+  .nav-back{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+  .nav-back:hover{color:var(--text);}
+  .theme-toggle{background:var(--toggle-bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s;user-select:none;line-height:1;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--text);}
+  header{padding:100px 52px 48px;border-bottom:1px solid var(--border);max-width:1000px;margin:0 auto;}
+  .badge{display:inline-block;background:rgba(244,114,182,.07);border:1px solid rgba(244,114,182,.2);color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px;}
+  h1{font-family:'Libre Baskerville',serif;font-size:clamp(32px,5vw,56px);font-weight:700;line-height:1.1;}
+  h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .subtitle{margin-top:12px;color:var(--muted);font-size:15px;max-width:500px;line-height:1.75;}
+  .global-progress{margin-top:28px;max-width:320px;}
+  .gp-label{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;font-weight:600;margin-bottom:7px;display:flex;justify-content:space-between;}
+  .gp-track{height:4px;background:var(--progress-track);border-radius:100px;overflow:hidden;}
+  .gp-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;width:0%;}
+  main{padding:48px 52px;max-width:1000px;margin:0 auto;}
+  .section-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:22px;font-weight:700;}
+  .chapters-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;}
+  .ch-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;text-decoration:none;display:block;transition:all .22s;position:relative;}
+  .ch-card:hover{border-color:rgba(244,114,182,.3);background:var(--card-hover);transform:translateY(-2px);}
+  .ch-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+  .ch-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;}
+  .ch-num{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
+  .ch-title{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:var(--text);margin-bottom:5px;}
+  .ch-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:16px;}
+  .ch-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+  .tag{font-size:10px;padding:2px 9px;border-radius:100px;font-weight:700;}
+  .tag.must{background:rgba(244,114,182,.15);color:var(--accent);}
+  .tag.high{background:rgba(251,191,36,.15);color:var(--warn);}
+  .tag.base{background:rgba(167,139,250,.15);color:var(--accent2);}
+  [data-theme="light"] .tag.must{background:rgba(219,39,119,.1);}
+  [data-theme="light"] .tag.high{background:rgba(217,119,6,.1);}
+  [data-theme="light"] .tag.base{background:rgba(124,58,237,.1);}
+  .ch-progress{display:flex;align-items:center;gap:10px;}
+  .ch-bar-track{flex:1;height:3px;background:var(--progress-track);border-radius:100px;overflow:hidden;}
+  .ch-bar-fill{height:100%;border-radius:100px;}
+  .ch-pct{font-size:10px;font-weight:700;color:var(--muted);min-width:24px;text-align:right;}
+  .ch-arrow{position:absolute;bottom:22px;right:22px;font-size:14px;color:var(--muted);transition:all .2s;}
+  .ch-card:hover .ch-arrow{transform:translateX(3px);color:var(--accent);}
+  footer{border-top:1px solid var(--border);padding:24px 52px;max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:48px;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--accent);}
+  .footer-copy{font-size:11px;color:var(--muted);}
+  @media(max-width:600px){header{padding:80px 20px 32px;}main{padding:32px 20px;}footer{padding:20px;flex-direction:column;text-align:center;}nav{padding:.9rem 1.2rem;}.chapters-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="passdashboard.html">Constance</a>
+  <a class="nav-back" href="passdashboard.html">← Programme PASS</a>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button>
+</nav>
+<header>
+  <div class="badge">Programme Stratégique PASS</div>
+  <h1>Anatomie<br><span>6 chapitres.</span></h1>
+  <p class="subtitle">Les structures à connaître avant ta rentrée — classées par priorité, avec exemples cliniques et quiz.</p>
+  <div class="global-progress">
+    <div class="gp-label"><span>Progression globale</span><span id="globalPct">0%</span></div>
+    <div class="gp-track"><div class="gp-fill" id="globalBar"></div></div>
+  </div>
+</header>
+<main>
+  <p class="section-label">Chapitres — cliquer pour ouvrir</p>
+  <div class="chapters-grid">
+    <a class="ch-card" href="passanatomiecardio.html">
+      <div class="ch-card-top"><div class="ch-icon" style="background:rgba(244,114,182,.12)">🫀</div><span class="ch-num">Chapitre 01</span></div>
+      <div class="ch-title">Cœur & Cardiovasculaire</div>
+      <div class="ch-desc">Cavités, valves, coronaires, système de conduction, gros vaisseaux.</div>
+      <div class="ch-tags"><span class="tag must">Priorité max</span><span class="tag high">Très fréquent</span></div>
+      <div class="ch-progress"><div class="ch-bar-track"><div class="ch-bar-fill" style="width:0%;background:linear-gradient(90deg,#f472b6,#a78bfa)"></div></div><span class="ch-pct">0%</span></div>
+      <div class="ch-arrow">→</div>
+    </a>
+    <a class="ch-card" href="passanatomierespi.html">
+      <div class="ch-card-top"><div class="ch-icon" style="background:rgba(96,165,250,.12)">🫁</div><span class="ch-num">Chapitre 02</span></div>
+      <div class="ch-title">Système Respiratoire</div>
+      <div class="ch-desc">Voies aériennes, arbre bronchique, alvéoles, plèvre, muscles respiratoires.</div>
+      <div class="ch-tags"><span class="tag must">Priorité max</span><span class="tag high">Fréquent</span></div>
+      <div class="ch-progress"><div class="ch-bar-track"><div class="ch-bar-fill" style="width:0%;background:linear-gradient(90deg,#60a5fa,#34d399)"></div></div><span class="ch-pct">0%</span></div>
+      <div class="ch-arrow">→</div>
+    </a>
+    <a class="ch-card" href="passanatomiesn.html">
+      <div class="ch-card-top"><div class="ch-icon" style="background:rgba(167,139,250,.12)">🧠</div><span class="ch-num">Chapitre 03</span></div>
+      <div class="ch-title">Système Nerveux</div>
+      <div class="ch-desc">SNC, SNP, lobes cérébraux, méninges, nerfs crâniens, LCR, Willis.</div>
+      <div class="ch-tags"><span class="tag must">Priorité max</span><span class="tag high">Complexe</span></div>
+      <div class="ch-progress"><div class="ch-bar-track"><div class="ch-bar-fill" style="width:0%;background:linear-gradient(90deg,#a78bfa,#818cf8)"></div></div><span class="ch-pct">0%</span></div>
+      <div class="ch-arrow">→</div>
+    </a>
+    <a class="ch-card" href="passanatomierein.html">
+      <div class="ch-card-top"><div class="ch-icon" style="background:rgba(251,191,36,.12)">🫘</div><span class="ch-num">Chapitre 04</span></div>
+      <div class="ch-title">Rein & Système Urinaire</div>
+      <div class="ch-desc">Néphron, filtration glomérulaire, voies urinaires, vascularisation rénale.</div>
+      <div class="ch-tags"><span class="tag must">Priorité max</span><span class="tag high">Lié à la physio</span></div>
+      <div class="ch-progress"><div class="ch-bar-track"><div class="ch-bar-fill" style="width:0%;background:linear-gradient(90deg,#fbbf24,#f97316)"></div></div><span class="ch-pct">0%</span></div>
+      <div class="ch-arrow">→</div>
+    </a>
+    <a class="ch-card" href="passanatomiediges.html">
+      <div class="ch-card-top"><div class="ch-icon" style="background:rgba(52,211,153,.12)">🟤</div><span class="ch-num">Chapitre 05</span></div>
+      <div class="ch-title">Système Digestif</div>
+      <div class="ch-desc">Tube digestif complet, foie, pancréas, péritoine, vascularisation digestive.</div>
+      <div class="ch-tags"><span class="tag high">Important</span><span class="tag base">Détaillé</span></div>
+      <div class="ch-progress"><div class="ch-bar-track"><div class="ch-bar-fill" style="width:0%;background:linear-gradient(90deg,#34d399,#6ee7b7)"></div></div><span class="ch-pct">0%</span></div>
+      <div class="ch-arrow">→</div>
+    </a>
+    <a class="ch-card" href="passanatomierachis.html">
+      <div class="ch-card-top"><div class="ch-icon" style="background:rgba(148,163,184,.12)">🦴</div><span class="ch-num">Chapitre 06</span></div>
+      <div class="ch-title">Rachis & Locomoteur</div>
+      <div class="ch-desc">Vertèbres, disques, moelle épinière, nerfs rachidiens, courbures.</div>
+      <div class="ch-tags"><span class="tag high">Important</span><span class="tag base">Neurochirurgie</span></div>
+      <div class="ch-progress"><div class="ch-bar-track"><div class="ch-bar-fill" style="width:0%;background:linear-gradient(90deg,#94a3b8,#60a5fa)"></div></div><span class="ch-pct">0%</span></div>
+      <div class="ch-arrow">→</div>
+    </a>
+  </div>
+
+  <a href="passanatomieqcm.html" style="display:flex;align-items:center;justify-content:space-between;background:rgba(244,114,182,0.06);border:1px solid rgba(244,114,182,0.22);border-radius:16px;padding:22px 26px;text-decoration:none;margin-top:14px;transition:all .2s;" onmouseover="this.style.borderColor='rgba(244,114,182,0.5)'" onmouseout="this.style.borderColor='rgba(244,114,182,0.22)'">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">🎯 Entraînement</div>
+      <div style="font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:var(--text);">QCM Anatomie — 120+ questions</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;">Tous chapitres · 3 niveaux · Barres de maîtrise</div>
+    </div>
+    <div style="font-size:20px;color:var(--accent);">→</div>
+  </a>
+</main>
+<footer>
+  <div class="footer-logo">Constance</div>
+  <div class="footer-copy">© Constance | @constance.cgh · Programme PASS gratuit · Tous droits réservés</div>
+</footer>
+<script>
+function toggleTheme(){const h=document.documentElement,b=document.getElementById('themeBtn');if(h.dataset.theme==='dark'){h.dataset.theme='light';b.textContent='🌙';}else{h.dataset.theme='dark';b.textContent='☀️';}}
+</script>
+</body>
+</html>

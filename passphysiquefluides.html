@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mécanique des fluides — Physique PASS · Constance</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  [data-theme="dark"]{--bg:#0a0a0f;--surface:#13131a;--border:#1e1e2e;--accent:#60a5fa;--accent2:#a78bfa;--accent3:#f472b6;--text:#e2e8f0;--muted:#64748b;--warn:#fbbf24;--item-text:#cbd5e1;--def-bg:rgba(96,165,250,0.05);--def-border:rgba(96,165,250,0.18);--ex-bg:rgba(251,191,36,0.05);--ex-border:rgba(251,191,36,0.2);--ex-color:#fde68a;--formula-bg:rgba(167,139,250,0.08);--formula-border:rgba(167,139,250,0.3);--formula-color:#c4b5fd;--progress-track:rgba(255,255,255,0.06);--toggle-bg:#1e1e2e;--quiz-bg:#0f0f18;--quiz-opt:rgba(255,255,255,0.03);--quiz-opt-hover:rgba(255,255,255,0.07);--correct:rgba(96,165,250,0.12);--correct-border:#60a5fa;--wrong:rgba(244,114,182,0.12);--wrong-border:#f472b6;--tip-bg:rgba(96,165,250,0.06);--tip-border:rgba(96,165,250,0.2);--tip-color:#93c5fd;--notion-bg:#13131a;--notion-border:#1e1e2e;}
+  [data-theme="light"]{--bg:#f8f9ff;--surface:#fff;--border:#e0e4f0;--accent:#2563eb;--accent2:#7c3aed;--accent3:#db2777;--text:#1e1b18;--muted:#6b7280;--warn:#d97706;--item-text:#374151;--def-bg:rgba(37,99,235,0.04);--def-border:rgba(37,99,235,0.15);--ex-bg:rgba(217,119,6,0.05);--ex-border:rgba(217,119,6,0.18);--ex-color:#92400e;--formula-bg:rgba(124,58,237,0.06);--formula-border:rgba(124,58,237,0.22);--formula-color:#5b21b6;--progress-track:rgba(0,0,0,0.07);--toggle-bg:#e0e4f0;--quiz-bg:#f0f2ff;--quiz-opt:rgba(0,0,0,0.02);--quiz-opt-hover:rgba(0,0,0,0.05);--correct:rgba(37,99,235,0.08);--correct-border:#2563eb;--wrong:rgba(219,39,119,0.08);--wrong-border:#db2777;--tip-bg:rgba(37,99,235,0.05);--tip-border:rgba(37,99,235,0.2);--tip-color:#1e40af;--notion-bg:#fff;--notion-border:#e0e4f0;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',serif;min-height:100vh;transition:background .3s,color .3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);backdrop-filter:blur(12px);background:rgba(10,10,15,0.85);}
+  [data-theme="light"] nav{background:rgba(248,249,255,0.88);}
+  .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--accent);text-decoration:none;}
+  .nav-back{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+  .nav-back:hover{color:var(--text);}
+  .theme-toggle{background:var(--toggle-bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s;user-select:none;line-height:1;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--text);}
+  header{padding:100px 52px 40px;border-bottom:1px solid var(--border);max-width:800px;margin:0 auto;}
+  .breadcrumb{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;}
+  .breadcrumb a{color:var(--muted);text-decoration:none;}
+  .breadcrumb a:hover{color:var(--accent);}
+  .ch-badge{display:inline-block;background:rgba(167,139,250,.08);border:1px solid rgba(167,139,250,.2);color:#a78bfa;font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:14px;}
+  h1{font-family:'Libre Baskerville',serif;font-size:clamp(28px,4.5vw,48px);font-weight:700;line-height:1.1;}
+  .ch-subtitle{margin-top:8px;color:var(--muted);font-size:14px;}
+  .progress-wrap{margin-top:22px;max-width:320px;display:flex;flex-direction:column;gap:12px;}
+  .prog-row{display:flex;flex-direction:column;gap:5px;}
+  .prog-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;}
+  .prog-track{height:4px;background:var(--progress-track);border-radius:100px;overflow:hidden;}
+  .prog-fill{height:100%;border-radius:100px;transition:width .4s ease;}
+  .fill-read{background:var(--accent2);}
+  .mastery-bar{display:flex;height:4px;border-radius:100px;overflow:hidden;gap:2px;}
+  .bar-ok{background:var(--accent);transition:flex .5s ease;flex:0;}
+  .bar-ko{background:var(--accent3);transition:flex .5s ease;flex:0;}
+  .bar-grey{background:var(--progress-track);transition:flex .5s ease;flex:1;}
+  .legend-row{display:flex;gap:14px;margin-top:5px;}
+  .leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);}
+  .leg-dot{width:7px;height:7px;border-radius:50%;}
+  main{padding:48px 52px;max-width:800px;margin:0 auto;}
+  .section-sep{display:flex;align-items:center;gap:14px;margin:40px 0 22px;}
+  .section-sep-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;}
+  .section-sep-line{flex:1;height:1px;background:var(--border);}
+  .sep-priority .section-sep-label{color:var(--accent3);}
+  .sep-important .section-sep-label{color:var(--warn);}
+  .sep-base .section-sep-label{color:var(--accent2);}
+  .notion{background:var(--notion-bg);border:1px solid var(--notion-border);border-radius:14px;padding:22px 24px;margin-bottom:12px;border-left:4px solid transparent;transition:opacity .2s;}
+  .notion.priority{border-left-color:var(--accent3);}
+  .notion.important{border-left-color:var(--warn);}
+  .notion.base{border-left-color:var(--accent2);}
+  .notion.read{opacity:.55;}
+  .notion.mastered{box-shadow:0 0 0 1.5px var(--accent);}
+  .notion.to-review{box-shadow:0 0 0 1.5px var(--accent3);}
+  .notion-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:10px;}
+  .notion-left{display:flex;align-items:flex-start;gap:10px;flex:1;}
+  .check-btn{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all .2s;color:transparent;cursor:pointer;background:transparent;user-select:none;}
+  .notion.read .check-btn{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+  .quiz-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;flex-shrink:0;margin-top:3px;display:none;}
+  .quiz-badge.show{display:inline-block;}
+  .quiz-badge.ok{background:rgba(96,165,250,.12);color:var(--accent);}
+  .quiz-badge.ko{background:rgba(244,114,182,.12);color:var(--accent3);}
+  .notion-title{font-family:'Libre Baskerville',serif;font-size:16px;font-weight:700;color:var(--text);}
+  .notion-def{font-size:14px;line-height:1.75;color:var(--item-text);}
+  .notion-def strong{color:var(--text);font-weight:700;}
+  .def-box{margin-top:14px;padding:14px 16px;background:var(--def-bg);border:1px solid var(--def-border);border-radius:10px;font-size:13px;line-height:1.7;color:var(--item-text);}
+  .def-box strong{color:var(--text);font-weight:700;}
+  .def-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+  .formula-box{margin-top:12px;padding:14px 18px;background:var(--formula-bg);border:1px solid var(--formula-border);border-radius:10px;text-align:center;}
+  .formula-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--formula-color);opacity:.7;margin-bottom:6px;}
+  .formula-main{font-size:17px;color:var(--formula-color);font-family:'Libre Baskerville',serif;font-style:italic;}
+  .formula-detail{font-size:11px;color:var(--formula-color);opacity:.65;margin-top:5px;}
+  .example-box{margin-top:12px;padding:13px 16px;background:var(--ex-bg);border:1px solid var(--ex-border);border-radius:10px;font-size:13px;line-height:1.65;color:var(--ex-color);}
+  .example-box::before{content:"🩺 Exemple médical — ";font-weight:700;}
+  .example-box strong{font-weight:700;}
+  .tip-box{margin-top:32px;padding:14px 16px;background:var(--tip-bg);border:1px solid var(--tip-border);border-radius:10px;font-size:13px;color:var(--tip-color);line-height:1.65;}
+  .tip-box::before{content:"💡 Conseil strat — ";font-weight:700;}
+  .quiz-section{margin-top:48px;padding-top:32px;border-top:1px solid var(--border);}
+  .quiz-title{font-family:'Libre Baskerville',serif;font-size:18px;font-weight:700;margin-bottom:20px;}
+  .quiz-title::before{content:"🎯 Quiz — ";}
+  .quiz-card{background:var(--quiz-bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;}
+  .quiz-q{font-size:14px;line-height:1.65;color:var(--item-text);margin-bottom:14px;font-weight:500;}
+  .quiz-options{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
+  .quiz-opt{padding:11px 15px;background:var(--quiz-opt);border:1px solid var(--border);border-radius:9px;font-size:13px;cursor:pointer;transition:all .15s;color:var(--item-text);text-align:left;font-family:'Source Serif 4',serif;line-height:1.4;}
+  .quiz-opt:hover:not(:disabled){background:var(--quiz-opt-hover);border-color:var(--muted);}
+  .quiz-opt.correct{background:var(--correct);border-color:var(--correct-border);color:var(--accent);}
+  .quiz-opt.wrong{background:var(--wrong);border-color:var(--wrong-border);color:var(--accent3);}
+  .quiz-opt:disabled{cursor:default;}
+  .quiz-feedback{font-size:13px;line-height:1.55;padding:11px 14px;border-radius:9px;margin-top:6px;display:none;}
+  .quiz-feedback.show{display:block;}
+  .quiz-feedback.ok{background:var(--correct);color:var(--accent);border:1px solid var(--correct-border);}
+  .quiz-feedback.ko{background:var(--wrong);color:var(--accent3);border:1px solid var(--wrong-border);}
+  .quiz-next{margin-top:10px;background:none;border:1px solid var(--border);border-radius:8px;padding:8px 18px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;font-family:'Source Serif 4',serif;transition:all .2s;display:none;}
+  .quiz-next.show{display:inline-block;}
+  .quiz-next:hover{border-color:var(--accent2);color:var(--accent2);}
+  .quiz-score{font-size:12px;color:var(--muted);margin-top:10px;font-weight:600;}
+  .ch-nav{display:flex;justify-content:space-between;margin-top:48px;padding-top:28px;border-top:1px solid var(--border);}
+  .ch-nav a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s;}
+  .ch-nav a:hover{color:var(--accent);}
+  footer{border-top:1px solid var(--border);padding:24px 52px;max-width:800px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:48px;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--accent);}
+  .footer-copy{font-size:11px;color:var(--muted);}
+  @media(max-width:600px){header,main,footer{padding-left:20px;padding-right:20px;}header{padding-top:80px;}nav{padding:.9rem 1.2rem;}.theme-toggle{top:14px;right:14px;}footer{flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="passdashboard.html">Constance</a>
+  <a class="nav-back" href="passphysique.html">← Physique</a>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button>
+</nav>
+<header>
+  <div class="breadcrumb"><a href="passphysique.html">Physique</a> · Chapitre 02</div>
+  <div class="ch-badge">Chapitre 02</div>
+  <h1>Mécanique des fluides</h1>
+  <div class="ch-subtitle">Pression · Débit · Viscosité · Écoulement</div>
+  <div class="progress-wrap">
+    <div class="prog-row">
+      <div class="prog-label"><span>Notions lues</span><span id="readCount">0 / 7</span></div>
+      <div class="prog-track"><div class="prog-fill fill-read" id="readBar" style="width:0%"></div></div>
+    </div>
+    <div class="prog-row">
+      <div class="prog-label"><span>Maîtrise — basée sur le quiz</span><span id="masteryCount">Fais le quiz ↓</span></div>
+      <div class="mastery-bar">
+        <div class="bar-ok" id="barOk"></div>
+        <div class="bar-ko" id="barKo"></div>
+        <div class="bar-grey" id="barGrey"></div>
+      </div>
+      <div class="legend-row">
+        <div class="leg"><div class="leg-dot" style="background:var(--accent)"></div>Maîtrisé</div>
+        <div class="leg"><div class="leg-dot" style="background:var(--accent3)"></div>À revoir</div>
+        <div class="leg"><div class="leg-dot" style="background:var(--progress-track)"></div>Non testé</div>
+      </div>
+    </div>
+  </div>
+</header>
+<main>
+
+  <div class="section-sep sep-priority"><div class="section-sep-label">🔴 Incontournables</div><div class="section-sep-line"></div></div>
+
+  <div class="notion priority" id="n0">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk0" onclick="toggleRead(0)"></div>
+        <div class="notion-title">Pression hydrostatique</div>
+      </div>
+      <div class="quiz-badge" id="qbadge0"></div>
+    </div>
+    <div class="notion-def">Dans un <strong>fluide au repos</strong>, la pression augmente avec la profondeur. Plus on descend, plus la colonne de liquide au-dessus pèse.</div>
+    <div class="def-box">
+      <div class="def-label">Les 3 variables clés</div>
+      <strong>ρ (masse volumique)</strong> : plus le fluide est dense, plus P est grande.<br><strong>g</strong> : gravité ≈ 9,8 m/s².<br><strong>h</strong> : profondeur en mètres.
+    </div>
+    <div class="formula-box">
+      <div class="formula-label">Formule terminale</div>
+      <div class="formula-main">P = P₀ + ρ × g × h</div>
+      <div class="formula-detail">P₀ = pression en surface · ρ_sang ≈ 1060 kg/m³</div>
+    </div>
+    <div class="example-box">Debout, la pression artérielle aux <strong>pieds</strong> est ~93 mmHg plus élevée qu'au cœur (colonne de sang de 1,2 m). C'est pourquoi les <strong>insuffisants cardiaques</strong> ont les chevilles gonflées en fin de journée.</div>
+  </div>
+
+  <div class="notion priority" id="n1">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk1" onclick="toggleRead(1)"></div>
+        <div class="notion-title">Loi de Pascal</div>
+      </div>
+      <div class="quiz-badge" id="qbadge1"></div>
+    </div>
+    <div class="notion-def">Dans un <strong>fluide incompressible au repos</strong>, toute variation de pression se transmet <strong>intégralement et instantanément</strong> dans toutes les directions.</div>
+    <div class="def-box">
+      <div class="def-label">L'intuition</div>
+      Appuie sur un côté d'un ballon d'eau → tous les côtés gonflent simultanément. Base des <strong>freins hydrauliques</strong> et des <strong>seringues</strong>.
+    </div>
+
+    <div class="example-box">Lors d'une <strong>hémorragie interne</strong>, la pression chute partout simultanément (Pascal). Le corps compense par <strong>vasoconstriction</strong>. En soins intensifs, on perfuse pour restaurer le volume et la pression.</div>
+  </div>
+
+  <div class="notion priority" id="n2">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk2" onclick="toggleRead(2)"></div>
+        <div class="notion-title">Débit et conservation du débit</div>
+      </div>
+      <div class="quiz-badge" id="qbadge2"></div>
+    </div>
+    <div class="notion-def">Le <strong>débit volumique Q</strong> est le volume traversant une section par unité de temps. Dans un circuit fermé, si la section rétrécit, la vitesse <strong>augmente</strong> pour conserver le débit.</div>
+    <div class="def-box">
+      <div class="def-label">L'analogie du tuyau d'arrosage</div>
+      Pince le bout → l'eau sort plus vite mais le débit total reste identique. <strong>Q = S × v = constante</strong>.
+    </div>
+
+    <div class="example-box">Dans une <strong>sténose aortique</strong>, la section de la valve diminue → le sang passe beaucoup plus vite → <strong>turbulences</strong> → <strong>souffle cardiaque</strong> audible au stéthoscope.</div>
+  </div>
+
+  <div class="notion priority" id="n3">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk3" onclick="toggleRead(3)"></div>
+        <div class="notion-title">Viscosité — résistance à l'écoulement</div>
+      </div>
+      <div class="quiz-badge" id="qbadge3"></div>
+    </div>
+    <div class="notion-def">La <strong>viscosité</strong> est la résistance interne d'un fluide à s'écouler. La viscosité du <strong>sang</strong> dépend surtout de l'<strong>hématocrite</strong> et de la température.</div>
+    <div class="def-box">
+      <div class="def-label">Newtonien vs non-newtonien</div>
+      <strong>Fluide newtonien</strong> : viscosité constante (eau).<br><strong>Fluide non-newtonien</strong> : viscosité variable. Le <strong>sang est non-newtonien</strong> — il devient moins visqueux quand il s'écoule vite (effet de cisaillement).
+    </div>
+
+    <div class="example-box">En <strong>polyglobulie</strong> (hématocrite élevé), le sang est très visqueux → le cœur travaille plus fort → <strong>hypertension</strong> et risque d'<strong>AVC thrombotique</strong>. Traitement : saignées (phlébotomies).</div>
+  </div>
+
+  <div class="notion priority" id="n4">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk4" onclick="toggleRead(4)"></div>
+        <div class="notion-title">Écoulement laminaire vs turbulent</div>
+      </div>
+      <div class="quiz-badge" id="qbadge4"></div>
+    </div>
+    <div class="notion-def">En <strong>écoulement laminaire</strong>, les couches de fluide glissent de façon ordonnée — silencieux et efficace. En <strong>turbulent</strong>, le fluide tourbillonne — bruyant et énergivore.</div>
+    <div class="def-box">
+      <div class="def-label">Le nombre de Reynolds (Re)</div>
+      <strong>Re &lt; 2000</strong> → laminaire · <strong>Re &gt; 4000</strong> → turbulent.<br>Re augmente avec la vitesse et le diamètre, diminue avec la viscosité.
+    </div>
+
+    <div class="example-box">En <strong>anémie sévère</strong>, le sang est moins visqueux ET le débit compensatoire augmente → Re élevé → flux turbulent → <strong>souffle fonctionnel</strong> sans lésion valvulaire. Corriger l'anémie fait disparaître le souffle.</div>
+  </div>
+
+  <div class="section-sep sep-important"><div class="section-sep-label">🟡 Importants</div><div class="section-sep-line"></div></div>
+
+  <div class="notion important" id="n5">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk5" onclick="toggleRead(5)"></div>
+        <div class="notion-title">Poussée d'Archimède</div>
+      </div>
+      <div class="quiz-badge" id="qbadge5"></div>
+    </div>
+    <div class="notion-def">Tout corps plongé dans un fluide subit une <strong>force verticale vers le haut</strong> égale au <strong>poids du fluide déplacé</strong>. Un corps flotte si sa densité moyenne est inférieure à celle du fluide.</div>
+
+
+    <div class="example-box">Les <strong>poumons remplis d'air</strong> réduisent la densité du corps → il flotte en apnée. En expirant complètement, la densité dépasse celle de l'eau → on coule. Utilisé en <strong>médecine légale</strong> pour estimer le temps de noyade.</div>
+  </div>
+
+  <div class="section-sep sep-base"><div class="section-sep-label">🔵 Base</div><div class="section-sep-line"></div></div>
+
+  <div class="notion base" id="n6">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk6" onclick="toggleRead(6)"></div>
+        <div class="notion-title">Tension superficielle</div>
+      </div>
+      <div class="quiz-badge" id="qbadge6"></div>
+    </div>
+    <div class="notion-def">À la <strong>surface d'un liquide</strong>, les molécules sont attirées vers l'intérieur → création d'un <strong>film élastique</strong> en surface qui résiste à être étiré.</div>
+
+
+    <div class="example-box">Les <strong>alvéoles pulmonaires</strong> seraient écrasées par la tension superficielle du film liquidien sans le <strong>surfactant</strong> (pneumocytes II). Chez les <strong>prématurés</strong> sans surfactant → <strong>maladie des membranes hyalines</strong>, urgence néonatale.</div>
+  </div>
+
+  <div class="tip-box">Ce chapitre est le pont direct entre physique et physiologie médicale. Comprendre viscosité, débit et types d'écoulement te permet de comprendre le système cardiovasculaire sans le mémoriser bêtement.</div>
+
+  <div class="quiz-section">
+    <div class="quiz-title">Mécanique des fluides</div>
+    <div id="quiz-container"></div>
+    <div class="quiz-score" id="quiz-score"></div>
+  </div>
+
+  <a href="passphysiqueqcm.html" style="display:flex;align-items:center;justify-content:space-between;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.22);border-radius:12px;padding:16px 20px;text-decoration:none;margin-top:16px;transition:all .2s;" onmouseover="this.style.borderColor='rgba(167,139,250,0.5)'" onmouseout="this.style.borderColor='rgba(167,139,250,0.22)'">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent2);margin-bottom:4px;">🎯 Entraînement complet</div>
+      <div style="font-size:14px;font-weight:600;color:var(--text);">QCM Physique — tous chapitres</div>
+    </div>
+    <div style="font-size:16px;color:var(--accent2);">→</div>
+  </a>
+
+  <div class="ch-nav">
+    <a href="passphysiquemecanique.html">← Chapitre 01 — Mécanique</a>
+    <a href="passphysiquethermodynamique.html">Chapitre 03 — Thermodynamique →</a>
+  </div>
+</main>
+<footer>
+  <div class="footer-logo">Constance</div>
+  <div class="footer-copy">© Constance | @constance.cgh · Programme PASS gratuit · Tous droits réservés</div>
+</footer>
+<script>
+const TOTAL = 7;
+const STORAGE_READ = 'fluides_read';
+const STORAGE_MASTERY = 'fluides_mastery';
+let readState = JSON.parse(localStorage.getItem(STORAGE_READ) || '[]');
+function toggleRead(i){
+  const idx = readState.indexOf(i);
+  if(idx === -1) readState.push(i); else readState.splice(idx,1);
+  localStorage.setItem(STORAGE_READ, JSON.stringify(readState));
+  applyRead();
+}
+function applyRead(){
+  for(let i=0;i<TOTAL;i++){
+    const n=document.getElementById('n'+i);
+    const b=document.getElementById('chk'+i);
+    if(!n||!b) continue;
+    if(readState.includes(i)){n.classList.add('read');b.textContent='✓';}
+    else{n.classList.remove('read');b.textContent='';}
+  }
+  const done=readState.length;
+  document.getElementById('readCount').textContent=done+' / '+TOTAL;
+  document.getElementById('readBar').style.width=Math.round((done/TOTAL)*100)+'%';
+}
+let mastery=JSON.parse(localStorage.getItem(STORAGE_MASTERY)||'{}');
+function applyMastery(){
+  let nOk=0,nKo=0;
+  for(let i=0;i<TOTAL;i++){
+    const n=document.getElementById('n'+i);
+    const b=document.getElementById('qbadge'+i);
+    if(!n||!b) continue;
+    n.classList.remove('mastered','to-review');
+    b.className='quiz-badge';b.textContent='';
+    if(mastery[i]==='ok'){n.classList.add('mastered');b.className='quiz-badge show ok';b.textContent='✓ Maîtrisé';nOk++;}
+    else if(mastery[i]==='ko'){n.classList.add('to-review');b.className='quiz-badge show ko';b.textContent='✗ À revoir';nKo++;}
+  }
+  const nG=TOTAL-nOk-nKo;
+  document.getElementById('barOk').style.flex=nOk;
+  document.getElementById('barKo').style.flex=nKo;
+  document.getElementById('barGrey').style.flex=Math.max(nG,0.2);
+  if(nOk+nKo>0) document.getElementById('masteryCount').textContent=nOk+' ✓ · '+nKo+' ✗ · '+nG+' non testés';
+}
+const quizData=[
+  {ni:0, q:"La pression artérielle est plus élevée aux pieds qu'au cœur car :", opts:["Le cœur pompe plus fort vers le bas", "La pression hydrostatique s'additionne avec la hauteur", "Le sang est plus visqueux aux pieds", "Les vaisseaux sont plus étroits"], a:1, exp:"P = P₀ + ρgh. La colonne de sang de ~1,2 m entre le cœur et les pieds ajoute ~93 mmHg. C'est le mécanisme des œdèmes déclives en insuffisance cardiaque."},
+  {ni:1, q:"La loi de Pascal explique pourquoi lors d'une hémorragie interne :", opts:["La pression augmente localement", "La pression chute partout simultanément dans le circuit", "Le sang devient plus visqueux", "Le cœur s'arrête immédiatement"], a:1, exp:"Pascal : dans un fluide incompressible, toute variation de pression se transmet instantanément dans toutes les directions. La perte de volume → chute de pression partout → choc hémorragique."},
+  {ni:2, q:"Dans une sténose aortique (section réduite de moitié), la vitesse du sang :", opts:["Diminue de moitié", "Reste identique", "Quadruple", "Double"], a:2, exp:"Q = S × v = constante. Section ÷2 sur le rayon → section ÷4 (πr²) → v ×4. Vitesse accrue → turbulences → souffle systolique audible."},
+  {ni:3, q:"La viscosité du sang augmente principalement quand :", opts:["La température augmente", "L'hématocrite augmente", "Le débit augmente", "La pression diminue"], a:1, exp:"L'hématocrite (% de GR) est le principal déterminant de la viscosité sanguine. Polyglobulie → hyperviscosité → risque de thrombose et d'hypertension."},
+  {ni:4, q:"Un souffle cardiaque fonctionnel en anémie est dû à :", opts:["Une lésion valvulaire", "Un Re élevé → flux turbulent (sang moins visqueux + débit compensatoire)", "Une pression artérielle trop élevée", "Une sténose sous-valvulaire"], a:1, exp:"Anémie → viscosité η diminue + débit compensatoire ↑ → Re augmente → turbulences → souffle. Fonctionnel = disparaît quand on traite l'anémie."},
+  {ni:5, q:"Le corps humain flotte en apnée car :", opts:["Les os sont creux", "Les poumons remplis d'air réduisent la densité globale sous 1000 kg/m³", "La graisse est plus dense que l'eau", "Le cœur bat et génère une force ascendante"], a:1, exp:"Archimède : flotte si densité_corps < densité_eau. Les poumons remplis d'air (~1,2 L) réduisent la densité globale. En expirant tout l'air → densité augmente → on coule."},
+  {ni:6, q:"Sans surfactant, les alvéoles s'effondrent car :", opts:["Elles manquent d'O₂", "La tension superficielle du film liquidien alvéolaire est trop élevée → collapsus à l'expiration", "Le diaphragme est trop faible", "La PO₂ est trop basse"], a:1, exp:"Loi de Laplace : ΔP = 2γ/r. Sans surfactant, γ élevée → ΔP élevée → les petites alvéoles s'effondrent. Le surfactant réduit γ → stabilisation des alvéoles. Chez le prématuré → syndrome de détresse respiratoire."},
+];
+let quizState=null;
+function initQuiz(){if(quizState)return;quizState={idx:0,score:0};renderQ();}
+function renderQ(){
+  const c=document.getElementById('quiz-container');
+  if(quizState.idx>=quizData.length){
+    c.innerHTML=`<div class="quiz-card" style="text-align:center;padding:28px;"><div style="font-size:40px;margin-bottom:12px;">${quizState.score>=Math.ceil(quizData.length*.8)?'🏆':quizState.score>=Math.ceil(quizData.length*.6)?'💪':'📚'}</div><div style="font-family:'Libre Baskerville',serif;font-size:22px;font-weight:700;">${quizState.score} / ${quizData.length}</div><div style="font-size:13px;color:var(--muted);margin-top:6px;">Les badges sont mis à jour sur chaque notion ci-dessus.</div></div>`;
+    document.getElementById('quiz-score').textContent='';return;
+  }
+  const q=quizData[quizState.idx];
+  c.innerHTML=`<div class="quiz-card"><div class="quiz-q">Q${quizState.idx+1}/${quizData.length} — ${q.q}</div><div class="quiz-options">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answer(${i})">${o}</button>`).join('')}</div><div class="quiz-feedback" id="qfb"></div><button class="quiz-next" id="qnext" onclick="nextQ()">Question suivante →</button></div>`;
+  document.getElementById('quiz-score').textContent='Score : '+quizState.score+' / '+quizState.idx;
+}
+function answer(i){
+  const q=quizData[quizState.idx];
+  document.querySelectorAll('.quiz-opt').forEach(o=>o.disabled=true);
+  const correct=i===q.a;
+  if(correct){quizState.score++;document.querySelectorAll('.quiz-opt')[i].classList.add('correct');}
+  else{document.querySelectorAll('.quiz-opt')[i].classList.add('wrong');document.querySelectorAll('.quiz-opt')[q.a].classList.add('correct');}
+  document.getElementById('qfb').textContent=(correct?'✓ Correct ! ':'✗ Incorrect. ')+q.exp;
+  document.getElementById('qfb').className='quiz-feedback show '+(correct?'ok':'ko');
+  document.getElementById('qnext').className='quiz-next show';
+  document.getElementById('quiz-score').textContent='Score : '+quizState.score+' / '+(quizState.idx+1);
+  mastery[q.ni]=correct?'ok':'ko';
+  localStorage.setItem(STORAGE_MASTERY,JSON.stringify(mastery));
+  applyMastery();
+}
+function nextQ(){quizState.idx++;renderQ();}
+function toggleTheme(){const h=document.documentElement,b=document.getElementById('themeBtn');if(h.dataset.theme==='dark'){h.dataset.theme='light';b.textContent='🌙 Mode sombre';}else{h.dataset.theme='dark';b.textContent='☀️ Mode clair';}}
+window.addEventListener('DOMContentLoaded',()=>{applyRead();applyMastery();});
+const obs=new IntersectionObserver(e=>{if(e[0].isIntersecting)initQuiz();},{threshold:0.1});
+obs.observe(document.querySelector('.quiz-section'));
+</script>
+</body>
+</html>
