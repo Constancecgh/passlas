@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mécanique — Physique PASS · Constance</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  [data-theme="dark"]{--bg:#0a0a0f;--surface:#13131a;--border:#1e1e2e;--accent:#60a5fa;--accent2:#a78bfa;--accent3:#f472b6;--text:#e2e8f0;--muted:#64748b;--warn:#fbbf24;--item-text:#cbd5e1;--def-bg:rgba(96,165,250,0.05);--def-border:rgba(96,165,250,0.18);--ex-bg:rgba(251,191,36,0.05);--ex-border:rgba(251,191,36,0.2);--ex-color:#fde68a;--formula-bg:rgba(167,139,250,0.08);--formula-border:rgba(167,139,250,0.3);--formula-color:#c4b5fd;--progress-track:rgba(255,255,255,0.06);--toggle-bg:#1e1e2e;--quiz-bg:#0f0f18;--quiz-opt:rgba(255,255,255,0.03);--quiz-opt-hover:rgba(255,255,255,0.07);--correct:rgba(96,165,250,0.12);--correct-border:#60a5fa;--wrong:rgba(244,114,182,0.12);--wrong-border:#f472b6;--tip-bg:rgba(96,165,250,0.06);--tip-border:rgba(96,165,250,0.2);--tip-color:#93c5fd;--notion-bg:#13131a;--notion-border:#1e1e2e;}
+  [data-theme="light"]{--bg:#f8f9ff;--surface:#fff;--border:#e0e4f0;--accent:#2563eb;--accent2:#7c3aed;--accent3:#db2777;--text:#1e1b18;--muted:#6b7280;--warn:#d97706;--item-text:#374151;--def-bg:rgba(37,99,235,0.04);--def-border:rgba(37,99,235,0.15);--ex-bg:rgba(217,119,6,0.05);--ex-border:rgba(217,119,6,0.18);--ex-color:#92400e;--formula-bg:rgba(124,58,237,0.06);--formula-border:rgba(124,58,237,0.22);--formula-color:#5b21b6;--progress-track:rgba(0,0,0,0.07);--toggle-bg:#e0e4f0;--quiz-bg:#f0f2ff;--quiz-opt:rgba(0,0,0,0.02);--quiz-opt-hover:rgba(0,0,0,0.05);--correct:rgba(37,99,235,0.08);--correct-border:#2563eb;--wrong:rgba(219,39,119,0.08);--wrong-border:#db2777;--tip-bg:rgba(37,99,235,0.05);--tip-border:rgba(37,99,235,0.2);--tip-color:#1e40af;--notion-bg:#fff;--notion-border:#e0e4f0;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',serif;min-height:100vh;transition:background .3s,color .3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);backdrop-filter:blur(12px);background:rgba(10,10,15,0.85);}
+  [data-theme="light"] nav{background:rgba(248,249,255,0.88);}
+  .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--accent);text-decoration:none;}
+  .nav-back{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+  .nav-back:hover{color:var(--text);}
+  .theme-toggle{background:var(--toggle-bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s;user-select:none;line-height:1;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--text);}
+
+  header{padding:100px 52px 40px;border-bottom:1px solid var(--border);max-width:800px;margin:0 auto;}
+  .breadcrumb{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;}
+  .breadcrumb a{color:var(--muted);text-decoration:none;}
+  .breadcrumb a:hover{color:var(--accent);}
+  .ch-badge{display:inline-block;background:rgba(96,165,250,.08);border:1px solid rgba(96,165,250,.2);color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:14px;}
+  h1{font-family:'Libre Baskerville',serif;font-size:clamp(28px,4.5vw,48px);font-weight:700;line-height:1.1;}
+  .ch-subtitle{margin-top:8px;color:var(--muted);font-size:14px;}
+
+  /* DOUBLE PROGRESS */
+  .progress-wrap{margin-top:22px;max-width:320px;display:flex;flex-direction:column;gap:12px;}
+  .prog-row{display:flex;flex-direction:column;gap:5px;}
+  .prog-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;}
+  .prog-track{height:4px;background:var(--progress-track);border-radius:100px;overflow:hidden;}
+  .prog-fill{height:100%;border-radius:100px;transition:width .4s ease;}
+  .fill-read{background:var(--accent2);}
+  /* Mastery bar — 3 segments */
+  .mastery-bar{display:flex;height:4px;border-radius:100px;overflow:hidden;gap:2px;}
+  .bar-ok{background:var(--accent);transition:flex .5s ease;flex:0;}
+  .bar-ko{background:var(--accent3);transition:flex .5s ease;flex:0;}
+  .bar-grey{background:var(--progress-track);transition:flex .5s ease;flex:1;}
+  .legend-row{display:flex;gap:14px;margin-top:5px;}
+  .leg{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--muted);}
+  .leg-dot{width:7px;height:7px;border-radius:50%;}
+
+  main{padding:48px 52px;max-width:800px;margin:0 auto;}
+  .section-sep{display:flex;align-items:center;gap:14px;margin:40px 0 22px;}
+  .section-sep-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;white-space:nowrap;}
+  .section-sep-line{flex:1;height:1px;background:var(--border);}
+  .sep-priority .section-sep-label{color:var(--accent3);}
+  .sep-important .section-sep-label{color:var(--warn);}
+  .sep-base .section-sep-label{color:var(--accent2);}
+
+  /* NOTION */
+  .notion{background:var(--notion-bg);border:1px solid var(--notion-border);border-radius:14px;padding:22px 24px;margin-bottom:12px;border-left:4px solid transparent;transition:opacity .2s;}
+  .notion.priority{border-left-color:var(--accent3);}
+  .notion.important{border-left-color:var(--warn);}
+  .notion.base{border-left-color:var(--accent2);}
+  .notion.read{opacity:.55;}
+  .notion.mastered{box-shadow:0 0 0 1.5px var(--accent);}
+  .notion.to-review{box-shadow:0 0 0 1.5px var(--accent3);}
+
+  .notion-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:10px;}
+  .notion-left{display:flex;align-items:flex-start;gap:10px;flex:1;}
+  /* COCHE MANUELLE */
+  .check-btn{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all .2s;color:transparent;cursor:pointer;background:transparent;user-select:none;}
+  .notion.read .check-btn{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+  /* BADGE QUIZ */
+  .quiz-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;flex-shrink:0;margin-top:3px;display:none;}
+  .quiz-badge.show{display:inline-block;}
+  .quiz-badge.ok{background:rgba(96,165,250,.12);color:var(--accent);}
+  .quiz-badge.ko{background:rgba(244,114,182,.12);color:var(--accent3);}
+
+  .notion-title{font-family:'Libre Baskerville',serif;font-size:16px;font-weight:700;color:var(--text);}
+  .notion-def{font-size:14px;line-height:1.75;color:var(--item-text);}
+  .notion-def strong{color:var(--text);font-weight:700;}
+  .def-box{margin-top:14px;padding:14px 16px;background:var(--def-bg);border:1px solid var(--def-border);border-radius:10px;font-size:13px;line-height:1.7;color:var(--item-text);}
+  .def-box strong{color:var(--text);font-weight:700;}
+  .def-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+  .formula-box{margin-top:12px;padding:14px 18px;background:var(--formula-bg);border:1px solid var(--formula-border);border-radius:10px;text-align:center;}
+  .formula-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--formula-color);opacity:.7;margin-bottom:6px;}
+  .formula-main{font-size:17px;color:var(--formula-color);font-family:'Libre Baskerville',serif;font-style:italic;}
+  .formula-detail{font-size:11px;color:var(--formula-color);opacity:.65;margin-top:5px;}
+  .example-box{margin-top:12px;padding:13px 16px;background:var(--ex-bg);border:1px solid var(--ex-border);border-radius:10px;font-size:13px;line-height:1.65;color:var(--ex-color);}
+  .example-box::before{content:"🩺 Exemple médical — ";font-weight:700;}
+  .example-box strong{font-weight:700;}
+  .tip-box{margin-top:32px;padding:14px 16px;background:var(--tip-bg);border:1px solid var(--tip-border);border-radius:10px;font-size:13px;color:var(--tip-color);line-height:1.65;}
+  .tip-box::before{content:"💡 Conseil strat — ";font-weight:700;}
+
+  /* QUIZ */
+  .quiz-section{margin-top:48px;padding-top:32px;border-top:1px solid var(--border);}
+  .quiz-title{font-family:'Libre Baskerville',serif;font-size:18px;font-weight:700;margin-bottom:20px;}
+  .quiz-title::before{content:"🎯 Quiz — ";}
+  .quiz-card{background:var(--quiz-bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;}
+  .quiz-q{font-size:14px;line-height:1.65;color:var(--item-text);margin-bottom:14px;font-weight:500;}
+  .quiz-options{display:flex;flex-direction:column;gap:8px;margin-bottom:10px;}
+  .quiz-opt{padding:11px 15px;background:var(--quiz-opt);border:1px solid var(--border);border-radius:9px;font-size:13px;cursor:pointer;transition:all .15s;color:var(--item-text);text-align:left;font-family:'Source Serif 4',serif;line-height:1.4;}
+  .quiz-opt:hover:not(:disabled){background:var(--quiz-opt-hover);border-color:var(--muted);}
+  .quiz-opt.correct{background:var(--correct);border-color:var(--correct-border);color:var(--accent);}
+  .quiz-opt.wrong{background:var(--wrong);border-color:var(--wrong-border);color:var(--accent3);}
+  .quiz-opt:disabled{cursor:default;}
+  .quiz-feedback{font-size:13px;line-height:1.55;padding:11px 14px;border-radius:9px;margin-top:6px;display:none;}
+  .quiz-feedback.show{display:block;}
+  .quiz-feedback.ok{background:var(--correct);color:var(--accent);border:1px solid var(--correct-border);}
+  .quiz-feedback.ko{background:var(--wrong);color:var(--accent3);border:1px solid var(--wrong-border);}
+  .quiz-next{margin-top:10px;background:none;border:1px solid var(--border);border-radius:8px;padding:8px 18px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;font-family:'Source Serif 4',serif;transition:all .2s;display:none;}
+  .quiz-next.show{display:inline-block;}
+  .quiz-next:hover{border-color:var(--accent2);color:var(--accent2);}
+  .quiz-score{font-size:12px;color:var(--muted);margin-top:10px;font-weight:600;}
+
+  .ch-nav{display:flex;justify-content:space-between;margin-top:48px;padding-top:28px;border-top:1px solid var(--border);}
+  .ch-nav a{font-size:13px;color:var(--muted);text-decoration:none;font-weight:600;transition:color .2s;}
+  .ch-nav a:hover{color:var(--accent);}
+  footer{border-top:1px solid var(--border);padding:24px 52px;max-width:800px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:48px;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--accent);}
+  .footer-copy{font-size:11px;color:var(--muted);}
+  @media(max-width:600px){header,main,footer{padding-left:20px;padding-right:20px;}header{padding-top:80px;}nav{padding:.9rem 1.2rem;}.theme-toggle{top:14px;right:14px;}footer{flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="passdashboard.html">Constance</a>
+  <a class="nav-back" href="passphysique.html">← Physique</a>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button>
+</nav>
+
+<header>
+  <div class="breadcrumb"><a href="passphysique.html">Physique</a> · Chapitre 01</div>
+  <div class="ch-badge">Chapitre 01 · Priorité max</div>
+  <h1>Mécanique</h1>
+  <div class="ch-subtitle">Force · Mouvement · Énergie · Pression</div>
+
+  <div class="progress-wrap">
+    <!-- Barre 1 : coches manuelles -->
+    <div class="prog-row">
+      <div class="prog-label"><span>Notions lues</span><span id="readCount">0 / 7</span></div>
+      <div class="prog-track"><div class="prog-fill fill-read" id="readBar" style="width:0%"></div></div>
+    </div>
+    <!-- Barre 2 : maîtrise quiz -->
+    <div class="prog-row">
+      <div class="prog-label"><span>Maîtrise — basée sur le quiz</span><span id="masteryCount">Fais le quiz ↓</span></div>
+      <div class="mastery-bar">
+        <div class="bar-ok" id="barOk"></div>
+        <div class="bar-ko" id="barKo"></div>
+        <div class="bar-grey" id="barGrey"></div>
+      </div>
+      <div class="legend-row">
+        <div class="leg"><div class="leg-dot" style="background:var(--accent)"></div>Maîtrisé</div>
+        <div class="leg"><div class="leg-dot" style="background:var(--accent3)"></div>À revoir</div>
+        <div class="leg"><div class="leg-dot" style="background:var(--progress-track)"></div>Non testé</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="section-sep sep-priority"><div class="section-sep-label">🔴 Incontournables</div><div class="section-sep-line"></div></div>
+
+  <div class="notion priority" id="n0">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk0" onclick="toggleRead(0)"></div>
+        <div class="notion-title">La force et les lois de Newton</div>
+      </div>
+      <div class="quiz-badge" id="qbadge0"></div>
+    </div>
+    <div class="notion-def">Une <strong>force</strong> est une action capable de modifier le mouvement d'un objet ou de le déformer. Elle se mesure en <strong>Newton (N)</strong>. Newton a décrit 3 lois qui gouvernent le mouvement de n'importe quel corps.</div>
+    <div class="def-box">
+      <div class="def-label">Les 3 lois — à connaître absolument</div>
+      <strong>1. Inertie :</strong> sans force nette, un objet reste immobile ou en ligne droite à vitesse constante.<br><br>
+      <strong>2. F = m × a :</strong> la force nette = masse × accélération. Plus un objet est lourd, plus il faut de force.<br><br>
+      <strong>3. Action-réaction :</strong> A exerce une force sur B → B exerce une force égale et opposée sur A.
+    </div>
+    <div class="formula-box">
+      <div class="formula-label">Formule terminale</div>
+      <div class="formula-main">F = m × a</div>
+      <div class="formula-detail">F en Newtons · m en kg · a en m/s²</div>
+    </div>
+    <div class="example-box">En <strong>RCP</strong>, le soignant appuie avec ~<strong>500 N</strong> sur le sternum pour comprimer le cœur arrêté et créer un débit sanguin artificiel. Trop peu → pas de débit. Trop fort → fracture des côtes.</div>
+  </div>
+
+  <div class="notion priority" id="n1">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk1" onclick="toggleRead(1)"></div>
+        <div class="notion-title">Vitesse et accélération</div>
+      </div>
+      <div class="quiz-badge" id="qbadge1"></div>
+    </div>
+    <div class="notion-def">La <strong>vitesse</strong> mesure la rapidité d'un déplacement (m/s). L'<strong>accélération</strong> mesure la variation de vitesse dans le temps (m/s²). On peut accélérer même si la valeur de la vitesse ne change pas — si la <em>direction</em> change.</div>
+    <div class="def-box">
+      <div class="def-label">Distinction clé</div>
+      <strong>Vitesse moyenne</strong> = distance ÷ temps.<br>
+      <strong>Accélération</strong> = Δv ÷ Δt. Une accélération négative = décélération (freinage).
+    </div>
+    <div class="example-box">À chaque <strong>systole</strong>, le sang passe de 0 à ~<strong>1 m/s dans l'aorte</strong>. En <strong>insuffisance cardiaque</strong>, la force de contraction diminue → moins d'accélération → la pression artérielle chute.</div>
+  </div>
+
+  <div class="notion priority" id="n2">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk2" onclick="toggleRead(2)"></div>
+        <div class="notion-title">La pression</div>
+      </div>
+      <div class="quiz-badge" id="qbadge2"></div>
+    </div>
+    <div class="notion-def">La <strong>pression</strong> est la force exercée perpendiculairement sur une surface, divisée par son aire. Exprimée en <strong>Pascal (Pa)</strong>, mais aussi en <strong>mmHg</strong> ou <strong>cmH₂O</strong> en médecine.</div>
+    <div class="formula-box">
+      <div class="formula-label">Formule terminale</div>
+      <div class="formula-main">P = F ÷ S</div>
+      <div class="formula-detail">Pa = N/m² · 1 mmHg ≈ 133 Pa · PA normale : 120/80 mmHg</div>
+    </div>
+    <div class="example-box">La <strong>pression intraoculaire</strong> mesurée en ophtalmologie : au-delà de <strong>21 mmHg</strong> → suspicion de <strong>glaucome</strong>, maladie qui détruit le nerf optique par excès de pression.</div>
+  </div>
+
+  <div class="notion priority" id="n3">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk3" onclick="toggleRead(3)"></div>
+        <div class="notion-title">Énergie cinétique et énergie potentielle</div>
+      </div>
+      <div class="quiz-badge" id="qbadge3"></div>
+    </div>
+    <div class="notion-def">L'<strong>énergie cinétique</strong> est liée au mouvement. L'<strong>énergie potentielle de pesanteur</strong> est liée à la hauteur. Elles se convertissent l'une en l'autre — c'est la <strong>conservation de l'énergie mécanique</strong>.</div>
+    <div class="formula-box">
+      <div class="formula-label">Formules terminale</div>
+      <div class="formula-main">Ec = ½ m v² &nbsp;|&nbsp; Ep = m g h</div>
+      <div class="formula-detail">Ec + Ep = constante (sans frottement) · g ≈ 9,8 m/s²</div>
+    </div>
+    <div class="example-box">Lors d'une <strong>chute</strong>, c'est la <strong>vitesse à l'impact</strong> (v au carré !) qui détermine la gravité. Un choc à <strong>60 km/h est 4× plus violent</strong> qu'à 30 km/h — même masse. C'est pour ça que les airbags servent à ralentir l'impact.</div>
+  </div>
+
+  <div class="section-sep sep-important"><div class="section-sep-label">🟡 Importants</div><div class="section-sep-line"></div></div>
+
+  <div class="notion important" id="n4">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk4" onclick="toggleRead(4)"></div>
+        <div class="notion-title">Travail et puissance</div>
+      </div>
+      <div class="quiz-badge" id="qbadge4"></div>
+    </div>
+    <div class="notion-def">Le <strong>travail W</strong> est l'énergie transférée par une force lors d'un déplacement (Joules). La <strong>puissance P</strong> mesure la rapidité à laquelle ce travail est effectué (Watts). 1 W = 1 J/s.</div>
+    <div class="example-box">Le <strong>cœur</strong> produit ~<strong>1 à 2 W</strong> au repos (comme une ampoule LED), jusqu'à <strong>20 W</strong> à l'effort. Un cœur défaillant compense en battant plus vite → <strong>tachycardie compensatrice</strong>.</div>
+  </div>
+
+  <div class="notion important" id="n5">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk5" onclick="toggleRead(5)"></div>
+        <div class="notion-title">Quantité de mouvement</div>
+      </div>
+      <div class="quiz-badge" id="qbadge5"></div>
+    </div>
+    <div class="notion-def">La <strong>quantité de mouvement p = m × v</strong> est vectorielle et conservée dans les systèmes isolés lors des chocs — même si les vitesses changent.</div>
+    <div class="example-box">Les <strong>airbags</strong> protègent en allongeant le temps d'arrêt Δt → la force F = Δp/Δt diminue. En <strong>traumatologie</strong>, la quantité de mouvement du véhicule détermine l'énergie transmise au corps.</div>
+  </div>
+
+  <div class="section-sep sep-base"><div class="section-sep-label">🔵 Base</div><div class="section-sep-line"></div></div>
+
+  <div class="notion base" id="n6">
+    <div class="notion-top">
+      <div class="notion-left">
+        <div class="check-btn" id="chk6" onclick="toggleRead(6)"></div>
+        <div class="notion-title">Mouvement circulaire et accélération centripète</div>
+      </div>
+      <div class="quiz-badge" id="qbadge6"></div>
+    </div>
+    <div class="notion-def">En <strong>mouvement circulaire uniforme</strong>, la direction change en permanence → <strong>accélération centripète</strong> vers le centre. La valeur de la vitesse reste constante mais le vecteur change → Newton 2 s'applique.</div>
+    <div class="example-box">Dans une <strong>centrifugeuse médicale</strong>, la force centrifuge sépare les constituants du sang par densité : <strong>globules rouges</strong> (lourds) au fond, <strong>plasma</strong> (léger) en haut → mesure de l'<strong>hématocrite</strong>.</div>
+  </div>
+
+  <div class="tip-box">La mécanique est la base qui rend compréhensible la biophysique des fluides et la physiologie. Comprendre F = ma et la conservation de l'énergie te donne les outils pour raisonner dans toutes les autres matières.</div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section">
+    <div class="quiz-title">Mécanique</div>
+    <div id="quiz-container"></div>
+    <div class="quiz-score" id="quiz-score"></div>
+  </div>
+
+  <a href="passphysiqueqcm.html" style="display:flex;align-items:center;justify-content:space-between;background:rgba(167,139,250,0.06);border:1px solid rgba(167,139,250,0.22);border-radius:12px;padding:16px 20px;text-decoration:none;margin-top:16px;transition:all .2s;" onmouseover="this.style.borderColor='rgba(167,139,250,0.5)'" onmouseout="this.style.borderColor='rgba(167,139,250,0.22)'">
+    <div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent2);margin-bottom:4px;">🎯 Entraînement complet</div>
+      <div style="font-size:14px;font-weight:600;color:var(--text);">QCM Physique — tous chapitres</div>
+    </div>
+    <div style="font-size:16px;color:var(--accent2);">→</div>
+  </a>
+
+  <div class="ch-nav">
+    <span></span>
+    <a href="passphysiquefluides.html">Chapitre 02 — Mécanique des fluides →</a>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-logo">Constance</div>
+  <div class="footer-copy">© Constance | @constance.cgh · Programme PASS gratuit · Tous droits réservés</div>
+</footer>
+
+<script>
+const TOTAL = 7;
+const STORAGE_READ = 'meca_read';
+const STORAGE_MASTERY = 'meca_mastery';
+
+// ── COCHES MANUELLES ──
+let readState = JSON.parse(localStorage.getItem(STORAGE_READ) || '[]');
+
+function toggleRead(i){
+  const idx = readState.indexOf(i);
+  if(idx === -1) readState.push(i);
+  else readState.splice(idx, 1);
+  localStorage.setItem(STORAGE_READ, JSON.stringify(readState));
+  applyRead();
+}
+
+function applyRead(){
+  for(let i=0;i<TOTAL;i++){
+    const notion = document.getElementById('n'+i);
+    const btn = document.getElementById('chk'+i);
+    if(!notion || !btn) continue;
+    if(readState.includes(i)){
+      notion.classList.add('read');
+      btn.textContent = '✓';
+    } else {
+      notion.classList.remove('read');
+      btn.textContent = '';
+    }
+  }
+  const done = readState.length;
+  const pct = Math.round((done/TOTAL)*100);
+  document.getElementById('readCount').textContent = done+' / '+TOTAL;
+  document.getElementById('readBar').style.width = pct+'%';
+}
+
+// ── MAÎTRISE QUIZ ──
+// mastery = { notionIdx: 'ok' | 'ko' }
+let mastery = JSON.parse(localStorage.getItem(STORAGE_MASTERY) || '{}');
+
+function applyMastery(){
+  let nOk=0, nKo=0;
+  for(let i=0;i<TOTAL;i++){
+    const notion = document.getElementById('n'+i);
+    const badge = document.getElementById('qbadge'+i);
+    if(!notion || !badge) continue;
+    notion.classList.remove('mastered','to-review');
+    badge.className = 'quiz-badge';
+    badge.textContent = '';
+    if(mastery[i] === 'ok'){
+      notion.classList.add('mastered');
+      badge.className = 'quiz-badge show ok';
+      badge.textContent = '✓ Maîtrisé';
+      nOk++;
+    } else if(mastery[i] === 'ko'){
+      notion.classList.add('to-review');
+      badge.className = 'quiz-badge show ko';
+      badge.textContent = '✗ À revoir';
+      nKo++;
+    }
+  }
+  const nGrey = TOTAL - nOk - nKo;
+  document.getElementById('barOk').style.flex = nOk;
+  document.getElementById('barKo').style.flex = nKo;
+  document.getElementById('barGrey').style.flex = Math.max(nGrey, 0.2);
+  if(nOk + nKo > 0){
+    document.getElementById('masteryCount').textContent =
+      nOk+' ✓ · '+nKo+' ✗ · '+nGrey+' non testés';
+  }
+}
+
+// ── QUIZ ──
+// notion index mapped per question
+const quizData = [
+  {ni:0, q:"Un objet de 4 kg soumis à une force nette de 12 N a une accélération de :", opts:["3 m/s²","48 m/s²","0,33 m/s²","12 m/s²"], a:0, exp:"F = m × a → a = F/m = 12/4 = 3 m/s². On divise la force par la masse."},
+  {ni:1, q:"Lors d'une chute, ce qui détermine la gravité des lésions est :", opts:["La masse uniquement","La hauteur uniquement","La vitesse à l'impact (Ec = ½mv²)","La surface d'impact"], a:2, exp:"Ec = ½mv². La vitesse est au carré — doubler la vitesse quadruple l'énergie. Un choc à 60 km/h est 4× plus violent qu'à 30 km/h."},
+  {ni:2, q:"La pression artérielle de 120 mmHg correspond à environ :", opts:["120 Pa","1 600 Pa","16 000 Pa","120 000 Pa"], a:2, exp:"1 mmHg ≈ 133 Pa → 120 × 133 ≈ 16 000 Pa. La surface vasculaire étant petite, cette pression suffit à générer un débit sanguin."},
+  {ni:3, q:"Un choc à 60 km/h est combien de fois plus violent qu'à 30 km/h ?", opts:["2×","4×","6×","8×"], a:1, exp:"Ec = ½mv². Rapport = (60)²/(30)² = 4. Doubler la vitesse quadruple l'énergie cinétique."},
+  {ni:4, q:"La puissance du cœur au repos est d'environ :", opts:["0,01 W","1 à 2 W","100 W","1000 W"], a:1, exp:"Le cœur produit 1 à 2 W au repos — soit une ampoule LED. À l'effort intense : jusqu'à 20 W."},
+  {ni:5, q:"Les airbags protègent en :", opts:["Absorbant toute l'énergie","Allongeant Δt → réduisant F = Δp/Δt","Augmentant la quantité de mouvement","Réduisant la masse"], a:1, exp:"Δp est fixé par la collision. F = Δp/Δt : allonger le temps d'arrêt réduit la force reçue. Les ceintures et airbags allongent Δt."},
+  {ni:6, q:"Dans une centrifugeuse, les globules rouges se déposent au fond car :", opts:["Ils sont plus légers","La force centripète les attire vers le centre","Leur densité élevée les propulse vers l'extérieur","La température est plus basse au fond"], a:2, exp:"La force centrifuge (réaction à la force centripète) propulse les éléments vers l'extérieur proportionnellement à leur densité. GR (denses) → fond. Plasma (léger) → haut."},
+];
+
+let quizState = null;
+
+function initQuiz(){
+  if(quizState) return;
+  quizState = {idx:0, score:0};
+  renderQ();
+}
+
+function renderQ(){
+  const c = document.getElementById('quiz-container');
+  if(quizState.idx >= quizData.length){
+    c.innerHTML = `<div class="quiz-card" style="text-align:center;padding:28px;">
+      <div style="font-size:40px;margin-bottom:12px;">${quizState.score>=6?'🏆':quizState.score>=4?'💪':'📚'}</div>
+      <div style="font-family:'Libre Baskerville',serif;font-size:22px;font-weight:700;">${quizState.score} / ${quizData.length}</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:6px;">Les badges sont mis à jour sur chaque notion ci-dessus.</div>
+    </div>`;
+    document.getElementById('quiz-score').textContent = '';
+    return;
+  }
+  const q = quizData[quizState.idx];
+  c.innerHTML = `<div class="quiz-card">
+    <div class="quiz-q">Q${quizState.idx+1}/${quizData.length} — ${q.q}</div>
+    <div class="quiz-options">${q.opts.map((o,i)=>`<button class="quiz-opt" onclick="answer(${i})">${o}</button>`).join('')}</div>
+    <div class="quiz-feedback" id="qfb"></div>
+    <button class="quiz-next" id="qnext" onclick="nextQ()">Question suivante →</button>
+  </div>`;
+  document.getElementById('quiz-score').textContent = 'Score : '+quizState.score+' / '+quizState.idx;
+}
+
+function answer(i){
+  const q = quizData[quizState.idx];
+  document.querySelectorAll('.quiz-opt').forEach(o=>o.disabled=true);
+  const correct = i === q.a;
+  if(correct){ quizState.score++; document.querySelectorAll('.quiz-opt')[i].classList.add('correct'); }
+  else { document.querySelectorAll('.quiz-opt')[i].classList.add('wrong'); document.querySelectorAll('.quiz-opt')[q.a].classList.add('correct'); }
+  document.getElementById('qfb').textContent = (correct?'✓ Correct ! ':'✗ Incorrect. ')+q.exp;
+  document.getElementById('qfb').className = 'quiz-feedback show '+(correct?'ok':'ko');
+  document.getElementById('qnext').className = 'quiz-next show';
+  document.getElementById('quiz-score').textContent = 'Score : '+quizState.score+' / '+(quizState.idx+1);
+  // Save mastery
+  mastery[q.ni] = correct ? 'ok' : 'ko';
+  localStorage.setItem(STORAGE_MASTERY, JSON.stringify(mastery));
+  applyMastery();
+}
+
+function nextQ(){ quizState.idx++; renderQ(); }
+
+function toggleTheme(){
+  const h=document.documentElement,b=document.getElementById('themeBtn');
+  if(h.dataset.theme==='dark'){h.dataset.theme='light';b.textContent='🌙 Mode sombre';}
+  else{h.dataset.theme='dark';b.textContent='☀️ Mode clair';}
+}
+
+// Init
+window.addEventListener('DOMContentLoaded',()=>{
+  applyRead();
+  applyMastery();
+});
+const obs = new IntersectionObserver(e=>{if(e[0].isIntersecting)initQuiz();},{threshold:0.1});
+obs.observe(document.querySelector('.quiz-section'));
+</script>
+</body>
+</html>

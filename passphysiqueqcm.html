@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCM Physique PASS · Constance</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  [data-theme="dark"]{--bg:#0a0a0f;--surface:#13131a;--border:#1e1e2e;--accent:#60a5fa;--accent2:#a78bfa;--accent3:#f472b6;--text:#e2e8f0;--muted:#64748b;--warn:#fbbf24;--item-text:#cbd5e1;--progress-track:rgba(255,255,255,0.06);--toggle-bg:#1e1e2e;--card:#0f0f18;--opt:rgba(255,255,255,0.03);--opt-hover:rgba(255,255,255,0.07);--correct:rgba(96,165,250,0.12);--correct-b:#60a5fa;--wrong:rgba(244,114,182,0.12);--wrong-b:#f472b6;--tip-bg:rgba(96,165,250,0.06);--tip-border:rgba(96,165,250,0.2);--tip-color:#93c5fd;}
+  [data-theme="light"]{--bg:#f8f9ff;--surface:#fff;--border:#e0e4f0;--accent:#2563eb;--accent2:#7c3aed;--accent3:#db2777;--text:#1e1b18;--muted:#6b7280;--warn:#d97706;--item-text:#374151;--progress-track:rgba(0,0,0,0.07);--toggle-bg:#e0e4f0;--card:#f0f2ff;--opt:rgba(0,0,0,0.02);--opt-hover:rgba(0,0,0,0.05);--correct:rgba(37,99,235,0.08);--correct-b:#2563eb;--wrong:rgba(219,39,119,0.08);--wrong-b:#db2777;--tip-bg:rgba(37,99,235,0.05);--tip-border:rgba(37,99,235,0.2);--tip-color:#1e40af;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',serif;min-height:100vh;transition:background .3s,color .3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);backdrop-filter:blur(12px);background:rgba(10,10,15,0.85);}
+  [data-theme="light"] nav{background:rgba(248,249,255,0.88);}
+  .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--accent);text-decoration:none;}
+  .nav-back{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+  .nav-back:hover{color:var(--text);}
+  .theme-toggle{background:var(--toggle-bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s;user-select:none;line-height:1;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--text);}
+
+  /* SETUP SCREEN */
+  .setup{max-width:680px;margin:0 auto;padding:100px 40px 60px;}
+  .setup-badge{display:inline-block;background:rgba(96,165,250,.07);border:1px solid rgba(96,165,250,.2);color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px;}
+  .setup h1{font-family:'Libre Baskerville',serif;font-size:clamp(28px,4vw,44px);font-weight:700;line-height:1.1;margin-bottom:10px;}
+  .setup h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .setup-sub{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:36px;}
+
+  .setup-section{margin-bottom:28px;}
+  .setup-label{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+
+  .chapter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;}
+  .ch-btn{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;text-align:left;transition:all .2s;font-family:'Source Serif 4',serif;}
+  .ch-btn:hover{border-color:var(--accent2);}
+  .ch-btn.selected{border-color:var(--accent);background:rgba(96,165,250,.06);}
+  .ch-btn-icon{font-size:18px;margin-bottom:6px;}
+  .ch-btn-name{font-size:13px;font-weight:600;color:var(--text);}
+  .ch-btn-count{font-size:11px;color:var(--muted);margin-top:2px;}
+
+  .count-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .count-btn{background:var(--surface);border:2px solid var(--border);border-radius:10px;padding:10px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s;font-family:'Source Serif 4',serif;}
+  .count-btn:hover{border-color:var(--accent2);color:var(--text);}
+  .count-btn.selected{border-color:var(--accent);color:var(--accent);background:rgba(96,165,250,.06);}
+
+  .start-btn{width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Source Serif 4',serif;letter-spacing:.03em;transition:opacity .2s;margin-top:8px;}
+  .start-btn:hover{opacity:.88;}
+  .start-btn:disabled{opacity:.4;cursor:default;}
+
+  /* QUIZ SCREEN */
+  .quiz-screen{max-width:680px;margin:0 auto;padding:100px 40px 60px;display:none;}
+
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+  .progress-label{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+  .progress-score{font-size:12px;color:var(--accent);font-weight:700;}
+  .progress-track{height:4px;background:var(--progress-track);border-radius:100px;overflow:hidden;margin-bottom:32px;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s ease;}
+
+  .q-meta{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .q-num{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+  .q-diff{font-size:10px;font-weight:700;padding:2px 9px;border-radius:100px;}
+  .diff-easy{background:rgba(52,211,153,.12);color:#34d399;}
+  .diff-medium{background:rgba(251,191,36,.12);color:var(--warn);}
+  .diff-hard{background:rgba(244,114,182,.12);color:var(--accent3);}
+
+  .q-chapter{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+  .q-text{font-family:'Libre Baskerville',serif;font-size:18px;font-weight:700;line-height:1.4;color:var(--text);margin-bottom:24px;}
+
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+  .opt{padding:14px 18px;background:var(--opt);border:2px solid var(--border);border-radius:12px;font-size:14px;cursor:pointer;transition:all .15s;color:var(--item-text);text-align:left;font-family:'Source Serif 4',serif;line-height:1.5;}
+  .opt:hover:not(:disabled){background:var(--opt-hover);border-color:var(--muted);}
+  .opt.correct{background:var(--correct);border-color:var(--correct-b);color:var(--accent);}
+  .opt.wrong{background:var(--wrong);border-color:var(--wrong-b);color:var(--accent3);}
+  .opt:disabled{cursor:default;}
+
+  .feedback{padding:14px 16px;border-radius:10px;font-size:13px;line-height:1.6;margin-top:4px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:var(--correct);color:var(--accent);border:1px solid var(--correct-b);}
+  .feedback.ko{background:var(--wrong);color:var(--accent3);border:1px solid var(--wrong-b);}
+
+  .next-btn{margin-top:16px;width:100%;padding:14px;background:none;border:2px solid var(--border);border-radius:12px;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;font-family:'Source Serif 4',serif;transition:all .2s;display:none;}
+  .next-btn.show{display:block;}
+  .next-btn:hover{border-color:var(--accent2);color:var(--accent2);}
+
+  /* RESULTS SCREEN */
+  .results{max-width:680px;margin:0 auto;padding:100px 40px 60px;display:none;text-align:center;}
+  .results-emoji{font-size:56px;margin-bottom:20px;}
+  .results h2{font-family:'Libre Baskerville',serif;font-size:clamp(24px,4vw,36px);font-weight:700;margin-bottom:8px;}
+  .results-score{font-size:64px;font-weight:700;font-family:'Libre Baskerville',serif;color:var(--accent);line-height:1;margin:20px 0;}
+  .results-sub{color:var(--muted);font-size:14px;margin-bottom:32px;line-height:1.6;}
+
+  .results-breakdown{display:flex;flex-direction:column;gap:8px;margin-bottom:32px;text-align:left;}
+  .breakdown-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:13px;}
+  .breakdown-ch{color:var(--text);font-weight:600;}
+  .breakdown-score{font-weight:700;}
+  .score-good{color:var(--accent);}
+  .score-mid{color:var(--warn);}
+  .score-low{color:var(--accent3);}
+
+  .results-actions{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn-primary{flex:1;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Source Serif 4',serif;transition:opacity .2s;min-width:140px;}
+  .btn-primary:hover{opacity:.88;}
+  .btn-secondary{flex:1;padding:14px;background:none;border:2px solid var(--border);border-radius:12px;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;font-family:'Source Serif 4',serif;transition:all .2s;text-decoration:none;display:flex;align-items:center;justify-content:center;min-width:140px;}
+  .btn-secondary:hover{border-color:var(--accent2);color:var(--accent2);}
+
+  footer{border-top:1px solid var(--border);padding:24px 40px;max-width:680px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--accent);}
+  .footer-copy{font-size:11px;color:var(--muted);}
+  @media(max-width:600px){.setup,.quiz-screen,.results{padding:80px 20px 40px;}nav{padding:.9rem 1.2rem;}.theme-toggle{top:14px;right:14px;}footer{padding:20px;flex-direction:column;text-align:center;}}
+
+  /* MASTERY TRACKER */
+  .mastery-section{max-width:680px;margin:0 auto;padding:0 40px 48px;}
+  .mastery-title{font-family:'Libre Baskerville',serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:18px;}
+  .mastery-title::before{content:"📊 Maîtrise — ";color:var(--accent2);}
+  .mastery-row{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
+  .mastery-ch-name{font-size:13px;font-weight:600;color:var(--text);width:160px;flex-shrink:0;display:flex;align-items:center;gap:7px;}
+  .mastery-bar-wrap{flex:1;position:relative;}
+  .mastery-bar-track{height:8px;background:var(--progress-track);border-radius:100px;overflow:hidden;}
+  .mastery-bar-fill{height:100%;border-radius:100px;transition:width .6s ease, background .6s ease;width:0%;}
+  .mastery-pct{font-size:11px;font-weight:700;color:var(--muted);width:36px;text-align:right;flex-shrink:0;}
+  .mastery-status{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;width:90px;flex-shrink:0;text-align:right;}
+  .status-none{color:var(--muted);}
+  .status-low{color:var(--accent3);}
+  .status-mid{color:var(--warn);}
+  .status-good{color:#34d399;}
+  .status-top{color:var(--accent);}
+  .mastery-note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="passdashboard.html">Constance</a>
+  <a class="nav-back" href="passphysique.html">← Physique</a>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button>
+</nav>
+
+<!-- SETUP -->
+<div class="setup" id="setupScreen">
+  <div class="setup-badge">QCM · Physique PASS</div>
+  <h1>Entraîne-toi.<br><span>Teste tes connaissances.</span></h1>
+  <p class="setup-sub">Choisis tes chapitres et le nombre de questions. Les QCM sont classés par difficulté croissante — facile, moyen, piège.</p>
+
+  <div class="setup-section">
+    <div class="setup-label">Chapitres — sélectionne un ou plusieurs</div>
+    <div class="chapter-grid">
+      <div class="ch-btn selected" onclick="toggleCh('meca')" id="btn-meca">
+        <div class="ch-btn-icon">⚙️</div>
+        <div class="ch-btn-name">Mécanique</div>
+        <div class="ch-btn-count">25 questions</div>
+      </div>
+      <div class="ch-btn selected" onclick="toggleCh('fluides')" id="btn-fluides">
+        <div class="ch-btn-icon">🌊</div>
+        <div class="ch-btn-name">Fluides</div>
+        <div class="ch-btn-count">25 questions</div>
+      </div>
+      <div class="ch-btn selected" onclick="toggleCh('thermo')" id="btn-thermo">
+        <div class="ch-btn-icon">🔥</div>
+        <div class="ch-btn-name">Thermodynamique</div>
+        <div class="ch-btn-count">25 questions</div>
+      </div>
+      <div class="ch-btn selected" onclick="toggleCh('ondes')" id="btn-ondes">
+        <div class="ch-btn-icon">〰️</div>
+        <div class="ch-btn-name">Ondes</div>
+        <div class="ch-btn-count">25 questions</div>
+      </div>
+      <div class="ch-btn selected" onclick="toggleCh('optique')" id="btn-optique">
+        <div class="ch-btn-icon">🔭</div>
+        <div class="ch-btn-name">Optique</div>
+        <div class="ch-btn-count">25 questions</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="setup-section">
+    <div class="setup-label">Nombre de questions</div>
+    <div class="count-row">
+      <button class="count-btn" onclick="setCount(5)" id="cnt-5">5</button>
+      <button class="count-btn selected" onclick="setCount(10)" id="cnt-10">10</button>
+      <button class="count-btn" onclick="setCount(20)" id="cnt-20">20</button>
+      <button class="count-btn" onclick="setCount(999)" id="cnt-all">Toutes</button>
+    </div>
+  </div>
+
+  <button class="start-btn" id="startBtn" onclick="startQuiz()">Commencer →</button>
+</div>
+
+<!-- QUIZ -->
+<div class="quiz-screen" id="quizScreen">
+  <div class="progress-header">
+    <span class="progress-label" id="progLabel">Question 1 / 10</span>
+    <span class="progress-score" id="progScore">Score : 0</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progBar" style="width:0%"></div></div>
+
+  <div class="q-chapter" id="qChapter"></div>
+  <div class="q-meta">
+    <span class="q-num" id="qNum"></span>
+    <span class="q-diff" id="qDiff"></span>
+  </div>
+  <div class="q-text" id="qText"></div>
+  <div class="options" id="qOptions"></div>
+  <div class="feedback" id="qFeedback"></div>
+  <button class="next-btn" id="nextBtn" onclick="nextQ()">Question suivante →</button>
+</div>
+
+<!-- RESULTS -->
+<div class="results" id="resultsScreen">
+  <div class="results-emoji" id="resEmoji"></div>
+  <h2 id="resTitle"></h2>
+  <div class="results-score" id="resScore"></div>
+  <div class="results-sub" id="resSub"></div>
+  <div class="results-breakdown" id="resBreakdown"></div>
+  <div class="results-actions">
+    <button class="btn-primary" onclick="restartQuiz()">Recommencer</button>
+    <button class="btn-primary" onclick="goSetup()" style="background:var(--accent2)">Changer les chapitres</button>
+    <a class="btn-secondary" href="passphysique.html">← Retour aux fiches</a>
+  </div>
+</div>
+
+<!-- MASTERY TRACKER -->
+<div class="mastery-section" id="masterySection">
+  <div class="mastery-title">ta progression par chapitre</div>
+  <div class="mastery-row">
+    <div class="mastery-ch-name">⚙️ Mécanique</div>
+    <div class="mastery-bar-wrap"><div class="mastery-bar-track"><div class="mastery-bar-fill" id="mbar-meca"></div></div></div>
+    <div class="mastery-pct" id="mpct-meca">—</div>
+    <div class="mastery-status" id="mstatus-meca"><span class="status-none">Non testé</span></div>
+  </div>
+  <div class="mastery-row">
+    <div class="mastery-ch-name">🌊 Fluides</div>
+    <div class="mastery-bar-wrap"><div class="mastery-bar-track"><div class="mastery-bar-fill" id="mbar-fluides"></div></div></div>
+    <div class="mastery-pct" id="mpct-fluides">—</div>
+    <div class="mastery-status" id="mstatus-fluides"><span class="status-none">Non testé</span></div>
+  </div>
+  <div class="mastery-row">
+    <div class="mastery-ch-name">🔥 Thermodynamique</div>
+    <div class="mastery-bar-wrap"><div class="mastery-bar-track"><div class="mastery-bar-fill" id="mbar-thermo"></div></div></div>
+    <div class="mastery-pct" id="mpct-thermo">—</div>
+    <div class="mastery-status" id="mstatus-thermo"><span class="status-none">Non testé</span></div>
+  </div>
+  <div class="mastery-row">
+    <div class="mastery-ch-name">〰️ Ondes</div>
+    <div class="mastery-bar-wrap"><div class="mastery-bar-track"><div class="mastery-bar-fill" id="mbar-ondes"></div></div></div>
+    <div class="mastery-pct" id="mpct-ondes">—</div>
+    <div class="mastery-status" id="mstatus-ondes"><span class="status-none">Non testé</span></div>
+  </div>
+  <div class="mastery-row">
+    <div class="mastery-ch-name">🔭 Optique</div>
+    <div class="mastery-bar-wrap"><div class="mastery-bar-track"><div class="mastery-bar-fill" id="mbar-optique"></div></div></div>
+    <div class="mastery-pct" id="mpct-optique">—</div>
+    <div class="mastery-status" id="mstatus-optique"><span class="status-none">Non testé</span></div>
+  </div>
+  <div class="mastery-note">La barre se met à jour après chaque session. Fais plusieurs sessions sur le même chapitre pour affiner ta maîtrise.</div>
+</div>
+
+<footer>
+  <div class="footer-logo">Constance</div>
+  <div class="footer-copy">© Constance | @constance.cgh · Programme PASS gratuit · Tous droits réservés</div>
+</footer>
+
+
+<script>
+// ── BANQUE DE QUESTIONS ──
+const ALL_QUESTIONS = {
+  meca: [
+    {d:'easy', q:"Un objet de 5 kg soumis à une force nette de 20 N a une accélération de :", opts:["4 m/s²","100 m/s²","0,25 m/s²","25 m/s²"], a:0, exp:"F = m × a → a = F/m = 20/5 = 4 m/s². On divise la force par la masse."},
+    {d:'easy', q:"La pression s'exprime en :", opts:["Joules","Newtons","Pascals","Watts"], a:2, exp:"La pression P = F/S s'exprime en Pascal (Pa = N/m²). Le Joule est l'énergie, le Newton la force, le Watt la puissance."},
+    {d:'easy', q:"L'énergie cinétique d'un objet de 2 kg à 10 m/s est :", opts:["20 J","100 J","200 J","40 J"], a:1, exp:"Ec = ½mv² = ½ × 2 × 100 = 100 J."},
+    {d:'easy', q:"La 1ère loi de Newton (inertie) dit qu'un objet sans force nette :", opts:["Accélère toujours","Reste immobile ou en ligne droite à vitesse constante","Tombe vers le bas","Ralentit progressivement"], a:1, exp:"Un objet sans force nette (ou dont les forces se compensent) maintient son état : immobile ou en mouvement rectiligne uniforme. Il ne s'arrête pas tout seul."},
+    {d:'easy', q:"Le poids d'un objet de 10 kg sur Terre (g = 10 m/s²) est :", opts:["10 N","100 N","10 kg","1000 N"], a:1, exp:"P = m × g = 10 × 10 = 100 N. Attention : la masse est en kg, le poids en Newton. On dit souvent 'peser 10 kg' mais physiquement le poids est 100 N."},
+    {d:'easy', q:"La puissance s'exprime en :", opts:["Joules","Newtons","Pascals","Watts"], a:3, exp:"La puissance P = W/t s'exprime en Watts (W). 1 W = 1 J/s. Le cœur au repos produit environ 1 à 2 W."},
+    {d:'easy', q:"L'énergie potentielle de pesanteur d'un objet de 5 kg à 4 m de hauteur (g = 10) est :", opts:["200 J","20 J","50 J","2000 J"], a:0, exp:"Ep = mgh = 5 × 10 × 4 = 200 J. Cette énergie sera convertie en énergie cinétique lors d'une chute."},
+    {d:'medium', q:"Un objet lancé verticalement vers le haut ralentit car :", opts:["La force de gravité s'oppose au mouvement","Sa masse augmente","L'air le freine uniquement","La vitesse initiale était trop faible"], a:0, exp:"La gravité (vers le bas) s'oppose au mouvement ascendant → décélération. F = ma avec F vers le bas → a vers le bas."},
+    {d:'medium', q:"La 3e loi de Newton (action-réaction) implique que :", opts:["Les forces sont toujours en équilibre","Toute force de B sur A génère une force égale et opposée de A sur B","L'accélération est nulle","La masse est constante"], a:1, exp:"Action-réaction : forces égales en intensité, opposées en direction, appliquées sur deux objets différents. Exemple : le sol pousse le pied vers le haut autant que le pied pousse le sol vers le bas."},
+    {d:'medium', q:"Un patient tombe de 2 m (g = 10 m/s²). Sa vitesse à l'impact est :", opts:["4 m/s","6,3 m/s","20 m/s","10 m/s"], a:1, exp:"Conservation énergie : mgh = ½mv² → v = √(2gh) = √(2×10×2) = √40 ≈ 6,3 m/s."},
+    {d:'medium', q:"La pression artérielle systolique normale est d'environ :", opts:["80 mmHg","120 mmHg","200 mmHg","40 mmHg"], a:1, exp:"La pression artérielle normale est 120/80 mmHg (systolique/diastolique). 120 mmHg ≈ 16 000 Pa. Au-delà de 140/90 mmHg → hypertension artérielle."},
+    {d:'medium', q:"Un sportif court à 5 m/s. Son énergie cinétique est 1000 J. Sa masse est :", opts:["40 kg","80 kg","200 kg","20 kg"], a:1, exp:"Ec = ½mv² → 1000 = ½ × m × 25 → m = 2000/25 = 80 kg."},
+    {d:'medium', q:"La puissance du cœur humain au repos est d'environ :", opts:["0,01 W","1 à 2 W","100 W","10 000 W"], a:1, exp:"Le cœur produit environ 1 à 2 W au repos — l'équivalent d'une ampoule LED. À l'effort intense, sa puissance peut atteindre 10 à 20 W."},
+    {d:'medium', q:"Deux forces de 30 N et 40 N s'appliquent perpendiculairement sur un objet. La force résultante est :", opts:["70 N","10 N","50 N","35 N"], a:2, exp:"Forces perpendiculaires → théorème de Pythagore : F = √(30² + 40²) = √(900+1600) = √2500 = 50 N."},
+    {d:'hard', q:"Un choc à 60 km/h vs 30 km/h : le rapport d'énergie cinétique est :", opts:["2","4","6","8"], a:1, exp:"Ec = ½mv². Rapport = (60)²/(30)² = 3600/900 = 4. Doubler la vitesse quadruple l'énergie cinétique — d'où la gravité accrue des accidents à haute vitesse."},
+    {d:'hard', q:"La quantité de mouvement est conservée lors d'un choc car :", opts:["Les forces extérieures sont nulles","Les masses sont égales","Les vitesses sont opposées","L'énergie cinétique est conservée"], a:0, exp:"Conservation de p dans un système isolé (sans force extérieure nette). Lors d'un choc inélastique, p est conservé mais l'énergie cinétique ne l'est pas — une partie se dissipe en chaleur et déformation."},
+    {d:'hard', q:"En RCP, une force de 500 N sur une surface sternale de 50 cm² donne une pression de :", opts:["10 Pa","1 000 Pa","10 000 Pa","100 000 Pa"], a:3, exp:"50 cm² = 50×10⁻⁴ m² = 0,005 m². P = F/S = 500/0,005 = 100 000 Pa = 1 bar. La pression est élevée malgré la force modérée car la surface est petite."},
+    {d:'hard', q:"Un ascenseur monte à vitesse constante. La force exercée par le câble est :", opts:["Supérieure au poids","Égale au poids","Inférieure au poids","Nulle"], a:1, exp:"Vitesse constante → accélération nulle → ΣF = 0 → Force câble = Poids. C'est la 1ère loi de Newton. Si l'ascenseur accélérait vers le haut, la force du câble serait supérieure au poids."},
+    {d:'hard', q:"Un médicament est dosé à 5 mg/kg. Pour un patient de 70 kg, la dose est :", opts:["5 mg","35 mg","350 mg","5000 mg"], a:2, exp:"Dose = 5 × 70 = 350 mg. En pharmacologie, les doses sont calculées par kg de masse corporelle — pas de poids. Cette distinction masse/poids est fondamentale en médecine."},
+    {d:'hard', q:"Une balle de tennis de 60 g à 200 km/h a une énergie cinétique de :", opts:["185 J","370 J","1200 J","60 J"], a:0, exp:"v = 200 km/h = 55,6 m/s. Ec = ½ × 0,060 × (55,6)² = ½ × 0,060 × 3091 ≈ 185 J. Impressionnant pour une balle légère — explique les blessures possibles."},
+    {d:'hard', q:"L'accélération centripète d'un globule rouge dans une centrifugeuse à 3000 tr/min (r = 10 cm) est environ :", opts:["31 m/s²","987 m/s²","9870 m/s²","100 m/s²"], a:2, exp:"ω = 3000 × 2π/60 ≈ 314 rad/s. a = ω²r = 314² × 0,1 ≈ 9870 m/s² ≈ 1000 g. C'est pourquoi les centrifugeuses séparent efficacement les constituants sanguins."},
+    {d:'hard', q:"Un muscle exerce 200 N sur un os, déplaçant l'articulation de 5 cm. Le travail effectué est :", opts:["4 J","10 J","40 J","1000 J"], a:1, exp:"W = F × d = 200 × 0,05 = 10 J. Le travail mécanique musculaire se calcule ainsi — mais le rendement musculaire étant de 25%, l'énergie chimique consommée est 4× supérieure soit 40 J."},
+    {d:'hard', q:"Lors d'une collision, un véhicule de 1000 kg à 20 m/s percute un mur et s'arrête en 0,1 s. La force moyenne est :", opts:["2 000 N","20 000 N","200 000 N","2 000 000 N"], a:2, exp:"Impulsion = Δp = mΔv = 1000 × 20 = 20 000 kg·m/s. F = Δp/Δt = 20 000/0,1 = 200 000 N = 20 tonnes. C'est pour ça que les airbags allongent le temps d'arrêt → réduisent la force."},
+    {d:'hard', q:"La pression intraoculaire normale est de 10–21 mmHg. En Pascal, 21 mmHg correspond à :", opts:["21 Pa","280 Pa","2 800 Pa","28 000 Pa"], a:2, exp:"1 mmHg ≈ 133 Pa → 21 mmHg ≈ 21 × 133 ≈ 2800 Pa. Au-delà → glaucome. Cette pression relativement faible suffit à comprimer et détruire le nerf optique sur le long terme."},
+    {d:'hard', q:"Un nageur plonge de 3 m. Sa vitesse à l'entrée dans l'eau (g=10) est :", opts:["3 m/s","7,7 m/s","60 m/s","5,5 m/s"], a:1, exp:"v = √(2gh) = √(2×10×3) = √60 ≈ 7,7 m/s soit ~28 km/h. À cette vitesse, l'eau est quasiment solide à l'impact — d'où les fractures possibles lors de plongeons ratés."},
+    {d:'medium', q:"Un globule rouge dans une centrifugeuse est en mouvement circulaire uniforme. Quelle force s'exerce sur lui ?", opts:["Aucune force car la vitesse en valeur est constante","Une force centripète dirigée vers le centre","Une force nulle car il tourne en rond","Une force vers l'extérieur uniquement"], a:1, exp:"En mouvement circulaire uniforme, la direction change en permanence → accélération centripète → force centripète vers le centre (2e loi Newton). La force centrifuge est fictive (référentiel tournant). Dans une centrifugeuse, cette force sépare les GR (denses) vers l'extérieur du tube."},
+  
+  ],
+
+  fluides: [
+    {d:'easy', q:"La pression hydrostatique à une profondeur h est :", opts:["P = ρ × h","P = P₀ + ρgh","P = mg/h","P = F/ρ"], a:1, exp:"P = P₀ + ρgh. P₀ pression en surface, ρ masse volumique, g = 9,8 m/s², h profondeur."},
+    {d:'easy', q:"La loi de Pascal stipule que :", opts:["La pression diminue avec la profondeur","Toute variation de pression se transmet intégralement dans toutes les directions","Le débit est conservé","La viscosité est constante"], a:1, exp:"Pascal : dans un fluide incompressible au repos, toute variation de pression se propage instantanément et uniformément dans toutes les directions."},
+    {d:'easy', q:"Le débit volumique Q dans un tube est :", opts:["Q = ρ × v","Q = S × v","Q = P × S","Q = F/v"], a:1, exp:"Q = S × v, avec S la section du tube et v la vitesse du fluide. Unités : m³/s ou L/min."},
+    {d:'easy', q:"Un fluide visqueux est un fluide qui :", opts:["N'a pas de masse","Coule difficilement, avec une résistance interne à l'écoulement","Ne peut pas être comprimé","Change de volume sous pression"], a:1, exp:"La viscosité est la résistance interne d'un fluide à s'écouler. Le miel est très visqueux, l'eau peu visqueux. Le sang a une viscosité intermédiaire, dépendant de l'hématocrite."},
+    {d:'easy', q:"Un corps flotte si :", opts:["Sa masse est nulle","Sa densité moyenne est inférieure à celle du fluide","Sa vitesse est suffisante","Il est creux"], a:1, exp:"Un corps flotte si ρ_corps < ρ_fluide. La poussée d'Archimède (poids du fluide déplacé) est alors supérieure au poids du corps."},
+    {d:'easy', q:"La viscosité du sang dépend principalement de :", opts:["La pression artérielle","L'hématocrite (proportion de globules rouges)","La fréquence cardiaque","La température uniquement"], a:1, exp:"L'hématocrite est le principal déterminant de la viscosité sanguine. Plus il y a de GR, plus le sang est épais. En polyglobulie → hyperviscosité → risque de thrombose."},
+    {d:'easy', q:"L'écoulement laminaire se caractérise par :", opts:["Des tourbillons chaotiques","Des couches de fluide parallèles et ordonnées","Un nombre de Reynolds > 4000","Un bruit audible"], a:1, exp:"L'écoulement laminaire est silencieux, ordonné et efficace. Il est favorable dans les vaisseaux sanguins normaux. Les turbulences (souffles cardiaques) signent un écoulement anormal."},
+    {d:'medium', q:"Dans un vaisseau dont la section est divisée par 4, la vitesse du sang :", opts:["Diminue de 4 fois","Reste identique","Augmente de 4 fois","Augmente de 2 fois"], a:2, exp:"Q = S × v = constante. Si S ÷4 → v ×4. Base de la sténose valvulaire et du souffle cardiaque : section réduite → vitesse accrue → turbulences."},
+    {d:'medium', q:"Un patient en insuffisance cardiaque a les chevilles gonflées car :", opts:["Le sang est plus visqueux aux pieds","La pression hydrostatique force le liquide hors des capillaires","Le débit est trop élevé","Les veines sont trop rigides"], a:1, exp:"P = P₀ + ρgh. La colonne de sang (~1,2 m) ajoute ~93 mmHg aux capillaires des chevilles → filtration excessive → œdèmes déclives."},
+    {d:'medium', q:"L'écoulement turbulent apparaît quand le nombre de Reynolds est :", opts:["< 500","Entre 500 et 2000","Entre 2000 et 4000","Supérieur à 4000"], a:3, exp:"Re > 4000 → turbulent. Re < 2000 → laminaire. Entre les deux → régime transitoire instable. Re augmente avec vitesse et diamètre, diminue avec viscosité."},
+    {d:'medium', q:"La tension superficielle du film alvéolaire est réduite par :", opts:["Les globules rouges","Le surfactant produit par les pneumocytes II","Le CO₂","La mucine bronchique"], a:1, exp:"Sans surfactant, la tension superficielle ferait s'effondrer les alvéoles à chaque expiration. Les pneumocytes II produisent le surfactant dès ~28 SA — chez les prématurés < 28 SA → maladie des membranes hyalines."},
+    {d:'medium', q:"Le nombre de Reynolds (Re) d'un écoulement augmente si :", opts:["La viscosité augmente","La vitesse augmente","La section du vaisseau diminue","La densité du fluide diminue"], a:1, exp:"Re = ρvD/η. Re augmente si v augmente (flux plus rapide → plus turbulent) ou si D augmente (vaisseau plus large) ou si η diminue (fluide moins visqueux, ex : anémie)."},
+    {d:'medium', q:"Un souffle cardiaque fonctionnel en anémie sévère est dû à :", opts:["Une lésion valvulaire","Une augmentation de la viscosité","Un Re élevé causé par la baisse de viscosité + augmentation du débit","Une calcification aortique"], a:2, exp:"En anémie : moins de GR → viscosité η diminue ET débit compensatoire augmente → Re augmente → flux turbulent → souffle fonctionnel. Corriger l'anémie fait disparaître le souffle."},
+    {d:'medium', q:"La poussée d'Archimède est égale à :", opts:["Le poids de l'objet immergé","Le poids du fluide déplacé par l'objet","La pression multipliée par le volume","La force de frottement du fluide"], a:1, exp:"Principe d'Archimède : Π = ρ_fluide × V_immergé × g = poids du fluide déplacé. Si Π > Poids → l'objet flotte."},
+    {d:'medium', q:"La pression au fond d'une colonne de sang de 1,2 m (ρ = 1060 kg/m³, g = 9,8) est :", opts:["~80 mmHg","~93 mmHg","~120 mmHg","~12 mmHg"], a:1, exp:"ΔP = ρgh = 1060 × 9,8 × 1,2 ≈ 12 470 Pa ÷ 133 ≈ 93 mmHg. C'est la différence de pression artérielle entre le niveau du cœur et les pieds chez un patient debout."},
+    {d:'hard', q:"Lors d'une hémorragie, la pression artérielle chute partout simultanément grâce à :", opts:["La loi de Poiseuille","La loi de Pascal","La loi de Bernoulli","La conservation de l'énergie"], a:1, exp:"Pascal : dans un fluide incompressible, toute variation de pression se transmet instantanément. La perte de volume sanguin réduit la pression partout → le corps compense par vasoconstriction réflexe."},
+    {d:'hard', q:"Le surfactant réduit la tension superficielle des alvéoles. Sans lui, selon la loi de Laplace :", opts:["Les grandes alvéoles s'effondrent","Les petites alvéoles s'effondrent en premier (ΔP = 2γ/r plus grand)","Toutes les alvéoles s'effondrent à la même vitesse","Le surfactant n'a aucun effet sur la pression"], a:1, exp:"Loi de Laplace : ΔP = 2γ/r. Plus le rayon r est petit, plus la pression interne est grande → les petites alvéoles tendent à se vider dans les grandes. Le surfactant réduit γ davantage dans les petites alvéoles → stabilisation."},
+    {d:'hard', q:"Un vaisseau de 4 mm de diamètre se ramifie en 4 vaisseaux de 2 mm. La vitesse du sang dans les branches est :", opts:["Identique","2 fois plus lente","Même — le débit total est conservé","4 fois plus lente"], a:0, exp:"Section totale des branches = 4 × π(1mm)² = 4π mm². Section initiale = π(2mm)² = 4π mm². Sections égales → vitesses égales. Le débit total est conservé : Q = ΣS_branches × v_branche."},
+    {d:'hard', q:"En polyglobulie (hématocrite = 65%), la viscosité sanguine est environ :", opts:["Identique à la normale","2 à 3 fois plus élevée","10 fois plus élevée","Diminuée"], a:1, exp:"L'hématocrite normal est ~45%. À 65%, la viscosité sanguine est 2 à 3 fois plus élevée qu'à la normale. Le cœur doit travailler beaucoup plus fort → HTA, risque de thrombose, AVC."},
+    {d:'hard', q:"Bernoulli (P + ½ρv² + ρgh = cste) ne s'applique pas au sang car :", opts:["Le sang est trop dense","Le sang est visqueux et non-newtonien — il faut utiliser Poiseuille","La pression artérielle est trop élevée","Le débit est trop variable"], a:1, exp:"Bernoulli s'applique aux fluides parfaits (non visqueux, incompressibles, laminaires). Le sang est visqueux, non-newtonien et pulsatile → Poiseuille (Q = πr⁴ΔP/8ηL) est plus adapté."},
+    {d:'hard', q:"Lors d'une transfusion, on perfuse du sérum physiologique (NaCl 0,9%). C'est une solution :", opts:["Hypotonique — l'eau entre dans les GR","Hypertonique — les GR se ratatinent","Isotonique — les GR ne changent pas de volume","Hypertonique — l'eau sort des GR et ils gonflent"], a:2, exp:"NaCl 0,9% est isotonique avec le plasma (290 mOsm/L). La pression osmotique est équilibrée → pas d'entrée ni de sortie d'eau dans les GR → pas d'hémolyse ni de ratatinement."},
+    {d:'hard', q:"La loi de Poiseuille prédit que si le rayon d'une artère coronaire est réduit de 50% par une plaque, le débit est divisé par :", opts:["2","4","8","16"], a:3, exp:"Q ∝ r⁴. Rayon ÷2 → r⁴ ÷16 → débit ÷16. Une sténose coronarienne de 50% du rayon réduit le débit de 94% ! C'est pourquoi une sténose 'modérée' en diamètre peut causer une ischémie sévère à l'effort."},
+    {d:'hard', q:"Un plongeur remonte trop vite d'une profondeur de 30 m. Le risque principal est :", opts:["L'hypothermie","La noyade","L'embolie gazeuse par formation de bulles d'azote (maladie des caissons)","L'hypoglycémie"], a:2, exp:"À 30 m, P = P₀ + ρgh ≈ 4 bar. L'azote est dissous dans le sang sous haute pression. Si on remonte trop vite, P diminue → l'azote se désout trop vite → bulles dans le sang → embolies → paralysies (maladie des caissons). Application directe de la loi des gaz."},
+    {d:'hard', q:"Le gel de contact en échographie a une impédance acoustique proche de celle des tissus pour :", opts:["Chauffer la peau","Éviter la réflexion totale des ultrasons à l'interface peau/air","Stériliser la zone de contact","Augmenter la fréquence des ultrasons"], a:1, exp:"L'air (impédance acoustique ≈ 0,4 kg/m²/s) et les tissus (~1,5 × 10⁶ kg/m²/s) ont des impédances très différentes → quasi-totalité des ultrasons réfléchis. Le gel (impédance ≈ tissus) élimine cette interface → les ultrasons pénètrent."},
+    {d:'hard', q:"Dans un capillaire, la pression hydrostatique favorise la filtration. La pression oncotique (protéines plasmatiques) favorise :", opts:["La filtration également","La réabsorption — elle attire l'eau vers le capillaire","La coagulation","L'augmentation de la viscosité"], a:1, exp:"Loi de Starling : la pression oncotique (albumine, ~25 mmHg) s'oppose à la filtration en retenant l'eau dans le capillaire. En hypoalbuminémie (dénutrition, cirrhose) → pression oncotique diminue → œdèmes."},
+    {d:'hard', q:"La compliance d'un vaisseau C = ΔV/ΔP. Les veines sont ~20× plus compliantes que les artères car :", opts:["Elles ont un plus grand diamètre","Leur paroi est plus fine et élastique — elles servent de réservoir","Elles contiennent moins de sang","Leur pression est plus élevée"], a:1, exp:"Les veines contiennent ~70% du volume sanguin total et servent de réservoir. Leur paroi fine et peu musclée → grande compliance. Les artères, moins compliantes, amortirent la pression pulsatile cardiaque."},
+  ],
+
+  thermo: [
+    {d:'easy', q:"Dans PV = nRT, T doit être en :", opts:["Degrés Celsius","Kelvin","Fahrenheit","Peu importe"], a:1, exp:"T doit obligatoirement être en Kelvin dans PV = nRT. T(K) = T(°C) + 273,15. Utiliser les Celsius fausse tous les calculs."},
+    {d:'easy', q:"37°C en Kelvin vaut :", opts:["37 K","236 K","310 K","373 K"], a:2, exp:"T(K) = 37 + 273 = 310 K. La température corporelle normale est 310 K — valeur à mémoriser."},
+    {d:'easy', q:"Le zéro absolu (0 K) correspond à :", opts:["0°C","−100°C","−173°C","−273°C"], a:3, exp:"0 K = −273,15°C = zéro absolu. En dessous de cette température, il est impossible d'aller — les molécules sont théoriquement immobiles."},
+    {d:'easy', q:"La conduction thermique se produit :", opts:["Par ondes électromagnétiques","Par mouvement d'un fluide","Par contact direct entre solides ou fluides immobiles","Dans le vide uniquement"], a:2, exp:"La conduction = transfert de chaleur par contact direct. Chaleur passe de molécule en molécule. Ex : brûlure par contact, dissipation de chaleur dans un os."},
+    {d:'easy', q:"Le mode de thermorégulation le plus efficace lors d'un effort intense est :", opts:["La conduction","La convection","Le rayonnement","L'évaporation de la sueur"], a:3, exp:"L'évaporation exploite la chaleur latente (~2500 J/g). Évaporer 1 L de sueur dissipe 2 500 000 J = 2500 kJ. C'est le mécanisme le plus puissant pour dissiper la chaleur à l'effort."},
+    {d:'easy', q:"La loi de Dalton concerne :", opts:["La viscosité des gaz","Les pressions partielles dans un mélange de gaz","La température des gaz parfaits","La vitesse des molécules"], a:1, exp:"Dalton : P_totale = somme des pressions partielles. Chaque gaz se comporte indépendamment. Application directe : PO₂ = fraction O₂ × P_atmo = 0,21 × 760 = 160 mmHg."},
+    {d:'easy', q:"L'air inspiré contient 21% d'O₂. À 760 mmHg, la pression partielle en O₂ est :", opts:["21 mmHg","160 mmHg","760 mmHg","79 mmHg"], a:1, exp:"PO₂ = 0,21 × 760 = 159,6 ≈ 160 mmHg. C'est cette valeur — pas le pourcentage — qui détermine les échanges gazeux alvéolaires."},
+    {d:'medium', q:"À volume constant, si la température absolue double, la pression du gaz :", opts:["Reste constante","Double","Quadruple","Diminue de moitié"], a:1, exp:"PV = nRT, V et n constants → P/T = cste (Gay-Lussac). Si T double → P double. Application : bouteilles sous pression dangereuses à la chaleur."},
+    {d:'medium', q:"À température constante, si le volume d'un gaz est divisé par 2, sa pression :", opts:["Diminue de moitié","Reste identique","Double","Quadruple"], a:2, exp:"PV = nRT, T et n constants → PV = cste (Boyle-Mariotte). V ÷2 → P ×2. Application : compression d'air dans les poumons lors d'une plongée."},
+    {d:'medium', q:"Le principal mode de perte de chaleur du corps au repos est :", opts:["La conduction","La convection","Le rayonnement infrarouge","L'évaporation"], a:2, exp:"Le rayonnement IR représente ~60% des pertes thermiques au repos. Le corps émet en permanence des IR proportionnels à T⁴ — détectables en thermographie médicale."},
+    {d:'medium', q:"Un patient hyperventile. Sa PaCO₂ artérielle :", opts:["Augmente → acidose respiratoire","Diminue → alcalose respiratoire","Reste stable","Augmente → alcalose métabolique"], a:1, exp:"Hyperventilation → élimination accrue de CO₂ → PaCO₂ diminue → pH sanguin augmente → alcalose respiratoire. Cliniquement : tétanie, paresthésies des extrémités."},
+    {d:'medium', q:"La chaleur latente de vaporisation de l'eau est ~2500 J/g. La transpiration de 500 mL dissipe :", opts:["250 kJ","1250 kJ","2500 kJ","125 kJ"], a:1, exp:"500 mL = 500 g. Q = 500 × 2500 = 1 250 000 J = 1250 kJ. C'est l'équivalent de chauffer 3 litres d'eau de 0 à 100°C — confirme l'efficacité de la sudation."},
+    {d:'medium', q:"En altitude (5000 m), la pression atmosphérique est ~400 mmHg. La PO₂ est alors :", opts:["21 mmHg","84 mmHg","160 mmHg","400 mmHg"], a:1, exp:"PO₂ = 0,21 × 400 = 84 mmHg (vs 160 mmHg au niveau de la mer). Cette chute de PO₂ provoque l'hypoxie d'altitude : fatigue, maux de tête, essoufflement."},
+    {d:'medium', q:"L'hypothermie thérapeutique à 33°C protège le cerveau en :", opts:["Augmentant le débit sanguin cérébral","Réduisant la vitesse des réactions chimiques et la consommation d'O₂","Augmentant la PO₂ cérébrale","Éliminant le CO₂ plus rapidement"], a:1, exp:"Chaque °C de moins réduit le métabolisme cérébral de ~7%. À 33°C vs 37°C → métabolisme réduit d'environ 25% → protection contre les lésions d'ischémie-reperfusion post-arrêt cardiaque."},
+    {d:'medium', q:"La chaleur massique de l'eau est 4186 J/(kg·K). Chauffer 500 mL d'eau de 20°C à 37°C nécessite :", opts:["~360 J","~3600 J","~36 000 J","~360 000 J"], a:2, exp:"Q = mcΔT = 0,5 × 4186 × (37−20) = 0,5 × 4186 × 17 ≈ 35 580 J ≈ 36 000 J. C'est l'énergie nécessaire pour réchauffer un perfusé de 500 mL — les liquides de perfusion doivent être réchauffés pour éviter l'hypothermie."},
+    {d:'hard', q:"Un plongeur respire à 30 m de profondeur (P = 4 bar). Le volume de ses poumons est 6 L. À la surface, ce volume devient :", opts:["6 L","12 L","24 L","3 L"], a:2, exp:"PV = cste (Boyle à T cste). P₁V₁ = P₂V₂ → 4 × 6 = 1 × V₂ → V₂ = 24 L. Si le plongeur remonte sans expirer, ses poumons subiraient une surpression de 24 L → barotraumatisme pulmonaire fatal."},
+    {d:'hard', q:"Un gaz parfait est refroidi de 400 K à 200 K à pression constante. Son volume :", opts:["Reste constant","Double","Diminue de moitié","Quadruple"], a:2, exp:"V/T = cste (Charles). V₂/V₁ = T₂/T₁ = 200/400 = 0,5 → V₂ = V₁/2. Le volume diminue de moitié. C'est pour ça qu'un ballon dégonfle par temps froid."},
+    {d:'hard', q:"La loi des gaz parfaits prédit que n moles de gaz à T = 273 K et P = 101 325 Pa occupent un volume de :", opts:["1 L/mol","22,4 L/mol","44,8 L/mol","10 L/mol"], a:1, exp:"V = nRT/P = 1 × 8,314 × 273 / 101325 ≈ 0,0224 m³ = 22,4 L. C'est le volume molaire d'un gaz parfait dans les conditions normales (0°C, 1 atm) — valeur de référence."},
+    {d:'hard', q:"En anesthésie générale, les agents halogénés sont des gaz dont la concentration s'exprime en %. Si la MAC de l'isoflurane est 1,15% et P = 760 mmHg, sa pression partielle à la MAC est :", opts:["1,15 mmHg","8,74 mmHg","115 mmHg","760 mmHg"], a:1, exp:"P_partielle = fraction × P_totale = 0,0115 × 760 = 8,74 mmHg. La MAC (concentration alvéolaire minimale) est la concentration qui empêche le mouvement chez 50% des patients — paramètre clé en anesthésiologie."},
+    {d:'hard', q:"Le coefficient respiratoire (QR) du glucose est 1 car :", opts:["Le glucose contient autant d'O et de C","La combustion du glucose produit autant de CO₂ que d'O₂ consommé","L'énergie produite est maximale","Le glucose ne contient pas de lipides"], a:1, exp:"C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O. QR = VCO₂/VO₂ = 6/6 = 1. Pour les lipides : QR ≈ 0,7. Le QR permet de déterminer le substrat énergétique utilisé en mesure de calorimétrie indirecte."},
+    {d:'hard', q:"La PaCO₂ normale est 40 mmHg. Si elle monte à 80 mmHg (hypoventilation), le pH sanguin :", opts:["Augmente (alcalose)","Reste stable grâce aux tampons","Diminue (acidose respiratoire)","Diminue (acidose métabolique)"], a:2, exp:"CO₂ + H₂O ⇌ H₂CO₃ ⇌ H⁺ + HCO₃⁻. PaCO₂ augmente → [H⁺] augmente → pH diminue → acidose respiratoire. En clinique : altération de la conscience, bradycardie."},
+    {d:'hard', q:"Un patient en arrêt respiratoire 5 min. Sa PO₂ passe de 100 à 20 mmHg. En Kelvin à 37°C, selon PV=nRT, la quantité d'O₂ dans les poumons :", opts:["Reste stable car T est constant","Diminue de 80% — n diminue proportionnellement à P","Augmente car les poumons se dilatent","Dépend uniquement de la viscosité du sang"], a:1, exp:"PV = nRT. V et T constants → n ∝ P. Si PO₂ ÷5 → n(O₂) ÷5 → réduction de 80% de l'O₂ disponible. En pratique, la SaO₂ chute et les organes entrent en hypoxie — d'où l'urgence de la ventilation."},
+    {d:'hard', q:"En caisson hyperbare à 2,5 bar, on traite une gangrène gazeuse. La PO₂ administrée à 100% d'O₂ est :", opts:["160 mmHg","380 mmHg","1900 mmHg","760 mmHg"], a:2, exp:"PO₂ = fraction × P_totale = 1 × (2,5 × 760) = 1900 mmHg. Cette PO₂ hyperbare (vs 160 mmHg en air normal) crée un environnement toxique pour les bactéries anaérobies et augmente la diffusion d'O₂ dans les tissus ischémiés."},
+    {d:'hard', q:"La chaleur spécifique de l'eau (4186 J/kg/K) est 4× celle du fer. Cela explique pourquoi :", opts:["L'eau bout plus vite que le fer","Le corps humain (70% eau) est un excellent tampon thermique — il résiste aux variations de température","Le fer est meilleur conducteur","L'eau conduit mieux la chaleur"], a:1, exp:"Grande chaleur massique → beaucoup d'énergie pour changer la T → faible variation de T pour un apport énergétique donné. Le corps stocke/dissipe de l'énergie sans variations brutales de T — essentiel pour l'homéothermie."},
+    {d:'hard', q:"Lors d'un exercice intense, la T corporelle monte à 40°C. Le ratio T_exercice/T_repos en Kelvin est :", opts:["40/37 ≈ 1,08","313/310 ≈ 1,01","40/37 × 100","Impossible à calculer"], a:1, exp:"En Kelvin : 40°C = 313 K, 37°C = 310 K. Ratio = 313/310 ≈ 1,01 soit +1% seulement. Pourtant ce petit écart (3°C) est cliniquement significatif — illustre pourquoi les calculs thermodynamiques exigent les Kelvin : les différences relatives y sont bien plus petites qu'en Celsius."},
+    {d:'medium', q:"Le 1er principe de la thermodynamique stipule que :", opts:["L'entropie d'un système isolé augmente","L'énergie se crée à partir de la chaleur","L'énergie ne se crée ni ne se détruit — elle se transforme","Le travail est toujours nul dans un système fermé"], a:2, exp:"ΔU = W + Q. En biologie : l'énergie chimique des nutriments (glucides, lipides) se convertit en travail mécanique (~25%) et chaleur (~75%). Jamais créée ni détruite — c'est le fondement du métabolisme énergétique."},
+  
+  ],
+
+  ondes: [
+    {d:'easy', q:"La relation fondamentale des ondes est :", opts:["v = f/λ","v = λ × f","v = λ + f","v = f²/λ"], a:1, exp:"v = λ × f. La vitesse d'une onde = longueur d'onde × fréquence. v dépend du milieu, pas de f."},
+    {d:'easy', q:"Les ultrasons médicaux ont une fréquence de :", opts:["< 20 Hz","20 Hz à 20 000 Hz","1 à 15 MHz","> 1 GHz"], a:2, exp:"Les ultrasons médicaux : 1 à 15 MHz. Haute fréquence → courte longueur d'onde → bonne résolution spatiale pour l'imagerie."},
+    {d:'easy', q:"+10 dB correspond à une intensité sonore :", opts:["2× plus grande","5× plus grande","10× plus grande","100× plus grande"], a:2, exp:"Échelle logarithmique : +10 dB = ×10 ; +20 dB = ×100 ; +30 dB = ×1000. Doubler l'intensité = +3 dB seulement."},
+    {d:'easy', q:"Le son est une onde :", opts:["Électromagnétique transversale","Mécanique longitudinale","Électromagnétique longitudinale","Mécanique transversale"], a:1, exp:"Le son est mécanique (besoin d'un support matériel) et longitudinal (molécules oscillent dans le sens de propagation, par compressions/dilatations). Il ne se propage pas dans le vide."},
+    {d:'easy', q:"L'effet Doppler se produit quand :", opts:["L'onde change de milieu","Il y a un mouvement relatif source/observateur","L'onde est absorbée","La fréquence dépasse 20 kHz"], a:1, exp:"L'effet Doppler résulte du mouvement relatif entre source et observateur. Source qui approche → fréquence perçue plus haute. Source qui s'éloigne → fréquence plus basse."},
+    {d:'easy', q:"Le seuil de danger pour l'audition (exposition prolongée) est :", opts:["60 dB","85 dB","100 dB","120 dB"], a:1, exp:"Au-delà de 85 dB sur 8h, les cellules ciliées cochléaires sont endommagées de façon irréversible. C'est la limite réglementaire en milieu professionnel (code du travail)."},
+    {d:'easy', q:"La période T et la fréquence f sont reliées par :", opts:["T = 2f","T = f","T = 1/f","T = f²"], a:2, exp:"T = 1/f. Période et fréquence sont inverses. Une onde à 100 Hz a une période de 0,01 s = 10 ms. Grande fréquence = petite période."},
+    {d:'medium', q:"En échographie, pourquoi utilise-t-on un gel de contact ?", opts:["Pour stériliser","Pour réchauffer","Pour éliminer l'interface peau/air qui réfléchirait les ultrasons","Pour augmenter la fréquence"], a:2, exp:"L'air réfléchit quasi totalement les ultrasons (forte différence d'impédance acoustique). Le gel (impédance ≈ tissus) élimine cette interface → les ultrasons pénètrent."},
+    {d:'medium', q:"Une perte auditive de 30 dB signifie que le patient n'entend que :", opts:["Ce qui est 3× plus intense","Ce qui est 30× plus intense","Ce qui est 1000× plus intense","Ce qui est 300× plus intense"], a:2, exp:"+30 dB = ×1000 en intensité. Une perte de 30 dB → surdité modérée. Nécessite souvent un appareillage auditif pour les conversations normales (60 dB)."},
+    {d:'medium', q:"L'IRM exploite :", opts:["La réflexion totale interne","La résonance magnétique des protons H","La diffraction des rayons X","L'effet photoélectrique"], a:1, exp:"L'IRM utilise champ magnétique + ondes radio à la fréquence de Larmor des protons H. Non irradiant — contrairement au scanner (rayons X) ou à la scintigraphie (γ)."},
+    {d:'medium', q:"En échographie Doppler, le flux sanguin qui s'éloigne de la sonde génère :", opts:["Une fréquence de retour plus haute","Une fréquence de retour identique","Une fréquence de retour plus basse","Aucun signal"], a:2, exp:"Source qui s'éloigne → ondes étirées → λ augmente → f diminue. En Doppler couleur : bleu = flux qui s'éloigne de la sonde, rouge = flux qui s'approche (convention BART : Blue Away, Red Towards)."},
+    {d:'medium', q:"La fréquence d'un son est doublée. Sa longueur d'onde (dans le même milieu) :", opts:["Double","Reste la même","Est divisée par 2","Est divisée par 4"], a:2, exp:"v = λf. v constant dans le même milieu → si f double, λ = v/f est divisée par 2. Haute fréquence = courte longueur d'onde = meilleure résolution en échographie."},
+    {d:'medium', q:"Les bruits cardiaques B1 et B2 correspondent à :", opts:["La contraction des oreillettes et des ventricules","La fermeture des valves AV (B1) et des valves sigmoïdes (B2)","L'ouverture des valves aortique (B1) et mitrale (B2)","Les souffles systolique (B1) et diastolique (B2)"], a:1, exp:"B1 = fermeture mitrale + tricuspide (début systole) — son sourd 'toum'. B2 = fermeture aortique + pulmonaire (début diastole) — son claquant 'tak'. Un B3 ou B4 est pathologique (insuffisance cardiaque, HVG)."},
+    {d:'medium', q:"Les ultrasons se propagent plus vite dans :", opts:["L'air","L'eau","Les os","Le vide"], a:2, exp:"La vitesse du son augmente avec la rigidité et la densité du milieu. Dans l'air : 340 m/s. Dans les tissus mous : ~1540 m/s. Dans l'os : ~3500 m/s. Dans le vide : 0 (onde mécanique)."},
+    {d:'medium', q:"Un son de 40 Hz et un son de 4000 Hz ont la même vitesse dans l'air car :", opts:["Ils ont la même intensité","La vitesse du son ne dépend que du milieu, pas de la fréquence","Ils ont la même longueur d'onde","Leurs amplitudes sont égales"], a:1, exp:"Dans un milieu donné, la vitesse du son est constante quelle que soit la fréquence. v = 340 m/s dans l'air pour 40 Hz comme pour 4000 Hz. Seules leurs longueurs d'onde diffèrent : λ₁ = 8,5 m vs λ₂ = 8,5 cm."},
+    {d:'hard', q:"L'IRM est contre-indiquée avec un pacemaker car :", opts:["Les rayonnements X endommagent les circuits","Le champ magnétique intense peut déplacer ou chauffer l'implant métallique et dérégler le pacemaker","Les ondes radio interfèrent avec les médicaments","La résonance acoustique casse l'implant"], a:1, exp:"L'IRM génère un champ magnétique de 1,5 à 3 Tesla (30 000 à 60 000 fois le champ magnétique terrestre). Les objets ferromagnétiques sont attirés violemment. Les pacemakers peuvent être déplacés, chauffés ou déréglés → risque vital."},
+    {d:'hard', q:"En échographie d'une artère carotide, la fréquence émise est 7 MHz. Le sang s'approche à 0,5 m/s (vitesse du son = 1540 m/s). Le décalage Doppler est environ :", opts:["45 Hz","4 545 Hz","450 Hz","45 000 Hz"], a:1, exp:"Δf ≈ 2f₀v/c = 2 × 7×10⁶ × 0,5 / 1540 ≈ 4545 Hz ≈ 4,5 kHz. Ce décalage est dans le domaine audible — c'est pourquoi l'écho Doppler peut être converti en son audible par le sondeur vasculaire."},
+    {d:'hard', q:"La résolution axiale d'une sonde échographique est :", opts:["Indépendante de la fréquence","Proportionnelle à la longueur d'onde — une plus haute fréquence donne une meilleure résolution axiale","Inversement proportionnelle à la fréquence","Déterminée uniquement par la profondeur"], a:1, exp:"Résolution axiale ≈ λ/2. Plus f est élevée → λ plus courte → meilleure résolution. Mais haute fréquence = moins de pénétration. Compromis : sonde 3 MHz pour les organes profonds (foie), 10–15 MHz pour les structures superficielles (thyroïde, écho-Doppler vasculaire)."},
+    {d:'hard', q:"Un son de 60 dB et un son de 70 dB jouent simultanément. Le niveau résultant est environ :", opts:["130 dB","70 dB","70,4 dB","65 dB"], a:2, exp:"On additionne les intensités : I₁ = 10⁶I₀, I₂ = 10⁷I₀. Itotal = 1,1×10⁷I₀ → L = 10log(1,1×10⁷) ≈ 70,4 dB. La source dominante (70 dB) 'écrase' la plus faible — impossible d'additionner les dB directement."},
+    {d:'hard', q:"En résonance magnétique, la fréquence de Larmor d'un proton dans un champ B = 1,5 T est (γ = 42,6 MHz/T) :", opts:["28,4 MHz","42,6 MHz","63,9 MHz","127,8 MHz"], a:2, exp:"f_Larmor = γ × B = 42,6 × 1,5 = 63,9 MHz. C'est à cette fréquence précise qu'on doit émettre les ondes radio pour exciter les protons. À 3T (IRM haute résolution), f = 127,8 MHz."},
+    {d:'hard', q:"L'audiogramme d'un patient montre une perte de 60 dB à 4 kHz. Pour entendre un son de 60 dB (conversation), ce patient a besoin d'un son d'intensité :", opts:["60 dB","100 dB","120 dB","1000 dB"], a:2, exp:"Pour compenser 60 dB de perte, le son doit être 10⁶ fois plus intense que pour un sujet normal. Son nécessaire = 60 (conversation) + 60 (perte) = 120 dB — soit le seuil de douleur. Ce patient ne peut pas entendre une conversation normale sans appareillage."},
+    {d:'hard', q:"Les rayons X utilisés en radiographie sont des ondes :", opts:["Mécaniques longitudinales","Mécaniques transversales","Électromagnétiques de haute fréquence","Acoustiques de très haute fréquence"], a:2, exp:"Les rayons X sont des ondes électromagnétiques (comme la lumière, les IR, les UV) mais de très haute fréquence et courte longueur d'onde (0,01 à 10 nm). Ils ionisent les tissus — d'où leur effet biologique et le risque carcinogène."},
+    {d:'hard', q:"La loi de Beer-Lambert (atténuation des rayons X) est I = I₀×e^(−μx). Si μ = 0,7 cm⁻¹ et x = 2 cm :", opts:["I/I₀ = 0","I/I₀ ≈ 0,25","I/I₀ ≈ 0,5","I/I₀ ≈ 0,75"], a:1, exp:"I/I₀ = e^(−0,7×2) = e^(−1,4) ≈ 0,25. 75% des rayons X sont absorbés après 2 cm de tissu avec ce coefficient. C'est pourquoi les structures denses (os, μ élevé) absorbent plus → blancs à la radio."},
+    {d:'hard', q:"Une onde stationnaire dans un tube ouvert aux deux bouts a des ventres aux extrémités. La fréquence fondamentale pour un tube de 17 cm (v = 340 m/s) est :", opts:["100 Hz","500 Hz","1000 Hz","2000 Hz"], a:2, exp:"Tube ouvert-ouvert : λ = 2L → L = λ/2. λ = 2 × 0,17 = 0,34 m. f = v/λ = 340/0,34 = 1000 Hz. Principe des instruments à vent et des cavités nasales — résonance acoustique qui amplifie certaines fréquences vocales."},
+    {d:'hard', q:"L'échographie ne visualise pas bien les structures osseuses parce que :", opts:["La fréquence des ultrasons est trop basse","L'os absorbe totalement les ultrasons","L'impédance acoustique de l'os est très différente de celle des tissus mous → réflexion quasi-totale","La longueur d'onde est trop grande"], a:2, exp:"Impédance osseuse (~7,8 Mrayl) vs tissus mous (~1,5 Mrayl) → très forte différence → coefficient de réflexion élevé → quasi-totalité des ultrasons réfléchis → impossible de voir derrière l'os. On obtient un 'cône d'ombre' acoustique."},
+    {d:'medium', q:"L'échelle des décibels est logarithmique car :", opts:["Les ondes sonores sont exponentielles","L'oreille perçoit les sons de façon logarithmique — un doublement d'intensité est perçu comme un faible gain","Les appareils de mesure sont logarithmiques","La fréquence varie exponentiellement"], a:1, exp:"L'oreille humaine a une réponse logarithmique. Passer de 1 W/m² à 2 W/m² est perçu de façon similaire à passer de 10 à 20 W/m². L'échelle dB reflète cette perception : +3 dB = ×2 en intensité, mais ressenti comme légèrement plus fort seulement."},
+    {d:'medium', q:"La réfraction des ultrasons à l'interface entre deux tissus peut causer :", opts:["Une meilleure résolution","Des artéfacts de position — la structure est affichée au mauvais endroit","Une augmentation de fréquence","La disparition totale du signal"], a:1, exp:"L'échographe suppose que les ultrasons voyagent en ligne droite. La réfraction (changement de direction à l'interface tissu/tissu d'impédances différentes) dévie le faisceau → artéfact de positionnement. C'est pourquoi l'interprétation échographique demande de l'expérience."},
+  
+  ],
+
+  optique: [
+    {d:'easy', q:"La myopie se corrige avec :", opts:["Une lentille convergente (D positif)","Une lentille divergente (D négatif)","Des lunettes de soleil","Une lentille plan-convexe"], a:1, exp:"Myopie = œil trop convergent → image en avant de la rétine. Correction : lentille divergente (D négatif) pour reculer le foyer. Mnémotechnique : Myope → Moins (signe négatif)."},
+    {d:'easy', q:"L'indice de réfraction de l'eau est environ :", opts:["1","1,33","1,5","2"], a:1, exp:"n_eau ≈ 1,33. L'air : n = 1 (référence). Le verre : n ≈ 1,5. Plus n est grand, plus la lumière ralentit dans ce milieu."},
+    {d:'easy', q:"Une lentille de +4 dioptries a une distance focale de :", opts:["4 m","25 cm","4 cm","40 cm"], a:1, exp:"D = 1/f → f = 1/D = 1/4 = 0,25 m = 25 cm. f doit être en mètres quand D est en dioptries."},
+    {d:'easy', q:"L'hypermétropie se corrige avec :", opts:["Une lentille divergente (D négatif)","Une lentille convergente (D positif)","Des filtres polarisants","Aucune correction n'est possible"], a:1, exp:"Hypermétropie = œil pas assez convergent → image en arrière de la rétine. Correction : lentille convergente (D positif) pour rapprocher le foyer. Inverse de la myopie."},
+    {d:'easy', q:"La réfraction de la lumière se produit :", opts:["Uniquement dans l'eau","À l'interface entre deux milieux d'indices de réfraction différents","Seulement avec les rayons X","Quand la lumière est absorbée"], a:1, exp:"La réfraction se produit à l'interface entre deux milieux d'indices n différents. La lumière change de direction car elle change de vitesse. Loi de Snell-Descartes : n₁sinθ₁ = n₂sinθ₂."},
+    {d:'easy', q:"Les fibres optiques d'endoscopie fonctionnent grâce à :", opts:["La diffraction","La réflexion totale interne","L'absorption sélective","La fluorescence"], a:1, exp:"Au-delà de l'angle critique, aucune lumière ne sort de la fibre → réflexion totale interne. La lumière peut voyager dans la fibre souple et courber vers des cavités inaccessibles."},
+    {d:'easy', q:"La vergence D d'une lentille de distance focale f = 50 cm est :", opts:["50 D","0,5 D","2 D","5 D"], a:2, exp:"D = 1/f(m) = 1/0,5 = 2 D. f doit être en mètres. 50 cm = 0,5 m → D = 2 dioptries. Lentille convergente (D > 0)."},
+    {d:'medium', q:"La loi de Snell-Descartes décrit :", opts:["La diffraction","La réfraction à l'interface entre deux milieux d'indices différents","La réflexion totale uniquement","L'absorption"], a:1, exp:"n₁sinθ₁ = n₂sinθ₂. La réfraction = changement de direction d'une onde à l'interface entre deux milieux d'indices différents. Base de l'optique des lentilles et du fonctionnement de l'œil."},
+    {d:'medium', q:"En chirurgie de la cataracte, l'implant intraoculaire remplace :", opts:["La cornée","Le corps vitré","Le cristallin opacifié","La rétine"], a:2, exp:"Cataracte = opacification du cristallin → chirurgie : phacoémulsification + implant. La vergence de l'implant est calculée par biométrie oculaire (longueur axiale + courbure cornéenne) pour corriger la vision."},
+    {d:'medium', q:"Un patient presbyte ne peut plus voir de près car :", opts:["Sa cornée se déforme","Son cristallin devient rigide et ne peut plus s'accommoder","Sa rétine vieillit","Sa PIO augmente"], a:1, exp:"La presbytie = perte d'accommodation liée à la rigidification du cristallin avec l'âge (>45 ans). Le cristallin ne peut plus bomber suffisamment pour voir de près. Correction : lentilles convergentes (lunettes de lecture)."},
+    {d:'medium', q:"Un rayon lumineux passe de l'air (n=1) dans le verre (n=1,5) avec θ₁ = 30°. L'angle de réfraction θ₂ est :", opts:["30°","19,5°","45°","60°"], a:1, exp:"n₁sinθ₁ = n₂sinθ₂ → 1×sin30° = 1,5×sinθ₂ → sinθ₂ = 0,5/1,5 = 0,333 → θ₂ ≈ 19,5°. Le rayon se rapproche de la normale en entrant dans un milieu plus dense."},
+    {d:'medium', q:"La limite de résolution du microscope optique est ~200 nm car :", opts:["Les lentilles sont trop petites","Elle est limitée par la longueur d'onde de la lumière visible","Le grossissement est insuffisant","L'indice de l'air limite la résolution"], a:1, exp:"Résolution ≈ λ/2. Lumière visible : λ ≈ 400–700 nm → résolution ≈ 200 nm. On voit les cellules (µm) et bactéries (1–10 µm), mais pas les virus (20–300 nm). Le microscope électronique (λ << 1 nm) résout ce problème."},
+    {d:'medium', q:"L'angle critique de réflexion totale interne à l'interface verre (n=1,5)/air (n=1) est :", opts:["30°","41,8°","45°","60°"], a:1, exp:"sinθc = n₂/n₁ = 1/1,5 = 0,667 → θc ≈ 41,8°. Au-delà de 41,8° → réflexion totale interne. C'est pour cela que les fibres optiques en verre ont un angle d'acceptance précis."},
+    {d:'medium', q:"Un myope a un punctum remotum (vision nette maximale) à 25 cm. Sa correction est :", opts:["+4 D","+2 D","−4 D","−2 D"], a:2, exp:"Le PR est à 25 cm = 0,25 m. La lentille doit créer une image virtuelle à 25 cm d'un objet à l'infini. f = −0,25 m (lentille divergente) → D = 1/f = −4 D. Correction : −4 dioptries."},
+    {d:'medium', q:"L'œil emmétrope (normal) forme l'image d'un objet lointain :", opts:["En avant de la rétine","Sur la rétine","En arrière de la rétine","Sur la cornée"], a:1, exp:"Emmétrope = œil normal. Objet à l'infini → rayons parallèles → convergent exactement sur la rétine sans accommodation. Myopie : en avant. Hypermétropie : en arrière (sans accommodation)."},
+    {d:'hard', q:"Un patient hypermétrope à +3 D sans lunettes voit correctement de loin grâce à :", opts:["La myopie compensatrice","L'accommodation spontanée du cristallin","La courbure cornéenne seule","Le réflexe pupillaire"], a:1, exp:"Hypermétropie légère : l'accommodation spontanée compense le défaut. Le cristallin bombе pour ajouter les 3 D manquantes. Mais cela fatigue les muscles ciliaires → asthénopie (fatigue visuelle, céphalées). Avec l'âge → décompensation."},
+    {d:'hard', q:"Un rayon passe de l'eau (n=1,33) vers l'air (n=1) avec θ₁ = 50°. Il y a :", opts:["Réfraction normale","Réflexion totale interne car θ₁ > θc","Absorption totale","Réfraction avec θ₂ = 90°"], a:1, exp:"θc = arcsin(1/1,33) = arcsin(0,75) ≈ 48,6°. θ₁ = 50° > θc → réflexion totale interne. Aucune lumière ne sort de l'eau → on ne peut pas voir à travers la surface pour un angle > 48,6° depuis l'eau."},
+    {d:'hard', q:"En LASIK, la cornée est amincie de 20 µm sur un rayon de 3 mm pour un myope. Le changement de vergence cornéenne approximatif est :", opts:["Négligeable","−1 D environ","−6 D environ","−0,1 D"], a:1, exp:"La relation approximative est ΔD ≈ Δe(n-1)/r². Chaque ablation de ~10 µm modifie la vergence de ~1 D. Une ablation de 20 µm sur le méridien central → correction d'environ −1 à −1,5 D selon le profil. Les calculs précis utilisent des modèles cornéens complexes."},
+    {d:'hard', q:"Le grossissement commercial d'un microscope optique est 1000×. La résolution réelle est :", opts:["Infinie grâce au fort grossissement","Toujours limitée à ~200 nm par la diffraction","Améliorée proportionnellement au grossissement","1000 fois meilleure qu'à l'œil nu"], a:1, exp:"Le grossissement utile maximal est limité par la résolution physique (~200 nm). Au-delà, on obtient du 'vide grossissement' : l'image est plus grande mais pas plus détaillée. C'est la diffraction qui fixe la limite, pas la qualité des lentilles."},
+    {d:'hard', q:"En angiographie à la fluorescéine (ophtalmologie), la fluorescéine absorbe à 490 nm et émet à 530 nm. Ce décalage s'appelle :", opts:["L'effet Doppler optique","Le décalage de Stokes — la fluorescence émet toujours à plus grande λ que l'absorption","La diffraction monochromatique","La réfraction de Snell"], a:1, exp:"Décalage de Stokes : en fluorescence, λ_émission > λ_absorption (énergie plus basse). 490 nm (bleu-vert, absorption) → 530 nm (vert, émission). Un filtre arrêt-bande bloque la lumière d'excitation → seule la fluorescence verte des vaisseaux rétiniens est visible."},
+    {d:'hard', q:"La biométrie oculaire pour calculer la puissance d'un implant de cataracte mesure :", opts:["Uniquement la courbure cornéenne","La longueur axiale de l'œil et la courbure cornéenne (formule de Sanders-Retzlaff-Kraff)","La pression intraoculaire et la viscosité vitréenne","Le diamètre pupillaire et l'épaisseur rétinienne"], a:1, exp:"Les formules biométriques (SRK/T, Holladay, Haigis) utilisent : longueur axiale (échographie ou optique), courbure cornéenne (kératométrie), parfois profondeur de chambre antérieure. Objectif : implant qui place le foyer sur la rétine → emmétropisaton postopératoire."},
+    {d:'hard', q:"Un OCT (tomographie à cohérence optique) rétinien a une résolution axiale de 5 µm. Il utilise des longueurs d'onde :", opts:["Rayons X (0,1 nm)","UV (300 nm)","Proche infrarouge (830 nm)","Radio (1 m)"], a:2, exp:"L'OCT utilise le proche IR (800–1300 nm) car il pénètre les tissus oculaires sans les endommager. Résolution axiale ≈ λ²/(2×Δλ) → en utilisant une large bande spectrale Δλ, on atteint 5 µm — permettant de visualiser les couches rétiniennes individuelles. Révolutionnaire pour le diagnostic glaucome/DMLA."},
+    {d:'hard', q:"Un verre de lunettes progressif (multifocal) corrige à la fois la vision de loin et de près car :", opts:["Il a deux indices de réfraction","Sa vergence varie continûment de haut (vision de loin) en bas (vision de près)","Il contient des prismes","Son épaisseur est constante"], a:1, exp:"Le verre progressif a une courbure variable → vergence qui augmente progressivement du haut (vision lointaine, D correction myopie ou 0) vers le bas (vision de près, +addition pour presbytie). Pas de ligne de démarcation contrairement aux verres bifocaux."},
+    {d:'hard', q:"La cornée a une courbure de rayon R = 7,8 mm et n_cornée = 1,376. Sa puissance réfractive (dans l'air, n_air=1) est environ :", opts:["12 D","48 D","67 D","1 D"], a:1, exp:"P = (n₂-n₁)/R = (1,376-1)/0,0078 ≈ 48 D. La cornée est responsable d'environ 43–48 D sur les ~60 D totaux de l'œil. C'est pourquoi le LASIK (qui modifie la courbure cornéenne) est si efficace pour corriger les défauts visuels."},
+  ],
+};
+
+// ── ÉTAT ──
+let selectedCh = new Set(['meca','fluides','thermo','ondes','optique']);
+let selectedCount = 10;
+let quizQuestions = [];
+let currentIdx = 0;
+let score = 0;
+let chScores = {};
+
+// ── SETUP ──
+function toggleTheme(){
+  const h=document.documentElement,b=document.getElementById('themeBtn');
+  if(h.dataset.theme==='dark'){h.dataset.theme='light';b.textContent='🌙 Mode sombre';}
+  else{h.dataset.theme='dark';b.textContent='☀️ Mode clair';}
+}
+
+function toggleCh(ch){
+  const btn=document.getElementById('btn-'+ch);
+  if(selectedCh.has(ch)){
+    if(selectedCh.size===1)return; // au moins 1
+    selectedCh.delete(ch);
+    btn.classList.remove('selected');
+  } else {
+    selectedCh.add(ch);
+    btn.classList.add('selected');
+  }
+}
+
+function setCount(n){
+  selectedCount=n;
+  document.querySelectorAll('.count-btn').forEach(b=>b.classList.remove('selected'));
+  const ids={5:'cnt-5',10:'cnt-10',20:'cnt-20',999:'cnt-all'};
+  document.getElementById(ids[n]).classList.add('selected');
+}
+
+function buildQuiz(){
+  // Rassembler toutes les questions des chapitres sélectionnés
+  let pool = [];
+  selectedCh.forEach(ch => {
+    ALL_QUESTIONS[ch].forEach(q => pool.push({...q, chapter:ch}));
+  });
+  // Mélanger
+  pool.sort(()=>Math.random()-.5);
+  // Prendre le bon nombre
+  const total = selectedCount === 999 ? pool.length : Math.min(selectedCount, pool.length);
+  quizQuestions = pool.slice(0, total);
+  // Trier par difficulté dans chaque lot de 3
+  quizQuestions.sort((a,b)=>{
+    const order={easy:0,medium:1,hard:2};
+    return order[a.d]-order[b.d];
+  });
+}
+
+function startQuiz(){
+  buildQuiz();
+  currentIdx=0; score=0; chScores={};
+  selectedCh.forEach(ch=>{ chScores[ch]={correct:0,total:0}; });
+  document.getElementById('setupScreen').style.display='none';
+  document.getElementById('quizScreen').style.display='block';
+  renderQ();
+}
+
+// ── QUIZ ──
+const CH_NAMES={meca:'Mécanique',fluides:'Mécanique des fluides',thermo:'Thermodynamique',ondes:'Ondes & Acoustique',optique:'Optique géométrique'};
+const CH_ICONS={meca:'⚙️',fluides:'🌊',thermo:'🔥',ondes:'〰️',optique:'🔭'};
+const DIFF_LABELS={easy:'Facile',medium:'Moyen',hard:'Piège'};
+const DIFF_CLASSES={easy:'diff-easy',medium:'diff-medium',hard:'diff-hard'};
+
+function renderQ(){
+  const q=quizQuestions[currentIdx];
+  const total=quizQuestions.length;
+  const pct=Math.round((currentIdx/total)*100);
+
+  document.getElementById('progLabel').textContent=`Question ${currentIdx+1} / ${total}`;
+  document.getElementById('progScore').textContent=`Score : ${score} / ${currentIdx}`;
+  document.getElementById('progBar').style.width=pct+'%';
+  document.getElementById('qChapter').textContent=CH_ICONS[q.chapter]+' '+CH_NAMES[q.chapter];
+  document.getElementById('qNum').textContent=`Q${currentIdx+1}`;
+  const diffEl=document.getElementById('qDiff');
+  diffEl.textContent=DIFF_LABELS[q.d];
+  diffEl.className='q-diff '+DIFF_CLASSES[q.d];
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('qFeedback').className='feedback';
+  document.getElementById('qFeedback').textContent='';
+  document.getElementById('nextBtn').className='next-btn';
+
+  const optsEl=document.getElementById('qOptions');
+  optsEl.innerHTML='';
+  q.opts.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='opt';
+    btn.textContent=opt;
+    btn.onclick=()=>answer(i);
+    optsEl.appendChild(btn);
+  });
+}
+
+function answer(chosen){
+  const q=quizQuestions[currentIdx];
+  const opts=document.querySelectorAll('.opt');
+  opts.forEach(o=>o.disabled=true);
+  const fb=document.getElementById('qFeedback');
+  const next=document.getElementById('nextBtn');
+
+  // Track par chapitre
+  chScores[q.chapter].total++;
+
+  if(chosen===q.a){
+    score++;
+    chScores[q.chapter].correct++;
+    opts[chosen].classList.add('correct');
+    fb.textContent='✓ Correct ! '+q.exp;
+    fb.className='feedback show ok';
+  } else {
+    opts[chosen].classList.add('wrong');
+    opts[q.a].classList.add('correct');
+    fb.textContent='✗ Incorrect. '+q.exp;
+    fb.className='feedback show ko';
+  }
+  document.getElementById('progScore').textContent=`Score : ${score} / ${currentIdx+1}`;
+  next.className='next-btn show';
+}
+
+function nextQ(){
+  currentIdx++;
+  if(currentIdx>=quizQuestions.length){
+    showResults();
+  } else {
+    renderQ();
+  }
+}
+
+// ── RÉSULTATS ──
+function showResults(){
+  document.getElementById('quizScreen').style.display='none';
+  document.getElementById('resultsScreen').style.display='block';
+  const total=quizQuestions.length;
+  const pct=Math.round((score/total)*100);
+
+  let emoji, title;
+  if(pct>=90){emoji='🏆';title='Excellent !';}
+  else if(pct>=70){emoji='💪';title='Très bien !';}
+  else if(pct>=50){emoji='📚';title='Pas mal — à retravailler !';}
+  else{emoji='🔁';title='Reprends les fiches !';}
+
+  document.getElementById('resEmoji').textContent=emoji;
+  document.getElementById('resTitle').textContent=title;
+  document.getElementById('resScore').textContent=score+' / '+total;
+  document.getElementById('resSub').textContent=pct+'% de bonnes réponses · '+
+    (pct>=70 ? 'Continue comme ça !' : 'Revois les notions en rouge dans les fiches.');
+
+  // Breakdown par chapitre
+  const bd=document.getElementById('resBreakdown');
+  bd.innerHTML='';
+  Object.entries(chScores).forEach(([ch,s])=>{
+    if(s.total===0)return;
+    const p=Math.round((s.correct/s.total)*100);
+    const cls=p>=70?'score-good':p>=50?'score-mid':'score-low';
+    bd.innerHTML+=`<div class="breakdown-item">
+      <span class="breakdown-ch">${CH_ICONS[ch]} ${CH_NAMES[ch]}</span>
+      <span class="breakdown-score ${cls}">${s.correct}/${s.total} (${p}%)</span>
+    </div>`;
+  });
+  updateMasteryFromResults();
+}
+
+function restartQuiz(){
+  document.getElementById('resultsScreen').style.display='none';
+  startQuiz();
+}
+
+function goSetup(){
+  document.getElementById('resultsScreen').style.display='none';
+  document.getElementById('setupScreen').style.display='block';
+}
+
+// ── MASTERY PERSISTENCE ──
+const MASTERY_KEY = 'physique_mastery';
+
+function loadAllMastery(){
+  try { return JSON.parse(localStorage.getItem(MASTERY_KEY) || '{}'); }
+  catch(e){ return {}; }
+}
+function saveAllMastery(data){
+  try { localStorage.setItem(MASTERY_KEY, JSON.stringify(data)); }
+  catch(e){}
+}
+
+function getMasteryColor(pct){
+  if(pct >= 90) return '#60a5fa';   // bleu — maîtrisé
+  if(pct >= 70) return '#34d399';   // vert — bien
+  if(pct >= 40) return '#fbbf24';   // jaune — en progression
+  return '#f472b6';                  // rose — à travailler
+}
+function getMasteryStatus(pct){
+  if(pct >= 90) return '<span class="status-top">✅ Maîtrisé</span>';
+  if(pct >= 70) return '<span class="status-good">🟢 Bien</span>';
+  if(pct >= 40) return '<span class="status-mid">🟡 En cours</span>';
+  return '<span class="status-low">🔴 À travailler</span>';
+}
+
+function renderMasteryBars(){
+  const data = loadAllMastery();
+  ['meca','fluides','thermo','ondes','optique'].forEach(ch => {
+    const bar = document.getElementById('mbar-'+ch);
+    const pct_el = document.getElementById('mpct-'+ch);
+    const status_el = document.getElementById('mstatus-'+ch);
+    if(!bar) return;
+    if(data[ch] === undefined){
+      bar.style.width = '0%';
+      pct_el.textContent = '—';
+      status_el.innerHTML = '<span class="status-none">Non testé</span>';
+    } else {
+      const pct = data[ch];
+      bar.style.width = pct+'%';
+      bar.style.background = getMasteryColor(pct);
+      pct_el.textContent = pct+'%';
+      status_el.innerHTML = getMasteryStatus(pct);
+    }
+  });
+}
+
+function updateMasteryFromResults(){
+  const data = loadAllMastery();
+  // For each chapter that was tested in this session, update weighted average
+  Object.entries(chScores).forEach(([ch, s]) => {
+    if(s.total === 0) return;
+    const sessionPct = Math.round((s.correct / s.total) * 100);
+    // Weighted: if existing score, blend 60% new + 40% old
+    if(data[ch] !== undefined){
+      data[ch] = Math.round(sessionPct * 0.6 + data[ch] * 0.4);
+    } else {
+      data[ch] = sessionPct;
+    }
+  });
+  saveAllMastery(data);
+  renderMasteryBars();
+}
+
+// Init bars on load
+window.addEventListener('DOMContentLoaded', renderMasteryBars);
+
+</script>
+</body>
+</html>

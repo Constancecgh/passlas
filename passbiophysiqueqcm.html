@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QCM Biophysique PASS · Constance</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  [data-theme="dark"]{--bg:#080c0a;--surface:#0f1612;--border:#1a2620;--accent:#34d399;--accent2:#6ee7b7;--accent3:#f472b6;--text:#e2e8f0;--muted:#64748b;--warn:#fbbf24;--item-text:#cbd5e1;--progress-track:rgba(255,255,255,0.06);--toggle-bg:#1a2620;--opt:rgba(255,255,255,0.03);--opt-hover:rgba(255,255,255,0.07);--correct:rgba(52,211,153,0.12);--correct-b:#34d399;--wrong:rgba(244,114,182,0.12);--wrong-b:#f472b6;}
+  [data-theme="light"]{--bg:#f2faf6;--surface:#fff;--border:#d4ede2;--accent:#059669;--accent2:#047857;--accent3:#db2777;--text:#1e1b18;--muted:#6b7280;--warn:#d97706;--item-text:#374151;--progress-track:rgba(0,0,0,0.07);--toggle-bg:#d4ede2;--opt:rgba(0,0,0,0.02);--opt-hover:rgba(0,0,0,0.05);--correct:rgba(5,150,105,0.08);--correct-b:#059669;--wrong:rgba(219,39,119,0.08);--wrong-b:#db2777;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:"Source Serif 4",serif;min-height:100vh;transition:background .3s,color .3s;}
+  nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);backdrop-filter:blur(12px);background:rgba(8,12,10,0.85);}
+  [data-theme="light"] nav{background:rgba(242,250,246,0.88);}
+  .nav-logo{font-family:"Cormorant Garamond",serif;font-size:1.2rem;color:var(--accent);text-decoration:none;}
+  .nav-back{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;}
+  .nav-back:hover{color:var(--text);}
+  .theme-toggle{background:var(--toggle-bg);border:1px solid var(--border);border-radius:100px;padding:5px 12px;cursor:pointer;font-size:14px;color:var(--muted);transition:all .2s;user-select:none;line-height:1;}
+  .theme-toggle:hover{border-color:var(--accent);color:var(--text);}
+  .setup{max-width:680px;margin:0 auto;padding:100px 40px 60px;}
+  .setup-badge{display:inline-block;background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.2);color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px;}
+  .setup h1{font-family:"Libre Baskerville",serif;font-size:clamp(28px,4vw,44px);font-weight:700;line-height:1.1;margin-bottom:10px;}
+  .setup h1 span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .setup-sub{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:36px;}
+  .setup-section{margin-bottom:28px;}
+  .setup-label{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+  .chapter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;}
+  .ch-btn{background:var(--surface);border:2px solid var(--border);border-radius:12px;padding:12px 14px;cursor:pointer;text-align:left;transition:all .2s;font-family:"Source Serif 4",serif;}
+  .ch-btn:hover{border-color:var(--accent2);}
+  .ch-btn.selected{border-color:var(--accent);background:rgba(52,211,153,.06);}
+  .ch-btn-icon{font-size:18px;margin-bottom:6px;}
+  .ch-btn-name{font-size:13px;font-weight:600;color:var(--text);}
+  .ch-btn-count{font-size:11px;color:var(--muted);margin-top:2px;}
+  .count-row{display:flex;gap:8px;flex-wrap:wrap;}
+  .count-btn{background:var(--surface);border:2px solid var(--border);border-radius:10px;padding:10px 18px;cursor:pointer;font-size:13px;font-weight:600;color:var(--muted);transition:all .2s;font-family:"Source Serif 4",serif;}
+  .count-btn:hover{border-color:var(--accent2);color:var(--text);}
+  .count-btn.selected{border-color:var(--accent);color:var(--accent);background:rgba(52,211,153,.06);}
+  .start-btn{width:100%;padding:16px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;font-family:"Source Serif 4",serif;transition:opacity .2s;margin-top:8px;}
+  .start-btn:hover{opacity:.88;}
+  .quiz-screen{max-width:680px;margin:0 auto;padding:100px 40px 60px;display:none;}
+  .progress-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+  .progress-label{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+  .progress-score{font-size:12px;color:var(--accent);font-weight:700;}
+  .progress-track{height:4px;background:var(--progress-track);border-radius:100px;overflow:hidden;margin-bottom:32px;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .4s ease;}
+  .q-chapter{font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;}
+  .q-meta{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .q-num{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+  .q-diff{font-size:10px;font-weight:700;padding:2px 9px;border-radius:100px;}
+  .diff-easy{background:rgba(52,211,153,.12);color:#34d399;}
+  .diff-medium{background:rgba(251,191,36,.12);color:var(--warn);}
+  .diff-hard{background:rgba(244,114,182,.12);color:var(--accent3);}
+  .q-text{font-family:"Libre Baskerville",serif;font-size:18px;font-weight:700;line-height:1.4;color:var(--text);margin-bottom:24px;}
+  .options{display:flex;flex-direction:column;gap:10px;margin-bottom:16px;}
+  .opt{padding:14px 18px;background:var(--opt);border:2px solid var(--border);border-radius:12px;font-size:14px;cursor:pointer;transition:all .15s;color:var(--item-text);text-align:left;font-family:"Source Serif 4",serif;line-height:1.5;}
+  .opt:hover:not(:disabled){background:var(--opt-hover);border-color:var(--muted);}
+  .opt.correct{background:var(--correct);border-color:var(--correct-b);color:var(--accent);}
+  .opt.wrong{background:var(--wrong);border-color:var(--wrong-b);color:var(--accent3);}
+  .opt:disabled{cursor:default;}
+  .feedback{padding:14px 16px;border-radius:10px;font-size:13px;line-height:1.6;margin-top:4px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.ok{background:var(--correct);color:var(--accent);border:1px solid var(--correct-b);}
+  .feedback.ko{background:var(--wrong);color:var(--accent3);border:1px solid var(--wrong-b);}
+  .next-btn{margin-top:16px;width:100%;padding:14px;background:none;border:2px solid var(--border);border-radius:12px;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;font-family:"Source Serif 4",serif;transition:all .2s;display:none;}
+  .next-btn.show{display:block;}
+  .next-btn:hover{border-color:var(--accent);color:var(--accent);}
+  .results{max-width:680px;margin:0 auto;padding:100px 40px 60px;display:none;text-align:center;}
+  .results-emoji{font-size:56px;margin-bottom:20px;}
+  .results h2{font-family:"Libre Baskerville",serif;font-size:clamp(24px,4vw,36px);font-weight:700;margin-bottom:8px;}
+  .results-score{font-size:64px;font-weight:700;font-family:"Libre Baskerville",serif;color:var(--accent);line-height:1;margin:20px 0;}
+  .results-sub{color:var(--muted);font-size:14px;margin-bottom:32px;line-height:1.6;}
+  .results-breakdown{display:flex;flex-direction:column;gap:8px;margin-bottom:32px;text-align:left;}
+  .breakdown-item{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:10px;font-size:13px;}
+  .breakdown-ch{color:var(--text);font-weight:600;}
+  .breakdown-score{font-weight:700;}
+  .score-good{color:var(--accent);}
+  .score-mid{color:var(--warn);}
+  .score-low{color:var(--accent3);}
+  .results-actions{display:flex;gap:10px;flex-wrap:wrap;}
+  .btn-primary{flex:1;padding:14px;background:var(--accent);color:#fff;border:none;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:"Source Serif 4",serif;transition:opacity .2s;min-width:140px;}
+  .btn-primary:hover{opacity:.88;}
+  .btn-secondary{flex:1;padding:14px;background:none;border:2px solid var(--border);border-radius:12px;font-size:14px;font-weight:700;color:var(--muted);cursor:pointer;font-family:"Source Serif 4",serif;transition:all .2s;text-decoration:none;display:flex;align-items:center;justify-content:center;min-width:140px;}
+  .btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
+  .mastery-section{max-width:680px;margin:0 auto;padding:0 40px 48px;}
+  .mastery-title{font-family:"Libre Baskerville",serif;font-size:16px;font-weight:700;color:var(--text);margin-bottom:18px;}
+  .mastery-title::before{content:"📊 Maîtrise — ";}
+  .mastery-row{display:flex;align-items:center;gap:14px;margin-bottom:12px;}
+  .mastery-ch-name{font-size:13px;font-weight:600;color:var(--text);width:180px;flex-shrink:0;display:flex;align-items:center;gap:7px;}
+  .mastery-bar-wrap{flex:1;}
+  .mastery-bar-track{height:8px;background:var(--progress-track);border-radius:100px;overflow:hidden;}
+  .mastery-bar-fill{height:100%;border-radius:100px;transition:width .6s ease,background .6s ease;width:0%;}
+  .mastery-pct{font-size:11px;font-weight:700;color:var(--muted);width:36px;text-align:right;flex-shrink:0;}
+  .mastery-status{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;width:100px;flex-shrink:0;text-align:right;}
+  .status-none{color:var(--muted);}
+  .status-low{color:var(--accent3);}
+  .status-mid{color:var(--warn);}
+  .status-good,.status-top{color:var(--accent);}
+  .mastery-note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6;}
+  footer{border-top:1px solid var(--border);padding:24px 40px;max-width:680px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  .footer-logo{font-family:"Cormorant Garamond",serif;font-size:1.1rem;color:var(--accent);}
+  .footer-copy{font-size:11px;color:var(--muted);}
+  @media(max-width:600px){.setup,.quiz-screen,.results,.mastery-section{padding-left:20px;padding-right:20px;}.setup,.quiz-screen,.results{padding-top:80px;}nav{padding:.9rem 1.2rem;}.theme-toggle{top:14px;right:14px;}footer{padding:20px;flex-direction:column;text-align:center;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="passdashboard.html">Constance</a>
+  <a class="nav-back" href="passbiophysique.html">← Biophysique</a>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️</button>
+</nav>
+
+<div class="setup" id="setupScreen">
+  <div class="setup-badge">QCM · Biophysique PASS</div>
+  <h1>Entraîne-toi.<br><span>Teste tes connaissances.</span></h1>
+  <p class="setup-sub">Choisis tes chapitres et le nombre de questions. Niveaux : Facile · Moyen · Piège.</p>
+  <div class="setup-section">
+    <div class="setup-label">Chapitres</div>
+    <div class="chapter-grid">
+      <div class="ch-btn selected" onclick="toggleCh('transport')" id="btn-transport"><div class="ch-btn-icon">🔬</div><div class="ch-btn-name">Transport membranaire</div><div class="ch-btn-count">25 questions</div></div>
+      <div class="ch-btn selected" onclick="toggleCh('hemo')" id="btn-hemo"><div class="ch-btn-icon">🫀</div><div class="ch-btn-name">Hémodynamique</div><div class="ch-btn-count">25 questions</div></div>
+      <div class="ch-btn selected" onclick="toggleCh('radio')" id="btn-radio"><div class="ch-btn-icon">☢️</div><div class="ch-btn-name">Radioactivité</div><div class="ch-btn-count">25 questions</div></div>
+      <div class="ch-btn selected" onclick="toggleCh('imagerie')" id="btn-imagerie"><div class="ch-btn-icon">🏥</div><div class="ch-btn-name">Imagerie médicale</div><div class="ch-btn-count">25 questions</div></div>
+      <div class="ch-btn selected" onclick="toggleCh('bioelec')" id="btn-bioelec"><div class="ch-btn-icon">⚡</div><div class="ch-btn-name">Bioélectricité</div><div class="ch-btn-count">25 questions</div></div>
+    </div>
+  </div>
+  <div class="setup-section">
+    <div class="setup-label">Nombre de questions</div>
+    <div class="count-row">
+      <button class="count-btn" onclick="setCount(5)" id="cnt-5">5</button>
+      <button class="count-btn selected" onclick="setCount(10)" id="cnt-10">10</button>
+      <button class="count-btn" onclick="setCount(20)" id="cnt-20">20</button>
+      <button class="count-btn" onclick="setCount(999)" id="cnt-all">Toutes</button>
+    </div>
+  </div>
+  <button class="start-btn" onclick="startQuiz()">Commencer →</button>
+</div>
+
+<div class="quiz-screen" id="quizScreen">
+  <div class="progress-header">
+    <span class="progress-label" id="progLabel">Question 1 / 10</span>
+    <span class="progress-score" id="progScore">Score : 0</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progBar" style="width:0%"></div></div>
+  <div class="q-chapter" id="qChapter"></div>
+  <div class="q-meta"><span class="q-num" id="qNum"></span><span class="q-diff" id="qDiff"></span></div>
+  <div class="q-text" id="qText"></div>
+  <div class="options" id="qOptions"></div>
+  <div class="feedback" id="qFeedback"></div>
+  <button class="next-btn" id="nextBtn" onclick="nextQ()">Question suivante →</button>
+</div>
+
+<div class="results" id="resultsScreen">
+  <div class="results-emoji" id="resEmoji"></div>
+  <h2 id="resTitle"></h2>
+  <div class="results-score" id="resScore"></div>
+  <div class="results-sub" id="resSub"></div>
+  <div class="results-breakdown" id="resBreakdown"></div>
+  <div class="results-actions">
+    <button class="btn-primary" onclick="restartQuiz()">Recommencer</button>
+    <button class="btn-primary" onclick="goSetup()" style="background:var(--accent2);">Changer les chapitres</button>
+    <a class="btn-secondary" href="passbiophysique.html">← Retour aux fiches</a>
+  </div>
+</div>
+
+<div class="mastery-section" id="masterySection">
+  <div class="mastery-title">ta progression par chapitre</div>
+  <div class="mastery-row"><div class="mastery-ch-name">🔬 Transport</div><div class="mastery-bar-wrap"><div class="mastery-bar-track"><div class="mastery-bar-fill" id="mbar-transport"></div></div></div><div class="mastery-pct" id="mpct-transport">—</div><div class="mastery-status" id="mstatus-transport"><span class="status-none">Non testé</span></div></div>
+  <div class="mastery-row"><div class="mastery-ch-name">🫀 Hémodynamique</div><div class="mastery-bar-wrap"><div class="mastery-bar-track"><div class="mastery-bar-fill" id="mbar-hemo"></div></div></div><div class="mastery-pct" id="mpct-hemo">—</div><div class="mastery-status" id="mstatus-hemo"><span class="status-none">Non testé</span></div></div>
+  <div class="mastery-row"><div class="mastery-ch-name">☢️ Radioactivité</div><div class="mastery-bar-wrap"><div class="mastery-bar-track"><div class="mastery-bar-fill" id="mbar-radio"></div></div></div><div class="mastery-pct" id="mpct-radio">—</div><div class="mastery-status" id="mstatus-radio"><span class="status-none">Non testé</span></div></div>
+  <div class="mastery-row"><div class="mastery-ch-name">🏥 Imagerie</div><div class="mastery-bar-wrap"><div class="mastery-bar-track"><div class="mastery-bar-fill" id="mbar-imagerie"></div></div></div><div class="mastery-pct" id="mpct-imagerie">—</div><div class="mastery-status" id="mstatus-imagerie"><span class="status-none">Non testé</span></div></div>
+  <div class="mastery-row"><div class="mastery-ch-name">⚡ Bioélectricité</div><div class="mastery-bar-wrap"><div class="mastery-bar-track"><div class="mastery-bar-fill" id="mbar-bioelec"></div></div></div><div class="mastery-pct" id="mpct-bioelec">—</div><div class="mastery-status" id="mstatus-bioelec"><span class="status-none">Non testé</span></div></div>
+  <div class="mastery-note">La barre se met à jour après chaque session. Plusieurs sessions sur le même chapitre affinent la maîtrise (moyenne pondérée 60/40).</div>
+</div>
+
+<footer>
+  <div class="footer-logo">Constance</div>
+  <div class="footer-copy">© Constance | @constance.cgh · Tous droits réservés</div>
+</footer>
+
+<script>
+const ALL_QUESTIONS = {
+  "transport": [
+    {
+      "d": "easy",
+      "q": "La diffusion simple se produit :",
+      "opts": [
+        "Contre le gradient, avec ATP",
+        "Selon le gradient, sans ATP",
+        "Uniquement pour les ions",
+        "Via des pompes membranaires"
+      ],
+      "a": 1,
+      "exp": "Transport passif : suit le gradient de concentration sans ATP. Exemple : O2 et CO2 traversent la membrane alvéolaire par diffusion simple."
+    },
+    {
+      "d": "easy",
+      "q": "En osmose, l'eau diffuse :",
+      "opts": [
+        "Du milieu hypertonique vers l'hypotonique",
+        "Du milieu hypotonique vers l'hypertonique",
+        "Dans le sens du gradient de soluté",
+        "Via des pompes ATP-dépendantes"
+      ],
+      "a": 1,
+      "exp": "L'eau diffuse du milieu le moins concentré en solutés (hypotonique) vers le plus concentré (hypertonique). NaCl 0,9% est isotonique -> pas de mouvement net d'eau."
+    },
+    {
+      "d": "easy",
+      "q": "Le potentiel de membrane au repos d'un neurone est :",
+      "opts": [
+        "0 mV",
+        "+70 mV",
+        "-70 mV",
+        "-55 mV"
+      ],
+      "a": 2,
+      "exp": "-70 mV : l'intérieur est négatif. Maintenu par la pompe Na/K ATPase et la perméabilité dominante au K+."
+    },
+    {
+      "d": "easy",
+      "q": "La pompe Na+/K+ ATPase sort/fait rentrer :",
+      "opts": [
+        "2 Na+ sortent, 3 K+ rentrent",
+        "3 Na+ sortent, 2 K+ rentrent",
+        "Équimolaire",
+        "Selon le gradient uniquement"
+      ],
+      "a": 1,
+      "exp": "3 Na+ sortent, 2 K+ rentrent par cycle, avec 1 ATP. Bilan : -1 charge nette par cycle -> contribue au potentiel de repos négatif."
+    },
+    {
+      "d": "easy",
+      "q": "Le NaCl 0,9% est utilisé en perfusion car :",
+      "opts": [
+        "Il est hypertonique",
+        "Il est hypotonique",
+        "Il est isotonique (~290 mOsm/L)",
+        "Il contient du glucose"
+      ],
+      "a": 2,
+      "exp": "NaCl 0,9% = isotonique -> pas de mouvement d'eau entre plasma et GR -> pas d'hémolyse ni de crénelation. Standard pour les perfusions de remplissage."
+    },
+    {
+      "d": "easy",
+      "q": "Le cotransport Na+/glucose (SGLT) est dit 'secondaire' car :",
+      "opts": [
+        "Il consomme 2 ATP",
+        "Il utilise le gradient Na+ créé par la pompe primaire",
+        "Il fonctionne uniquement dans le rein",
+        "Il transporte des ions"
+      ],
+      "a": 1,
+      "exp": "Secondaire = utilise l'énergie du gradient Na+ (maintenu par la pompe Na/K ATPase primaire) pour faire entrer le glucose contre son gradient. Pas de consommation directe d'ATP."
+    },
+    {
+      "d": "easy",
+      "q": "La pression oncotique plasmatique est exercée principalement par :",
+      "opts": [
+        "Les ions Na+",
+        "L'albumine et les protéines plasmatiques",
+        "Les globules rouges",
+        "Le glucose"
+      ],
+      "a": 1,
+      "exp": "Albumine (~3,5-5 g/dL) génère ~25 mmHg de pression oncotique. Elle ne traverse pas la paroi capillaire -> retient l'eau dans le compartiment plasmatique. Hypoalbuminémie -> oedèmes."
+    },
+    {
+      "d": "medium",
+      "q": "La loi de Fick prédit que le flux d'O2 alvéolaire diminue si :",
+      "opts": [
+        "La surface alvéolaire augmente",
+        "L'épaisseur membranaire diminue",
+        "La fibrose pulmonaire épaissit la membrane",
+        "La PO2 alvéolaire augmente"
+      ],
+      "a": 2,
+      "exp": "J = -D x (dC/dx) x S. Fibrose -> membrane plus épaisse (dx augmente) -> J diminue -> hypoxie d'effort. Signe précoce : désaturation à l'effort avant la désaturation au repos."
+    },
+    {
+      "d": "medium",
+      "q": "En hyperglycémie, la polyurie diabétique est due à :",
+      "opts": [
+        "Une hypersécrétion d'ADH",
+        "Le glucose non réabsorbé augmente l'osmolarité tubulaire -> diurèse osmotique",
+        "Une insuffisance rénale",
+        "Une augmentation du DFG"
+      ],
+      "a": 1,
+      "exp": "Glucose > seuil rénal (1,8 g/L) -> non réabsorbé par SGLT2 saturé -> reste dans le tubule -> osmolarité tubulaire augmente -> eau retenue dans le tubule -> polyurie. Traitement par gliflozines (inhibition SGLT2)."
+    },
+    {
+      "d": "medium",
+      "q": "E_K+ = -94 mV signifie que :",
+      "opts": [
+        "A -94 mV, le K+ entre massivement",
+        "A -94 mV, flux électrique = flux diffusion -> pas de mouvement net de K+",
+        "Le potentiel de repos est -94 mV",
+        "Le K+ ne diffuse jamais"
+      ],
+      "a": 1,
+      "exp": "Potentiel de Nernst : à E_K, les forces électrique et chimique s'équilibrent exactement. Vm repos = -70 mV (entre E_K = -94 mV et E_Na = +60 mV) selon les perméabilités relatives."
+    },
+    {
+      "d": "medium",
+      "q": "Les anesthésiques locaux (lidocaïne) bloquent :",
+      "opts": [
+        "La pompe Na/K",
+        "Les canaux Na+ voltage-dépendants -> pas de PA",
+        "Les canaux K+",
+        "La transmission synaptique"
+      ],
+      "a": 1,
+      "exp": "Blocage des canaux Na+ voltage-dépendants -> la phase 0 de dépolarisation (entrée Na+) ne peut plus se produire -> pas de PA -> pas de conduction douloureuse. Réversible."
+    },
+    {
+      "d": "medium",
+      "q": "Les gliflozines (inhibiteurs SGLT2) traitent le diabète en :",
+      "opts": [
+        "Stimulant l'insuline",
+        "Inhibant SGLT2 -> glucose éliminé dans les urines",
+        "Augmentant la sensibilité à l'insuline",
+        "Bloquant l'absorption intestinale"
+      ],
+      "a": 1,
+      "exp": "SGLT2 réabsorbe 90% du glucose filtré. Son inhibition -> glycosurie -> réduction glycémie. Effet bonus : natriurèse légère -> bénéfice cardiovasculaire prouvé (réduction mortalité IC)."
+    },
+    {
+      "d": "medium",
+      "q": "En hyponatrémie de dilution, les cellules cérébrales :",
+      "opts": [
+        "Se ratatinent",
+        "Gonflent par entrée d'eau osmotique depuis le plasma hypotonique",
+        "Ne changent pas de volume",
+        "Perdent activement des ions"
+      ],
+      "a": 1,
+      "exp": "Plasma hypotonique -> eau entre dans les cellules par osmose -> oedème cérébral -> céphalées, confusion, convulsions. Correction doit être lente (< 8-10 mEq/L/24h) pour éviter la myélinolyse centropontine."
+    },
+    {
+      "d": "medium",
+      "q": "La loi de Starling prédit un oedème si :",
+      "opts": [
+        "La pression hydrostatique capillaire diminue",
+        "La pression oncotique augmente",
+        "Pression hydrostatique > pression oncotique",
+        "La perméabilité diminue"
+      ],
+      "a": 2,
+      "exp": "Starling : Jv = Kf[(Pc-Pi) - sigma(πc-πi)]. Si Pc > πc -> filtration nette -> oedème. IC (Pc élevée) ou hypoalbuminémie (πc basse) -> tous deux favorisent les oedèmes."
+    },
+    {
+      "d": "hard",
+      "q": "Le PA cardiaque dure ~300 ms (vs ~1 ms neuronal) à cause de :",
+      "opts": [
+        "La taille du coeur",
+        "Le plateau calcique (ICaL) qui maintient la dépolarisation",
+        "La conduction plus lente",
+        "Des canaux Na+ différents"
+      ],
+      "a": 1,
+      "exp": "Phase de plateau (phase 2) : ouverture des canaux calciques lents L (ICaL) -> entrée prolongée de Ca2+ -> maintien de la dépolarisation -> contraction prolongée -> pas de tétanos cardiaque possible. Les inhibiteurs calciques (vérapamil) bloquent ICaL."
+    },
+    {
+      "d": "hard",
+      "q": "L'aquaporine 2 (AQP2) dans le tube collecteur est régulée par :",
+      "opts": [
+        "L'aldostérone",
+        "L'ADH (vasopressine) -> insertion d'AQP2 -> réabsorption d'eau",
+        "Le facteur atrial natriurétique",
+        "Le glucose"
+      ],
+      "a": 1,
+      "exp": "ADH -> récepteur V2 -> AMPc -> PKA -> phosphorylation AQP2 -> insertion membrane apicale -> perméabilité à l'eau augmente -> urine concentrée. Diabète insipide central : déficit ADH -> urine diluée."
+    },
+    {
+      "d": "hard",
+      "q": "En acidose métabolique, l'hyperkaliémie associée est due à :",
+      "opts": [
+        "Production accrue de K+",
+        "Échange H+/K+ : H+ entre dans les cellules, K+ sort",
+        "Inhibition de la pompe Na/K",
+        "Augmentation réabsorption rénale K+"
+      ],
+      "a": 1,
+      "exp": "Acidose -> [H+] plasmatique augmente -> H+ entre dans les cellules (tampons intracellulaires) -> K+ sort pour maintenir l'électroneutralité -> hyperkaliémie. Règle : pH -0,1 -> K+ +0,5-0,7 mEq/L."
+    },
+    {
+      "d": "hard",
+      "q": "La diffusion facilitée se distingue du transport actif car :",
+      "opts": [
+        "Elle ne nécessite pas de protéines",
+        "Elle suit le gradient, sans ATP, mais via des protéines (canaux, perméases)",
+        "Elle est toujours plus rapide",
+        "Elle peut aller contre le gradient"
+      ],
+      "a": 1,
+      "exp": "Diffusion facilitée : passif (suit le gradient) + protéines de transport (GLUT, canaux ioniques). Saturable. Pas d'ATP. Transport actif : contre le gradient + ATP direct (pompe primaire) ou indirect (cotransport secondaire)."
+    },
+    {
+      "d": "hard",
+      "q": "Dans le syndrome néphrotique, les oedèmes sont dus à :",
+      "opts": [
+        "L'albumine est diurétique",
+        "Fuite d'albumine -> πc chute -> réabsorption insuffisante -> oedèmes",
+        "L'albumine transporte des diurétiques",
+        "La filtration glomérulaire augmente"
+      ],
+      "a": 1,
+      "exp": "Protéinurie massive (> 3,5 g/j) -> hypoalbuminémie -> πc chute -> la pression oncotique ne compense plus la filtration hydrostatique -> oedèmes généralisés (anasarque). Traitement : traiter la cause + albumine IV + diurétiques."
+    },
+    {
+      "d": "hard",
+      "q": "CFTR muté dans la mucoviscidose est un canal :",
+      "opts": [
+        "Na+",
+        "Cl- ATP-dépendant",
+        "Cl- régulé par l'AMPc (passif)",
+        "Pompe Ca2+"
+      ],
+      "a": 2,
+      "exp": "CFTR = canal Cl- passif (suit le gradient) dont l'ouverture est régulée par l'AMPc (PKA phosphoryle CFTR). Mutation -> Cl- (et eau) ne sortent pas -> mucus épais -> obstruction bronchique, pancréatique. Nouvelle thérapeutique : modulateurs CFTR (ivacaftor, tezacaftor)."
+    },
+    {
+      "d": "hard",
+      "q": "La loi de Fick appliquée au poumon : la capacité de diffusion DL diminue dans :",
+      "opts": [
+        "L'emphysème ET la fibrose pulmonaire",
+        "L'exercice physique",
+        "L'hyperventilation",
+        "La polyglobulie"
+      ],
+      "a": 0,
+      "exp": "DL = D x S / Δx. Emphysème : destruction des septa -> S diminue. Fibrose : épaississement membranaire -> Δx augmente. Les deux réduisent DL -> hypoxie d'effort. Mesure par test au CO (DLCO) en spirométrie."
+    },
+    {
+      "d": "hard",
+      "q": "L'équation de Goldman donne un Vm plus dépolarisé si :",
+      "opts": [
+        "La perméabilité K+ augmente",
+        "La perméabilité Na+ augmente (ENa = +60 mV attire Vm vers +60 mV)",
+        "[K+]i augmente",
+        "La pompe Na/K est activée"
+      ],
+      "a": 1,
+      "exp": "Vm = f(PK, PNa, PCl et concentrations). Si PNa >> PK -> Vm se rapproche de ENa (+60 mV). C'est ce qui se passe lors de la phase 0 du PA : ouverture des canaux Na+ -> PNa très grande -> Vm monte à +30 mV."
+    },
+    {
+      "d": "hard",
+      "q": "Un bain de dialyse hypotonique risque de provoquer :",
+      "opts": [
+        "Une hypernatrémie",
+        "Une hémolyse par entrée d'eau dans les GR -> gonflement -> éclatement",
+        "Une hyperkaliémie",
+        "Une acidose"
+      ],
+      "a": 1,
+      "exp": "Si le dialysat est hypotonique -> eau entre dans les GR par osmose -> gonflement -> hémolyse -> hémoglobinémie -> insuffisance rénale sur hémoglobinurie. La composition du dialysat est strictement contrôlée."
+    },
+    {
+      "d": "hard",
+      "q": "La conductance d'un canal ionique unique (en pS) est mesurée par :",
+      "opts": [
+        "Électroencéphalogramme",
+        "Patch-clamp en configuration cellule entière",
+        "Patch-clamp en configuration 'inside-out' ou 'outside-out' (canal unique)",
+        "Voltamétrie cyclique"
+      ],
+      "a": 2,
+      "exp": "Patch-clamp canal unique (inside-out ou outside-out) : pipette de verre en contact avec un petit patch membranaire contenant idéalement 1 seul canal -> courant de quelques pA -> conductance g = I / Vm (en picosiemens). Prix Nobel 1991 Neher et Sakmann."
+    },
+    {
+      "d": "hard",
+      "q": "Le cotransport Na+/H+ (NHE3) du tubule proximal est activé par :",
+      "opts": [
+        "L'alcalose métabolique",
+        "L'acidose -> augmentation [H+] intracellulaire -> NHE3 activé -> H+ excrété, Na+ réabsorbé",
+        "L'hypernatrémie",
+        "L'aldostérone directement"
+      ],
+      "a": 1,
+      "exp": "NHE3 : échange 1 Na+ (entrant) contre 1 H+ (sortant vers la lumière tubulaire). Acidose -> [H+]i augmente -> NHE3 activé -> réabsorption Na+ + excrétion H+ -> acidurie -> correction acidose. L'aldostérone active NHE3 indirectement en augmentant la réabsorption Na+/K+ distale."
+    }
+  ],
+  "hemo": [
+    {
+      "d": "easy",
+      "q": "Le débit cardiaque au repos est d'environ :",
+      "opts": [
+        "1 L/min",
+        "3 L/min",
+        "5 L/min",
+        "10 L/min"
+      ],
+      "a": 2,
+      "exp": "Q = FC x VES = 70 x 70 mL = 4900 mL/min ~5 L/min. À l'effort maximal chez un sportif : jusqu'à 20-25 L/min."
+    },
+    {
+      "d": "easy",
+      "q": "La PA normale est :",
+      "opts": [
+        "90/60 mmHg",
+        "120/80 mmHg",
+        "150/90 mmHg",
+        "180/100 mmHg"
+      ],
+      "a": 1,
+      "exp": "< 120/80 mmHg = normale. HTA grade 1 : 130-139/80-89. HTA grade 2 : >= 140/90. PA = Q x RVP."
+    },
+    {
+      "d": "easy",
+      "q": "L'hématocrite normal chez l'homme est :",
+      "opts": [
+        "20-30%",
+        "40-52%",
+        "55-65%",
+        "70-80%"
+      ],
+      "a": 1,
+      "exp": "Homme : 40-52%, femme : 36-47%. Principal déterminant de la viscosité sanguine. Polyglobulie -> hyperviscosité -> risque thrombotique."
+    },
+    {
+      "d": "easy",
+      "q": "Les veines contiennent quel % du volume sanguin total :",
+      "opts": [
+        "10%",
+        "30%",
+        "70%",
+        "90%"
+      ],
+      "a": 2,
+      "exp": "~70% du volume sanguin dans les veines (très compliantes). Réservoir mobilisable lors de l'effort par venoconstriction -> augmente retour veineux -> loi de Frank-Starling."
+    },
+    {
+      "d": "easy",
+      "q": "La loi de Poiseuille (Q prop r4) : rayon /2 -> débit / :",
+      "opts": [
+        "2",
+        "4",
+        "8",
+        "16"
+      ],
+      "a": 3,
+      "exp": "Q proportionnel à r4. r/2 -> Q/16. Sténose coronarienne de 50% du rayon -> débit réduit de 94%. Le r4 est le point le plus contre-intuitif et le plus testé au PASS."
+    },
+    {
+      "d": "easy",
+      "q": "La fraction d'éjection (FE) normale du VG est :",
+      "opts": [
+        "< 30%",
+        "35-45%",
+        "55-70%",
+        "80-90%"
+      ],
+      "a": 2,
+      "exp": "FE normale >= 55%. FE < 40% -> IC systolique (HFrEF). Mesurée en échocardiographie (méthode de Simpson biplan)."
+    },
+    {
+      "d": "easy",
+      "q": "La PAM pour 120/80 mmHg est :",
+      "opts": [
+        "100 mmHg",
+        "93 mmHg",
+        "80 mmHg",
+        "110 mmHg"
+      ],
+      "a": 1,
+      "exp": "PAM = PAD + PP/3 = 80 + 40/3 = 80 + 13,3 ≈ 93 mmHg. La diastole dure 2/3 du cycle cardiaque -> pondération par 1/3."
+    },
+    {
+      "d": "medium",
+      "q": "Les bêtabloquants améliorent la FE en IC systolique car :",
+      "opts": [
+        "Ils augmentent la FC",
+        "FC diminuée -> remplissage amélioré -> VES augmente + effets anti-remodelage",
+        "Ils augmentent les RVP",
+        "Ils sont vasodilatateurs directs"
+      ],
+      "a": 1,
+      "exp": "Paradoxe du bêtabloquant : réduction FC -> plus de temps de remplissage -> VES augmente. Effets anti-remodelage (réduction fibrose, anti-apoptose). Bénéfice sur la mortalité prouvé (métoprolol, bisoprolol, carvédilol)."
+    },
+    {
+      "d": "medium",
+      "q": "L'HTA se traite en réduisant PA = Q x RVP via :",
+      "opts": [
+        "Uniquement la PAS",
+        "Q (diurétiques, bêtabloquants) et/ou RVP (IEC, ARA2, inhibiteurs calciques)",
+        "Uniquement la FC",
+        "Uniquement la rigidité artérielle"
+      ],
+      "a": 1,
+      "exp": "Multi-cibles : diurétiques (volémie ↓ -> Q ↓), bêtabloquants (FC ↓), IEC/ARA2 (vasodilatation -> RVP ↓), inhibiteurs calciques (vasodilatation artérielle). Objectif : PA < 130/80 mmHg (ESC 2023)."
+    },
+    {
+      "d": "medium",
+      "q": "L'effet Fåhræus-Lindqvist décrit :",
+      "opts": [
+        "Viscosité augmentée dans les petits vaisseaux",
+        "Viscosité apparente réduite dans les capillaires (GR en file -> couche plasma marginale)",
+        "Rigidité artérielle liée à l'âge",
+        "Augmentation débit dans les artérioles"
+      ],
+      "a": 1,
+      "exp": "Dans les vaisseaux < 300 µm, les GR s'axilisent -> couche de plasma pauvre en GR en périphérie -> viscosité apparente diminuée. Paradoxe bénéfique pour la microcirculation."
+    },
+    {
+      "d": "medium",
+      "q": "Une sténose carotidienne de 70% du diamètre réduit le débit de :",
+      "opts": [
+        "70%",
+        "50%",
+        "~95%",
+        "30%"
+      ],
+      "a": 2,
+      "exp": "Diamètre -70% -> rayon -70% -> r résiduel = 30% -> Q = (0,3)4 = 0,0081 = 0,81% du débit initial -> réduction de 99%. Une sténose sévère est catastrophique pour le débit distal."
+    },
+    {
+      "d": "medium",
+      "q": "Une PP élevée (> 60 mmHg) indique :",
+      "opts": [
+        "Une hypotension orthostatique",
+        "Rigidité artérielle pathologique - marqueur cardiovasculaire",
+        "Une hypovolémie",
+        "Un bloc de branche"
+      ],
+      "a": 1,
+      "exp": "PP = PAS - PAD. PP > 60 mmHg -> artères rigides (artériosclérose) -> PAS très haute, PAD basse. Marqueur de risque CV indépendant. Vieillissement vasculaire accéléré."
+    },
+    {
+      "d": "medium",
+      "q": "En polyglobulie secondaire, la saignée vise à :",
+      "opts": [
+        "Augmenter le volume sanguin",
+        "Réduire l'Ht et la viscosité -> améliorer la microcirculation",
+        "Stimuler l'EPO",
+        "Diluer les médicaments"
+      ],
+      "a": 1,
+      "exp": "BPCO sévère -> hypoxie -> EPO ↑ -> polyglobulie -> Ht > 55% -> hyperviscosité. Saignée (phlébotomie) : retrait 300-500 mL -> Ht diminue -> viscosité diminue. Objectif Ht < 55% chez l'homme."
+    },
+    {
+      "d": "medium",
+      "q": "La VOP (vélocité onde de pouls) augmente avec :",
+      "opts": [
+        "Compliance artérielle",
+        "Rigidité artérielle",
+        "Fréquence cardiaque",
+        "Volume sanguin"
+      ],
+      "a": 1,
+      "exp": "VOP proportionnelle à la racine de la rigidité artérielle. Normale : 7-9 m/s. VOP > 10 m/s -> artériosclérose pathologique. Marqueur de risque CV validé."
+    },
+    {
+      "d": "hard",
+      "q": "La loi de Frank-Starling cardiaque prédit que :",
+      "opts": [
+        "Le VES diminue si la précharge augmente",
+        "VES augmente si précharge augmente - jusqu'au seuil optimal",
+        "VES constant quelles que soient les conditions",
+        "La FC compense toujours"
+      ],
+      "a": 1,
+      "exp": "Plus les fibres myocardiques sont étirées (précharge) -> plus elles se contractent fort (jusqu'à longueur optimale des sarcomères ~2,2 µm). Autorégulation du débit cardiaque. En IC décompensée, le coeur est sur le plateau ou en descente de la courbe."
+    },
+    {
+      "d": "hard",
+      "q": "L'équation de Bernoulli simplifiée en écho-Doppler (ΔP = 4V2) permet de :",
+      "opts": [
+        "Calculer le débit uniquement",
+        "Estimer le gradient de pression à travers une sténose valvulaire depuis la vitesse Doppler",
+        "Mesurer la viscosité",
+        "Calculer les RVP"
+      ],
+      "a": 1,
+      "exp": "ΔP = 4 x Vmax2 (en mmHg si V en m/s). Sténose aortique serrée : Vmax > 4 m/s -> ΔP > 64 mmHg -> sténose sévère -> indication chirurgicale. Application directe de Bernoulli à la cardiologie non invasive."
+    },
+    {
+      "d": "hard",
+      "q": "En choc cardiogénique, la PA chute car :",
+      "opts": [
+        "Q diminue (VES effondré) - même si RVP augmente, PA = Q x RVP reste basse",
+        "La RVP diminue",
+        "Le volume sanguin diminue",
+        "La FC s'effondre"
+      ],
+      "a": 0,
+      "exp": "VES effondré -> Q ↓. Sympathique compense (FC ↑, vasoconstriction -> RVP ↑) mais Q trop bas -> PA basse malgré RVP élevée. Cercle vicieux : ischémie coronarienne -> détérioration myocardique."
+    },
+    {
+      "d": "hard",
+      "q": "La RVP normale est d'environ :",
+      "opts": [
+        "800 dyn.s.cm-5",
+        "80 dyn.s.cm-5 (10x inférieure aux RVS)",
+        "1600 dyn.s.cm-5",
+        "Identique aux RVS"
+      ],
+      "a": 1,
+      "exp": "RVP ~80 dyn.s.cm-5 vs RVS ~800. VD travaille 10x moins fort -> paroi plus fine. HTAP (RVP ↑) -> VD surchargé -> insuffisance droite (cor pulmonale)."
+    },
+    {
+      "d": "hard",
+      "q": "Le bruit de Korotkoff correspond à :",
+      "opts": [
+        "Contraction cardiaque",
+        "Turbulences quand P brassard < PAS -> sang passe par intermittence",
+        "Fermeture des valves",
+        "Dépolarisation ventriculaire"
+      ],
+      "a": 1,
+      "exp": "Brassard dégonflé : quand P_brassard = PAS -> premier bruit (turbulences, flux pulsé) -> PAS. Bruits disparaissent quand P_brassard = PAD (flux continu laminaire à nouveau) -> PAD."
+    },
+    {
+      "d": "hard",
+      "q": "La réserve coronarienne normale est de :",
+      "opts": [
+        "1,5",
+        "3-5",
+        "10",
+        "0,8"
+      ],
+      "a": 1,
+      "exp": "Débit coronarien peut augmenter de 3 à 5x le débit basal à l'effort maximal (vasodilatation artériolaire). Sténose réduit cette réserve. Tests de stress (scintigraphie, écho de stress) explorent la réserve coronarienne."
+    },
+    {
+      "d": "hard",
+      "q": "L'impédance aortique augmente avec :",
+      "opts": [
+        "La compliance aortique",
+        "Rigidité aortique -> postcharge VG augmentée -> HVG",
+        "Réduction du VES",
+        "Hypotension"
+      ],
+      "a": 1,
+      "exp": "Artériosclérose -> aorte rigide -> impédance ↑ -> VG doit travailler plus fort -> HVG (hypertrophie ventriculaire gauche) -> risque IC à FE préservée (HFpEF)."
+    },
+    {
+      "d": "hard",
+      "q": "La méthode de Simpson échocardiographique calcule :",
+      "opts": [
+        "La vitesse du flux aortique",
+        "VES = VTDVG - VTSVG par planimétrie des contours VG en 2 plans",
+        "Les pressions par Doppler",
+        "Réservée aux tachycardies"
+      ],
+      "a": 1,
+      "exp": "Simpson biplan : tracé des contours VG en 4 et 2 cavités à la fin de diastole et systole -> volumes VTDVG et VTSVG -> FE = (VTDVG - VTSVG) / VTDVG x 100. Standard pour la mesure de FE en echocardiographie."
+    },
+    {
+      "d": "hard",
+      "q": "En hypovolémie sévère (choc hémorragique), la réponse compensatrice est :",
+      "opts": [
+        "Bradycardie + vasodilatation",
+        "Tachycardie + vasoconstriction (réflexe barorécepteur) + redistribution vers organes vitaux",
+        "Augmentation VES uniquement",
+        "Diminution RVP"
+      ],
+      "a": 1,
+      "exp": "Barorécepteurs -> système sympathique -> tachycardie + vasoconstriction artériolaire (RVP ↑). Venoconstriction -> mobilise réservoir veineux -> augmente retour veineux. Limite : si saignement continue -> décompensation."
+    },
+    {
+      "d": "hard",
+      "q": "En HTAP (PAP moy > 25 mmHg), le VD est en difficulté car :",
+      "opts": [
+        "Paroi trop épaisse",
+        "Paroi fine adaptée aux basses pressions -> incapable de la postcharge imposée",
+        "VD reçoit sang désoxygéné",
+        "FC trop basse"
+      ],
+      "a": 1,
+      "exp": "VD normal : paroi fine (~3-5 mm), pressions normales 15-30 mmHg. En HTAP (jusqu'à 80-100 mmHg) -> VD dilaté -> IC droite (cor pulmonale). Traitements : prostacyclines, iPDE5 (sildénafil), antagonistes endothéline (bosentan)."
+    }
+  ],
+  "radio": [
+    {
+      "d": "easy",
+      "q": "Le Becquerel (Bq) est l'unité de :",
+      "opts": [
+        "Dose absorbée",
+        "Activité radioactive (1 Bq = 1 désintégration/s)",
+        "Dose efficace",
+        "Énergie des rayonnements"
+      ],
+      "a": 1,
+      "exp": "1 Bq = 1 désintégration/s. Ne pas confondre : Gray (dose absorbée, J/kg) et Sievert (dose efficace = risque biologique)."
+    },
+    {
+      "d": "easy",
+      "q": "Après 2 demi-vies, quelle fraction reste :",
+      "opts": [
+        "1/2",
+        "1/4",
+        "1/8",
+        "1/3"
+      ],
+      "a": 1,
+      "exp": "Après n demi-vies : N = N0/2n. Après 2 t½ : N0/4. Après 3 t½ : N0/8. Après 10 t½ : N0/1024 ≈ 0,1%."
+    },
+    {
+      "d": "easy",
+      "q": "Le rayonnement le plus pénétrant est :",
+      "opts": [
+        "Alpha",
+        "Bêta",
+        "Gamma",
+        "Infrarouge"
+      ],
+      "a": 2,
+      "exp": "Gamma (photons haute énergie) : très pénétrant (plomb ou béton épais nécessaire). Alpha : stoppé par la peau. Bêta : quelques mm d'aluminium. Ionisation inversement corrélée à la pénétration."
+    },
+    {
+      "d": "easy",
+      "q": "Le facteur de pondération wR du rayonnement alpha est :",
+      "opts": [
+        "1",
+        "5",
+        "10",
+        "20"
+      ],
+      "a": 3,
+      "exp": "wR = 20 pour alpha, 1 pour gamma et beta. 1 Gy d'alpha = 20 Sv (20x plus dangereux biologiquement que 1 Gy de gamma). D'où le danger du radon inhalé."
+    },
+    {
+      "d": "easy",
+      "q": "La demi-vie du Tc-99m (scintigraphie) est :",
+      "opts": [
+        "6 heures",
+        "6 jours",
+        "6 semaines",
+        "6 ans"
+      ],
+      "a": 0,
+      "exp": "t½ Tc-99m = 6h. Idéal : assez court (après 24h = 4 t½, il reste 6,25%), assez long pour l'examen (2-4h post-injection)."
+    },
+    {
+      "d": "easy",
+      "q": "ALARA signifie :",
+      "opts": [
+        "As Large As Reasonably Acceptable",
+        "As Low As Reasonably Achievable",
+        "Atomic Level of Radiation Activity",
+        "Authorized Level for Radiation Areas"
+      ],
+      "a": 1,
+      "exp": "ALARA = As Low As Reasonably Achievable. Principe d'optimisation : réduire l'exposition au minimum compatible avec l'objectif. L'un des 3 principes de radioprotection (justification, optimisation, limitation)."
+    },
+    {
+      "d": "easy",
+      "q": "La dose naturelle annuelle en France est environ :",
+      "opts": [
+        "0,1 mSv",
+        "1 mSv",
+        "3 mSv",
+        "100 mSv"
+      ],
+      "a": 2,
+      "exp": "~2,9 mSv/an (radon ~1,5 mSv, rayonnement cosmique, terrestre, interne). Dose limite public = 1 mSv/an au-delà du fond naturel. Travailleurs nucléaire = 20 mSv/an."
+    },
+    {
+      "d": "medium",
+      "q": "La datation au C-14 est limitée à ~50 000 ans car :",
+      "opts": [
+        "C-14 est stable 50 000 ans",
+        "Après ~9 t½, < 0,2% reste -> signal trop faible pour être mesuré précisément",
+        "C-14 produit uniquement par les vivants",
+        "t½ du C-14 est 50 000 ans"
+      ],
+      "a": 1,
+      "exp": "t½(C-14) = 5730 ans. Après 50 000 ans ~8,7 t½ -> 0,2% reste. Signal détectable par spectrométrie de masse (AMS) mais avec grande incertitude au-delà."
+    },
+    {
+      "d": "medium",
+      "q": "Le F-18 FDG s'accumule dans les tumeurs car :",
+      "opts": [
+        "F-18 a une affinité spécifique pour les cellules cancéreuses",
+        "Effet Warburg : glycolyse anaérobie -> captation accrue de FDG",
+        "FDG éliminé uniquement par cellules normales",
+        "Tumeurs mieux vascularisées"
+      ],
+      "a": 1,
+      "exp": "Effet Warburg : cellules cancéreuses -> glycolyse anaérobie même en présence O2 -> surexpression GLUT -> captation accrue de FDG. Hyperfixation -> détection métastases. Gold standard pour bilan d'extension des cancers solides."
+    },
+    {
+      "d": "medium",
+      "q": "L'effet Compton (dominant en radiologie diagnostique) est :",
+      "opts": [
+        "Absorption totale photon -> éjection d'un électron",
+        "Diffusion partielle photon + éjection électron -> photon dévié de moindre énergie",
+        "Création paire e-/e+",
+        "Réflexion totale"
+      ],
+      "a": 1,
+      "exp": "Compton (50 keV-10 MeV) : photon dévié + électron éjecté. Dominant en radiologie diagnostique (100-150 kV). Responsable du rayonnement diffusé qui dégrade la qualité d'image et expose les praticiens."
+    },
+    {
+      "d": "medium",
+      "q": "Tripler la distance à la source (loi 1/r2) divise l'intensité par :",
+      "opts": [
+        "3",
+        "9",
+        "6",
+        "27"
+      ],
+      "a": 1,
+      "exp": "I proportionnelle à 1/r2. Distance x3 -> I /9. De 1 m à 3 m : exposition divisée par 9. Moyen le plus simple de radioprotection avec la distance."
+    },
+    {
+      "d": "medium",
+      "q": "Le tablier plombé protège principalement contre :",
+      "opts": [
+        "Rayons X primaires",
+        "Rayons X diffusés (Compton) émis par le patient",
+        "Rayons gamma haute énergie",
+        "Neutrons"
+      ],
+      "a": 1,
+      "exp": "Le faisceau primaire va vers le détecteur (pas le praticien positionné correctement). Le tablier (0,25-0,5 mm Pb équivalent) protège contre le diffusé Compton qui émane du patient dans toutes les directions. Atténuation ~90%."
+    },
+    {
+      "d": "medium",
+      "q": "La scintigraphie osseuse détecte les métastases avant la radio car :",
+      "opts": [
+        "Doses plus élevées",
+        "Révèle l'activité ostéoblastique précoce avant toute destruction visible (>30-50% nécessaire en radio)",
+        "Meilleure résolution",
+        "Non irradiante"
+      ],
+      "a": 1,
+      "exp": "Tc-99m MDP fixé par les ostéoblastes actifs (remaniement osseux = réponse précoce). Détectable avant lyse visible en radio. Sensibilité ~85-90% pour métastases ostéoblastiques. Limite : spécificité faible (fractures, arthrose aussi hyperfixants)."
+    },
+    {
+      "d": "medium",
+      "q": "Après 4 t½ du Tc-99m (6h), il reste quelle fraction de l'activité :",
+      "opts": [
+        "50%",
+        "25%",
+        "12,5%",
+        "6,25%"
+      ],
+      "a": 3,
+      "exp": "4 t½ -> A = A0/2^4 = A0/16 = 6,25%. Après 24h, activité négligeable. Patient peut côtoyer ses proches normalement (sauf nourrissons et femmes enceintes dans les premières heures)."
+    },
+    {
+      "d": "hard",
+      "q": "La création de paires (gamma -> e- + e+) nécessite :",
+      "opts": [
+        "100 keV",
+        "511 keV",
+        "1,022 MeV",
+        "10 MeV"
+      ],
+      "a": 2,
+      "exp": "E = mc2 : masse électron = 0,511 MeV. Création e- + e+ = 2 x 0,511 = 1,022 MeV minimum. En TEP, annihilation e+/e- -> 2 photons de 511 keV à 180°. Détecteurs TEP optimisés à 511 keV."
+    },
+    {
+      "d": "hard",
+      "q": "Curiethérapie prostate I-125 (t½=60j) : après 1 an (~6 t½), activité résiduelle :",
+      "opts": [
+        "50%",
+        "12,5%",
+        "1,6%",
+        "0,1%"
+      ],
+      "a": 2,
+      "exp": "6 t½ : A = A0/2^6 = A0/64 ≈ 1,6%. Après 1 an, activité < 2% -> négligeable. Les grains restent à vie. Dose totale délivrée à la prostate sur 6-12 mois ~144 Gy."
+    },
+    {
+      "d": "hard",
+      "q": "L'épaisseur de demi-atténuation (HVL) selon Beer-Lambert est :",
+      "opts": [
+        "ln2/mu = 0,693/mu",
+        "1/mu",
+        "mu/2",
+        "2mu"
+      ],
+      "a": 0,
+      "exp": "I0/2 = I0 x e^(-mu x HVL) -> mu x HVL = ln2 -> HVL = ln2/mu = 0,693/mu. Analogue à t½ en radioactivité. Pour Pb face aux gamma 200 keV : HVL ≈ 4 mm Pb."
+    },
+    {
+      "d": "hard",
+      "q": "La dosimétrie interne (MIRD) calcule la dose des organes en intégrant :",
+      "opts": [
+        "Uniquement l'activité injectée",
+        "Activité + biodistribution + demi-vie effective + facteur S (énergie déposée/désintégration)",
+        "Uniquement la demi-vie physique",
+        "La distance entre organes"
+      ],
+      "a": 1,
+      "exp": "MIRD : Dose = A x ΣS x T_eff. T_eff = (T_phys x T_bio) / (T_phys + T_bio). Utilisée pour optimiser les protocoles de radiothérapie interne vectorisée (cancer thyroïde I-131, PRRT tumeurs neuroendocrines)."
+    },
+    {
+      "d": "hard",
+      "q": "Un patient reçoit 5 Gy de gamma (wR=1) et 0,5 Gy d'alpha (wR=20). La dose efficace totale est :",
+      "opts": [
+        "5,5 Sv",
+        "15 Sv",
+        "5 Sv",
+        "20 Sv"
+      ],
+      "a": 1,
+      "exp": "Dose efficace = somme (dose absorbée x wR). Gamma : 5 x 1 = 5 Sv. Alpha : 0,5 x 20 = 10 Sv. Total = 15 Sv. 0,5 Gy d'alpha cause autant de dommages que 10 Gy de gamma."
+    },
+    {
+      "d": "hard",
+      "q": "La BNCT (capture neutronique au bore) exploite :",
+      "opts": [
+        "Radioactivité naturelle du bore",
+        "Réaction 10B + neutron -> 7Li + alpha : les alpha de courte portée détruisent la cellule tumorale",
+        "Effet photoélectrique du bore",
+        "Diffusion Compton"
+      ],
+      "a": 1,
+      "exp": "Concentrer 10B dans les cellules tumorales -> irradiation par neutrons thermiques -> alpha de portée 5-9 µm (taille d'une cellule) -> destruction sélective. Prometteur pour glioblastomes et cancers ORL récidivants."
+    },
+    {
+      "d": "hard",
+      "q": "Le radon-222 cause des cancers du poumon car :",
+      "opts": [
+        "Il est cancérigène chimiquement",
+        "Ses descendants solides (Po-218, Po-214) se déposent dans les bronches et émettent des alpha au contact de l'épithélium",
+        "Il émet des gamma très pénétrants",
+        "Sa demi-vie est trop courte pour être dangereux"
+      ],
+      "a": 1,
+      "exp": "Le radon gazeux serait expiré. Mais ses descendants solides se déposent dans les bronches - Po-218 et Po-214 (émetteurs alpha) irradient directement l'épithélium -> mutations -> carcinome broncho-pulmonaire. 2ème cause après le tabac."
+    },
+    {
+      "d": "hard",
+      "q": "La stérilisation gamma des dispositifs médicaux est validée à :",
+      "opts": [
+        "1 kGy",
+        "25 kGy",
+        "1 Gy",
+        "100 kGy"
+      ],
+      "a": 1,
+      "exp": "25 kGy (ISO 11137) -> SAL 10^-6 (probabilité < 1/million de micro-organisme viable). Avantages : pénètre emballages fermés, sans résidu chimique, applicable aux thermosensibles."
+    },
+    {
+      "d": "hard",
+      "q": "La scintigraphie de perfusion myocardique au Tc-99m MIBI (SPECT) compare :",
+      "opts": [
+        "Uniquement le débit coronarien au repos",
+        "Perfusion effort vs repos : défaut réversible = ischémie, défaut fixe = nécrose",
+        "La morphologie coronarienne",
+        "La contractilité myocardique"
+      ],
+      "a": 1,
+      "exp": "Injection à l'effort (pharmacologique ou physique) + repos. Défaut effort seulement (réversible) = ischémie par sténose (myocarde viable). Défaut permanent (fixe) = nécrose (cicatrice). Sensibilité ~87% pour sténose > 70%."
+    }
+  ],
+  "imagerie": [
+    {
+      "d": "easy",
+      "q": "Quel examen est non irradiant :",
+      "opts": [
+        "Radiographie",
+        "Scanner",
+        "IRM",
+        "Scintigraphie"
+      ],
+      "a": 2,
+      "exp": "IRM = champ magnétique + ondes radio -> aucune radiation ionisante. L'échographie est aussi non irradiante. Radio, scanner, scintigraphie, TEP -> rayonnements ionisants."
+    },
+    {
+      "d": "easy",
+      "q": "En radiographie, les os apparaissent blancs car :",
+      "opts": [
+        "Ils émettent de la lumière",
+        "Densité élevée -> absorbent les X -> peu transmis -> blancs",
+        "Ils contiennent du calcium fluorescent",
+        "Ils réfléchissent les X"
+      ],
+      "a": 1,
+      "exp": "Beer-Lambert : I = I0 x e^(-mu x x). Grand mu (os, calcium) -> forte absorption -> peu de photons transmis -> blanc. Air (mu ~0) -> tout transmis -> noir."
+    },
+    {
+      "d": "easy",
+      "q": "La valeur Hounsfield de l'eau est :",
+      "opts": [
+        "-1000 HU",
+        "-100 HU",
+        "0 HU",
+        "+1000 HU"
+      ],
+      "a": 2,
+      "exp": "Échelle HU : eau = 0 (référence), air = -1000, os cortical = +1000. Tissu mou +20 à +80, graisse -50 à -100, sang frais +50 à +80."
+    },
+    {
+      "d": "easy",
+      "q": "L'IRM est contre-indiquée avec :",
+      "opts": [
+        "Prothèse hanche en titane",
+        "Pacemaker ferromagnétique non compatible IRM",
+        "Tatouage",
+        "Plombage dentaire"
+      ],
+      "a": 1,
+      "exp": "Champ magnétique IRM peut déplacer, chauffer ou dérégler un pacemaker ferromagnétique. Titane = non magnétique -> généralement compatible. Pacemakers 'IRM-safe' modernes disponibles."
+    },
+    {
+      "d": "easy",
+      "q": "L'échographie est préférée chez la femme enceinte car :",
+      "opts": [
+        "Moins chère",
+        "Non irradiante (ultrasons) et temps réel",
+        "Meilleure résolution que le scanner",
+        "Sans gel"
+      ],
+      "a": 1,
+      "exp": "Ultrasons != rayons X -> aucun risque foetal connu. Disponible en temps réel, portative. Standard grossesse : clarté nucale (T21), morphologie foetale, biométrie."
+    },
+    {
+      "d": "easy",
+      "q": "La TEP-FDG est utile pour :",
+      "opts": [
+        "Fractures osseuses",
+        "Bilan d'extension des cancers solides",
+        "Évaluation fonction rénale",
+        "Imagerie cartilages"
+      ],
+      "a": 1,
+      "exp": "FDG-TEP = gold standard bilan d'extension. Métastases captent plus de FDG (Warburg). Sensibilité ~90% ganglions > 1 cm. Utilisé pour poumon, lymphome, mélanome, côlon..."
+    },
+    {
+      "d": "easy",
+      "q": "Un scanner injecté nécessite de vérifier :",
+      "opts": [
+        "Le groupe sanguin",
+        "La créatinine/DFG (néphrotoxicité du PC iodé)",
+        "La NFS",
+        "L'ECG"
+      ],
+      "a": 1,
+      "exp": "PC iodés néphrotoxiques. DFG < 30 mL/min -> risque IRA post-injection -> précautions (hydratation, CI relative). Arrêt metformine 48h avant/après (risque acidose lactique si IRA)."
+    },
+    {
+      "d": "medium",
+      "q": "Un AVC ischémique récent (< 6h) au scanner sans injection apparaît :",
+      "opts": [
+        "Hyperdense (blanc) clairement",
+        "Hypodense (sombre) clairement",
+        "Souvent isodense ou discret - signes précoces subtils",
+        "Normal"
+      ],
+      "a": 2,
+      "exp": "AVC ischémique aigu < 6h : scanner souvent normal ou signes subtils (disparition ruban insulaire, perte différenciation SB/SG). IRM DWI bien plus sensible. Scanner crucial pour exclure hémorragie (CI thrombolyse)."
+    },
+    {
+      "d": "medium",
+      "q": "Une lésion cérébrale hyperintense en IRM T2 contient :",
+      "opts": [
+        "Peu d'eau",
+        "Beaucoup d'eau (oedème, inflammation, démyélinisation, LCR)",
+        "Du sang récent",
+        "Du tissu fibreux"
+      ],
+      "a": 1,
+      "exp": "T2 : eau libre = signal élevé = blanc. Pathologies riches en eau (oedème tumoral, plaques SEP, ischémie) -> hyperintenses T2. Séquence de référence pour la détection des lésions cérébrales."
+    },
+    {
+      "d": "medium",
+      "q": "En Doppler couleur (convention BART), le rouge code :",
+      "opts": [
+        "Le flux qui s'éloigne de la sonde",
+        "Le flux qui se rapproche de la sonde",
+        "Le flux turbulent",
+        "Le flux rétrograde"
+      ],
+      "a": 1,
+      "exp": "BART : Blue Away (bleu = s'éloigne), Red Towards (rouge = s'approche). Visualise régurgitations valvulaires (flux inversé = bleu en diastole), sténoses, flux carotidien."
+    },
+    {
+      "d": "medium",
+      "q": "La scintigraphie thyroïdienne évalue :",
+      "opts": [
+        "Taille anatomique uniquement",
+        "Fonctionnalité des nodules : chaud (hyperfonctionnel) vs froid (risque de cancer ~15-20%)",
+        "L'envahissement ganglionnaire",
+        "La vascularisation par Doppler"
+      ],
+      "a": 1,
+      "exp": "Nodule chaud (hyperfixant) = hyperfonctionnel = généralement bénin (adénome toxique). Nodule froid (hypofixant) = ne capte pas l'iode = risque malignité ~15-20% -> indication biopsie cytologique."
+    },
+    {
+      "d": "medium",
+      "q": "La dose d'un scanner thoracique est environ :",
+      "opts": [
+        "0,1 mSv (= radio thoracique)",
+        "7 mSv (~2,5 ans fond naturel)",
+        "100 mSv",
+        "0,01 mSv"
+      ],
+      "a": 1,
+      "exp": "Scanner thorax ~7 mSv. Radio thorax = 0,1 mSv. Scanner abdomino-pelvien = 10-15 mSv. TEP-FDG = 10-25 mSv. Justification obligatoire (bénéfice > risque)."
+    },
+    {
+      "d": "medium",
+      "q": "L'IRM cardiaque au gadolinium détecte le rehaussement tardif (LGE) qui correspond à :",
+      "opts": [
+        "Zones en hyperactivité métabolique",
+        "Fibrose myocardique (cicatrice infarctus, myocardite) -> espace interstitiel élargi -> accumulation Gd",
+        "Hypertrophie VG",
+        "Ischémie aiguë en cours"
+      ],
+      "a": 1,
+      "exp": "LGE : gadolinium s'accumule dans l'espace interstitiel élargi des zones fibreuses (infarctus, myocardite fibrosante). Séquence 10-15 min après injection. Distingue myocarde viable (pas de LGE) du cicatriciel (LGE)."
+    },
+    {
+      "d": "medium",
+      "q": "L'OCT (tomographie cohérence optique) intracoronaire a une résolution de :",
+      "opts": [
+        "1 mm",
+        "100 µm (IVUS)",
+        "10-20 µm",
+        "1 µm"
+      ],
+      "a": 2,
+      "exp": "OCT : résolution axiale ~10-20 µm (vs IVUS ~100-150 µm). Permet de visualiser la chape fibreuse d'une plaque vulnérable (< 65 µm), la pose d'un stent, les thrombus. Révolutionne la cardiologie interventionnelle."
+    },
+    {
+      "d": "hard",
+      "q": "La DSA (angiographie par soustraction numérique) améliore la visualisation vasculaire en :",
+      "opts": [
+        "Augmentant la dose",
+        "Soustrayant l'image masque de l'image opacifiée -> seul le PC visible",
+        "Utilisant des ultrasons",
+        "Superposant des images scanner"
+      ],
+      "a": 1,
+      "exp": "DSA : masque (avant injection) soustrait de l'image après injection -> seul le PC iodé (donc les vaisseaux) reste visible. Résolution spatiale et temporelle excellente. Gold standard artériographie diagnostique et interventionnelle."
+    },
+    {
+      "d": "hard",
+      "q": "La mammographie utilise des basses énergies (25-35 kV) pour :",
+      "opts": [
+        "Réduire la dose",
+        "Maximiser le contraste entre tissu glandulaire, graisse et micro-calcifications (différences subtiles)",
+        "Éviter les artefacts de mouvement",
+        "Permettre la reconstruction 3D"
+      ],
+      "a": 1,
+      "exp": "À basse énergie : effet photoélectrique dominant -> fort contraste entre tissus de densité proche. Détecte micro-calcifications de 100-200 µm et masses de densité proche du tissu normal. Dépistage organisé femmes 50-74 ans."
+    },
+    {
+      "d": "hard",
+      "q": "La tomosynthèse mammaire (3D) améliore la détection tumorale car :",
+      "opts": [
+        "Plus de dose",
+        "Reconstruit des coupes de 1 mm -> élimine la superposition tissulaire -> réduction faux positifs ~40%",
+        "Utilise des ultrasons en complément",
+        "Injecte du gadolinium"
+      ],
+      "a": 1,
+      "exp": "Tomosynthèse : tube X pivote -> coupes tomographiques de 1 mm. La superposition du tissu glandulaire (limitation majeure de la 2D) est éliminée -> détection de tumeurs masquées -> réduction des rappels de ~40%."
+    },
+    {
+      "d": "hard",
+      "q": "L'IRM de diffusion (DWI) détecte l'ischémie cérébrale aiguë car :",
+      "opts": [
+        "Elle mesure le flux sanguin",
+        "Mort cellulaire -> oedème cytotoxique -> eau confinée -> diffusion restreinte -> hypersignal DWI dès 30 min",
+        "Elle injecte du gadolinium",
+        "Elle mesure la PIC"
+      ],
+      "a": 1,
+      "exp": "DWI : ischémie -> ATP diminue -> pompes Na/K défaillent -> Na+ et eau entrent dans les cellules -> eau moins libre -> ADC bas -> DWI brillant. Détectable dès 30 min. Bien supérieure au scanner dans les premières heures."
+    },
+    {
+      "d": "hard",
+      "q": "Le SPECT diffère de la scintigraphie planaire car :",
+      "opts": [
+        "Il utilise des positrons",
+        "Acquisitions sous multiples angles -> reconstruction tomographique 3D (comme scanner en émission)",
+        "Il est non irradiant",
+        "Il n'utilise pas de radioéléments"
+      ],
+      "a": 1,
+      "exp": "Scintigraphie planaire = image 2D. SPECT = gamma-caméra tourne -> ~120 angles -> reconstruction 3D. Meilleure localisation anatomique, moins de chevauchement. Ex : SPECT myocardique Tc-99m MIBI -> détection ischémie."
+    },
+    {
+      "d": "hard",
+      "q": "En TEP cérébrale F-18 FDG, la substance blanche apparaît hypofixante car :",
+      "opts": [
+        "Elle est plus profonde",
+        "Peu de métabolisme glucidique par rapport au cortex gris",
+        "Elle contient de l'eau",
+        "Elle absorbe le FDG"
+      ],
+      "a": 1,
+      "exp": "Substance blanche : faible métabolisme glucidique -> hypofixation relative. Cortex cérébral (substance grise) très actif -> hyperfixation. Réseau mode par défaut (cortex cingulaire postérieur) visible. TEP cérébrale -> diagnostic maladie d'Alzheimer (hypofixation temporopariétale)."
+    },
+    {
+      "d": "hard",
+      "q": "La radiologie interventionnelle combine :",
+      "opts": [
+        "Scanner et IRM",
+        "Fluoroscopie temps réel + cathétérisme sélectif + matériaux embolisants ou chimiothérapie intra-artérielle",
+        "Échographie et scintigraphie",
+        "TEP et IRM uniquement"
+      ],
+      "a": 1,
+      "exp": "Radio-interventionnelle : fluoroscopie (X temps réel) + DSA pour guider le cathéter + traitement local (billes embolisantes, agents sclérosants, chimiothérapie). Traitements mini-invasifs : cancers hépatiques, malformations vasculaires, hémorragies."
+    },
+    {
+      "d": "hard",
+      "q": "La séquence IRM FLAIR annule le signal du LCR pour :",
+      "opts": [
+        "Annuler le signal de la graisse",
+        "Rendre visibles les lésions périventriculaires noyées dans le signal LCR (T2)",
+        "Augmenter le contraste vasculaire",
+        "Accélérer l'acquisition"
+      ],
+      "a": 1,
+      "exp": "FLAIR = T2 + inversion-récupération annulant le LCR. Les lésions riches en eau (SEP périventriculaire, contusions, hémorragie sous-arachnoïdienne) restent brillantes mais ne sont plus 'noyées' dans le LCR brillant."
+    },
+    {
+      "d": "hard",
+      "q": "L'élastographie IRM hépatique mesure :",
+      "opts": [
+        "Flux sanguin portal",
+        "Rigidité du parenchyme hépatique (kPa) -> corrélation fibrose (METAVIR F0-F4)",
+        "Vascularisation intratumorale",
+        "Teneur en graisse"
+      ],
+      "a": 1,
+      "exp": "Onde mécanique (60 Hz) -> propagation dans le foie -> rigidité calculée. Foie normal < 2,5 kPa. Cirrhose (F4) > 5-6 kPa. Alternative non invasive à la biopsie hépatique pour bilan de fibrose (NASH, hépatite C, alcool)."
+    }
+  ],
+  "bioelec": [
+    {
+      "d": "easy",
+      "q": "L'onde P de l'ECG correspond à :",
+      "opts": [
+        "Dépolarisation ventriculaire",
+        "Repolarisation auriculaire",
+        "Dépolarisation auriculaire",
+        "Repolarisation ventriculaire"
+      ],
+      "a": 2,
+      "exp": "P = dépolarisation auriculaire. QRS = dépolarisation ventriculaire. T = repolarisation ventriculaire. Ordre : P -> PR -> QRS -> ST -> T."
+    },
+    {
+      "d": "easy",
+      "q": "Le complexe QRS correspond à :",
+      "opts": [
+        "Dépolarisation auriculaire",
+        "Dépolarisation ventriculaire",
+        "Repolarisation ventriculaire",
+        "Dépolarisation nœud AV"
+      ],
+      "a": 1,
+      "exp": "QRS = dépolarisation ventriculaire (His -> Purkinje -> myocarde ventriculaire). Durée normale < 120 ms. QRS > 120 ms -> bloc de branche."
+    },
+    {
+      "d": "easy",
+      "q": "Le pace-maker naturel du coeur est :",
+      "opts": [
+        "Nœud AV",
+        "Faisceau de His",
+        "Nœud sino-auriculaire (SA)",
+        "Réseau de Purkinje"
+      ],
+      "a": 2,
+      "exp": "Nœud SA (OD) = pace-maker naturel ~70 bpm. Hiérarchie : SA (70) -> AV (40-50) -> Purkinje (20-30). En dysfonction SA, l'AV prend le relais (bradycardie)."
+    },
+    {
+      "d": "easy",
+      "q": "La défibrillation est indiquée en :",
+      "opts": [
+        "Bloc AV complet",
+        "Fibrillation ventriculaire (arrêt cardiaque)",
+        "Tachycardie sinusale",
+        "Bradycardie sinusale"
+      ],
+      "a": 1,
+      "exp": "Défibrillation (choc non synchronisé) = FV et TV sans pouls. Choc électrique -> dépolarisation simultanée tout le myocarde -> espoir reprise rythme sinusal."
+    },
+    {
+      "d": "easy",
+      "q": "L'EEG est l'examen de référence pour :",
+      "opts": [
+        "Infarctus du myocarde",
+        "Épilepsies",
+        "Arythmies cardiaques",
+        "Neuropathies périphériques"
+      ],
+      "a": 1,
+      "exp": "EEG = activité électrique corticale. Détecte les décharges épileptiformes (pointes, pointe-ondes). ECG pour le coeur, EEG pour le cerveau."
+    },
+    {
+      "d": "easy",
+      "q": "Le rythme alpha (8-13 Hz) à l'EEG correspond à :",
+      "opts": [
+        "Sommeil profond",
+        "Éveil calme yeux fermés",
+        "Crises épileptiques",
+        "Coma"
+      ],
+      "a": 1,
+      "exp": "Alpha : éveil calme, yeux fermés, relaxation. Prédomine en occipital. Disparaît à l'ouverture des yeux (désynchronisation). Delta (0,5-4 Hz) = sommeil profond ou coma."
+    },
+    {
+      "d": "easy",
+      "q": "La loi d'Ohm appliquée aux membranes biologiques : I = :",
+      "opts": [
+        "U x R",
+        "U / R = U x G",
+        "P x Q",
+        "R / U"
+      ],
+      "a": 1,
+      "exp": "I = U/R = U x G. I = courant ionique (A), U = différence de potentiel (V), R = résistance membranaire (Ω), G = conductance = 1/R (S). G varie selon l'état des canaux ioniques."
+    },
+    {
+      "d": "medium",
+      "q": "Le délai au nœud AV (120-200 ms) est crucial pour :",
+      "opts": [
+        "Accélérer la dépolarisation ventriculaire",
+        "Permettre la systole auriculaire -> remplissage ventriculaire avant la systole ventriculaire",
+        "Bloquer toute activité entre systoles",
+        "Générer l'onde T"
+      ],
+      "a": 1,
+      "exp": "Le délai AV garantit la contribution auriculaire au remplissage (kick auriculaire ~10-20%). En FA (pas de systole auriculaire), contribution perdue -> débit réduit de 10-20%, problématique en IC sévère."
+    },
+    {
+      "d": "medium",
+      "q": "Un QTc allongé (> 450 ms) est dangereux car :",
+      "opts": [
+        "Il indique une bradycardie",
+        "Il augmente le risque de torsades de pointes -> FV -> mort subite",
+        "Il est toujours bénin",
+        "Il correspond à une HVA"
+      ],
+      "a": 1,
+      "exp": "QTc allongé -> repolarisation prolongée -> hétérogénéité de repolarisation -> torsades de pointes -> FV. Causes : médicaments (antiarythmiques, antibiotiques), hypokaliémie, syndrome du QT long congénital (SCN5A, KCNQ1)."
+    },
+    {
+      "d": "medium",
+      "q": "L'EMG en aiguille dans une myopathie montre :",
+      "opts": [
+        "PUM de grande durée et amplitude (réinnervation)",
+        "PUM de courte durée et petite amplitude (fibres atrophiées)",
+        "Absence totale de signal",
+        "VCN diminuée"
+      ],
+      "a": 1,
+      "exp": "Myopathie : fibres atrophiées -> moins de fibres par UM -> PUM courts et petite amplitude (tracé myopathique). Neuropathie : réinnervation -> UM élargies -> PUM longs et amples (tracé neurogène). VCN réduite dans les neuropathies démyélinisantes."
+    },
+    {
+      "d": "medium",
+      "q": "Le sus-décalage du segment ST signe :",
+      "opts": [
+        "Ischémie sous-endocardique stable",
+        "STEMI (infarctus transmural en cours) -> coronarographie urgente < 90 min",
+        "Bloc de branche droit",
+        "Péricardite chronique"
+      ],
+      "a": 1,
+      "exp": "Sus-ST en territoire coronarien -> STEMI -> occlusion coronarienne aiguë -> ischémie transmurale -> urgence coronarographie + angioplastie < 90 min (DOOR-to-BALLOON time)."
+    },
+    {
+      "d": "medium",
+      "q": "Un BAV 3ème degré (bloc complet) montre à l'ECG :",
+      "opts": [
+        "Allongement progressif du PR",
+        "Dissociation AV : P et QRS indépendants à des fréquences différentes",
+        "QRS élargi isolément",
+        "Sus-ST diffus"
+      ],
+      "a": 1,
+      "exp": "BAV 3 : aucune conduction AV. P à ~70-80/min (nœud SA), QRS à ~30-40/min (rythme d'échappement). Syncopes (Adams-Stokes) -> pacemaker urgent."
+    },
+    {
+      "d": "medium",
+      "q": "L'EEG plat persistant dans le contexte légal requis est un critère de :",
+      "opts": [
+        "Coma dépassé mais pas mort encéphalique",
+        "Mort encéphalique -> autorisation prélèvement d'organes en France",
+        "Syncope profonde",
+        "Anesthésie générale profonde"
+      ],
+      "a": 1,
+      "exp": "France : mort encéphalique = absence réflexes du tronc + absence ventilation spontanée + 2 EEG plats à 4h d'intervalle (ou angiographie cérébrale). Seule condition légale pour le prélèvement sur donneur en mort encéphalique."
+    },
+    {
+      "d": "hard",
+      "q": "Le patch-clamp 'whole-cell' permet de :",
+      "opts": [
+        "Enregistrer un seul canal",
+        "Contrôler le potentiel membranaire (voltage-clamp) ou injecter du courant (current-clamp) dans une cellule entière",
+        "Mesurer l'exocytose",
+        "Observer la morphologie"
+      ],
+      "a": 1,
+      "exp": "Whole-cell : pipette -> rupture membrane -> accès intérieur cellulaire. Voltage-clamp : potentiel imposé -> mesure courant ionique total. Current-clamp : courant imposé -> mesure du PA. Base de la pharmacologie des canaux (antiarythmiques, anesthésiques)."
+    },
+    {
+      "d": "hard",
+      "q": "En FA, la perte de systole auriculaire impacte davantage les patients avec :",
+      "opts": [
+        "FE normale",
+        "IC diastolique (HFpEF) où le remplissage VG dépend de la systole auriculaire",
+        "Tachycardie sinusale préalable",
+        "Sténose pulmonaire"
+      ],
+      "a": 1,
+      "exp": "HFpEF : VG rigide -> remplissage passif insuffisant -> systole auriculaire représente 25-30% du remplissage (vs 10-15% normal). Perte de cette contribution en FA -> décompensation aiguë. D'où la priorité à réduire la FA en IC diastolique."
+    },
+    {
+      "d": "hard",
+      "q": "La défibrillation biphasique est préférée à la monophasique car :",
+      "opts": [
+        "Elle délivre plus d'énergie",
+        "Courant dans 2 directions -> moins de lésions myocardiques pour même efficacité -> dose ~200 J vs 360 J",
+        "Elle est plus rapide",
+        "Réservée à la FA uniquement"
+      ],
+      "a": 1,
+      "exp": "Biphasique : courant dans 2 directions successives -> compensation des impédances -> efficacité équivalente avec ~50% moins d'énergie -> moins de lésions myocardiques -> meilleur pronostic neurologique et cardiaque."
+    },
+    {
+      "d": "hard",
+      "q": "L'onde de Brugada (sus-ST en V1-V3) est liée à :",
+      "opts": [
+        "Ischémie antérieure",
+        "Mutation SCN5A (canal Na+ cardiaque) -> hétérogénéité de repolarisation épicardique -> risque FV",
+        "Bloc de branche gauche complet",
+        "Hypertrophie VG"
+      ],
+      "a": 1,
+      "exp": "Syndrome de Brugada : mutation perte de fonction SCN5A -> ICNa réduit -> repolarisation précoce épicarde V1-V3 -> sus-ST type Brugada. Risque FV par réentrée -> mort subite. DAI pour les formes symptomatiques."
+    },
+    {
+      "d": "hard",
+      "q": "Le signal EMG de surface est obtenu par superposition de :",
+      "opts": [
+        "PA des fibres nerveuses",
+        "Potentiels d'unité motrice (PUM) de nombreuses UM actives simultanément",
+        "Potentiels post-synaptiques",
+        "PA des cellules de Schwann"
+      ],
+      "a": 1,
+      "exp": "EMG surface = somme de tous les PUMs actifs. Amplitude RMS proportionnelle à la force musculaire. Base du biofeedback EMG et des prothèses myoélectriques."
+    },
+    {
+      "d": "hard",
+      "q": "La TMS (stimulation magnétique transcrânienne) agit en :",
+      "opts": [
+        "Injectant des courants directement dans le cortex",
+        "Induisant des courants électriques dans le cortex par variation rapide d'un champ magnétique (loi de Faraday)",
+        "Déposant des électrodes intracorticales",
+        "Ultrasons focalisés"
+      ],
+      "a": 1,
+      "exp": "TMS : bobine -> impulsion courant -> variation rapide B -> induction E dans le cortex (Faraday : E prop dB/dt) -> dépolarisation neuronale. Non invasif. rTMS = traitement dépression résistante (agréé FDA). TMS simple = cartographie corticale."
+    },
+    {
+      "d": "hard",
+      "q": "L'ECG de His mesure l'intervalle HV qui représente :",
+      "opts": [
+        "Temps de conduction AV total",
+        "Temps de conduction His-Purkinje (bifurcation -> myocarde ventriculaire) normal 35-55 ms",
+        "Durée de dépolarisation ventriculaire",
+        "Période réfractaire effective"
+      ],
+      "a": 1,
+      "exp": "HV normal = 35-55 ms. HV > 70 ms -> risque BAV infrahissien -> pacemaker préventif. Permet de localiser le niveau du bloc (supra-hissien AH, hissien H, infra-hissien HV)."
+    },
+    {
+      "d": "hard",
+      "q": "La variabilité de la fréquence cardiaque (HRV) reflète :",
+      "opts": [
+        "Les arythmies uniquement",
+        "L'équilibre sympathique/parasympathique du SNA contrôlant le nœud SA",
+        "La force de contraction",
+        "La pression artérielle"
+      ],
+      "a": 1,
+      "exp": "HRV : analyse des variations de l'intervalle RR. HRV élevée -> tonus vagal -> bonne santé CV. HRV basse -> stress chronique, IC, diabète autonomique -> facteur de risque mort subite. Pronostique validé post-IDM et en IC."
+    },
+    {
+      "d": "hard",
+      "q": "L'EEG haute densité (256 électrodes) permet par rapport à l'EEG standard (21 électrodes) :",
+      "opts": [
+        "Meilleure résolution temporelle",
+        "Meilleure résolution spatiale -> localisation plus précise des sources épileptiques par reconstruction de source (LORETA)",
+        "Mesure de l'activité profonde directement",
+        "Éliminer les artefacts de mouvement"
+      ],
+      "a": 1,
+      "exp": "EEG HD + reconstruction de source : localisation du générateur à quelques cm3 (vs lobes seulement en EEG standard). Combiné à l'IRM ou stéréo-EEG pour évaluation préchirurgicale des épilepsies pharmaco-résistantes."
+    }
+  ]
+};
+
+const CH_NAMES={transport:'Transport membranaire',hemo:'Hémodynamique',radio:'Radioactivité',imagerie:'Imagerie médicale',bioelec:'Bioélectricité'};
+const CH_ICONS={transport:'🔬',hemo:'🫀',radio:'☢️',imagerie:'🏥',bioelec:'⚡'};
+const DIFF_LABELS={easy:'Facile',medium:'Moyen',hard:'Piège'};
+const DIFF_CLASSES={easy:'diff-easy',medium:'diff-medium',hard:'diff-hard'};
+const MASTERY_KEY='biophysique_mastery';
+
+let selectedCh=new Set(['transport','hemo','radio','imagerie','bioelec']);
+let selectedCount=10;
+let quizQuestions=[];
+let currentIdx=0;
+let score=0;
+let chScores={};
+
+function toggleTheme(){const h=document.documentElement,b=document.getElementById('themeBtn');if(h.dataset.theme==='dark'){h.dataset.theme='light';b.textContent='🌙 Mode sombre';}else{h.dataset.theme='dark';b.textContent='☀️ Mode clair';}}
+
+function toggleCh(ch){
+  const btn=document.getElementById('btn-'+ch);
+  if(selectedCh.has(ch)){if(selectedCh.size===1)return;selectedCh.delete(ch);btn.classList.remove('selected');}
+  else{selectedCh.add(ch);btn.classList.add('selected');}
+}
+
+function setCount(n){
+  selectedCount=n;
+  document.querySelectorAll('.count-btn').forEach(b=>b.classList.remove('selected'));
+  const ids={5:'cnt-5',10:'cnt-10',20:'cnt-20',999:'cnt-all'};
+  document.getElementById(ids[n]).classList.add('selected');
+}
+
+function buildQuiz(){
+  let pool=[];
+  selectedCh.forEach(ch=>{ALL_QUESTIONS[ch].forEach(q=>pool.push({...q,chapter:ch}));});
+  pool.sort(()=>Math.random()-.5);
+  const total=selectedCount===999?pool.length:Math.min(selectedCount,pool.length);
+  quizQuestions=pool.slice(0,total);
+  quizQuestions.sort((a,b)=>{const o={easy:0,medium:1,hard:2};return o[a.d]-o[b.d];});
+}
+
+function startQuiz(){
+  buildQuiz();currentIdx=0;score=0;chScores={};
+  selectedCh.forEach(ch=>{chScores[ch]={correct:0,total:0};});
+  document.getElementById('setupScreen').style.display='none';
+  document.getElementById('quizScreen').style.display='block';
+  renderQ();
+}
+
+function renderQ(){
+  const q=quizQuestions[currentIdx];
+  const total=quizQuestions.length;
+  const pct=Math.round((currentIdx/total)*100);
+  document.getElementById('progLabel').textContent='Question '+(currentIdx+1)+' / '+total;
+  document.getElementById('progScore').textContent='Score : '+score+' / '+currentIdx;
+  document.getElementById('progBar').style.width=pct+'%';
+  document.getElementById('qChapter').textContent=CH_ICONS[q.chapter]+' '+CH_NAMES[q.chapter];
+  document.getElementById('qNum').textContent='Q'+(currentIdx+1);
+  const diffEl=document.getElementById('qDiff');
+  diffEl.textContent=DIFF_LABELS[q.d];diffEl.className='q-diff '+DIFF_CLASSES[q.d];
+  document.getElementById('qText').textContent=q.q;
+  document.getElementById('qFeedback').className='feedback';
+  document.getElementById('qFeedback').textContent='';
+  document.getElementById('nextBtn').className='next-btn';
+  const optsEl=document.getElementById('qOptions');
+  optsEl.innerHTML='';
+  q.opts.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='opt';btn.textContent=opt;
+    btn.onclick=()=>answer(i);
+    optsEl.appendChild(btn);
+  });
+}
+
+function answer(chosen){
+  const q=quizQuestions[currentIdx];
+  document.querySelectorAll('.opt').forEach(o=>o.disabled=true);
+  const fb=document.getElementById('qFeedback');
+  const next=document.getElementById('nextBtn');
+  chScores[q.chapter].total++;
+  if(chosen===q.a){
+    score++;chScores[q.chapter].correct++;
+    document.querySelectorAll('.opt')[chosen].classList.add('correct');
+    fb.textContent='✓ Correct ! '+q.exp;fb.className='feedback show ok';
+  } else {
+    document.querySelectorAll('.opt')[chosen].classList.add('wrong');
+    document.querySelectorAll('.opt')[q.a].classList.add('correct');
+    fb.textContent='✗ Incorrect. '+q.exp;fb.className='feedback show ko';
+  }
+  document.getElementById('progScore').textContent='Score : '+score+' / '+(currentIdx+1);
+  next.className='next-btn show';
+}
+
+function nextQ(){currentIdx++;if(currentIdx>=quizQuestions.length){showResults();}else{renderQ();}}
+
+function showResults(){
+  document.getElementById('quizScreen').style.display='none';
+  document.getElementById('resultsScreen').style.display='block';
+  const total=quizQuestions.length;
+  const pct=Math.round((score/total)*100);
+  let emoji,title;
+  if(pct>=90){emoji='🏆';title='Excellent !';}
+  else if(pct>=70){emoji='💪';title='Très bien !';}
+  else if(pct>=50){emoji='📚';title='Pas mal — à retravailler !';}
+  else{emoji='🔁';title='Reprends les fiches !';}
+  document.getElementById('resEmoji').textContent=emoji;
+  document.getElementById('resTitle').textContent=title;
+  document.getElementById('resScore').textContent=score+' / '+total;
+  document.getElementById('resSub').textContent=pct+'% de bonnes réponses';
+  const bd=document.getElementById('resBreakdown');bd.innerHTML='';
+  Object.entries(chScores).forEach(([ch,s])=>{
+    if(s.total===0)return;
+    const p=Math.round((s.correct/s.total)*100);
+    const cls=p>=70?'score-good':p>=50?'score-mid':'score-low';
+    bd.innerHTML+=`<div class="breakdown-item"><span class="breakdown-ch">${CH_ICONS[ch]} ${CH_NAMES[ch]}</span><span class="breakdown-score ${cls}">${s.correct}/${s.total} (${p}%)</span></div>`;
+  });
+  updateMasteryFromResults();
+}
+
+function restartQuiz(){document.getElementById('resultsScreen').style.display='none';startQuiz();}
+function goSetup(){document.getElementById('resultsScreen').style.display='none';document.getElementById('setupScreen').style.display='block';}
+
+function loadAllMastery(){try{return JSON.parse(localStorage.getItem(MASTERY_KEY)||'{}');}catch(e){return {};}}
+function saveAllMastery(data){try{localStorage.setItem(MASTERY_KEY,JSON.stringify(data));}catch(e){}}
+
+function getMasteryColor(pct){
+  if(pct>=70)return '#34d399';
+  if(pct>=40)return '#fbbf24';
+  return '#f472b6';
+}
+function getMasteryStatus(pct){
+  if(pct>=90)return '<span class="status-top">✅ Maîtrisé</span>';
+  if(pct>=70)return '<span class="status-good">🟢 Bien</span>';
+  if(pct>=40)return '<span class="status-mid">🟡 En cours</span>';
+  return '<span class="status-low">🔴 À travailler</span>';
+}
+
+function renderMasteryBars(){
+  const data=loadAllMastery();
+  ['transport','hemo','radio','imagerie','bioelec'].forEach(ch=>{
+    const bar=document.getElementById('mbar-'+ch);
+    const pct_el=document.getElementById('mpct-'+ch);
+    const status_el=document.getElementById('mstatus-'+ch);
+    if(!bar)return;
+    if(data[ch]===undefined){
+      bar.style.width='0%';pct_el.textContent='—';
+      status_el.innerHTML='<span class="status-none">Non testé</span>';
+    } else {
+      const pct=data[ch];
+      bar.style.width=pct+'%';bar.style.background=getMasteryColor(pct);
+      pct_el.textContent=pct+'%';status_el.innerHTML=getMasteryStatus(pct);
+    }
+  });
+}
+
+function updateMasteryFromResults(){
+  const data=loadAllMastery();
+  Object.entries(chScores).forEach(([ch,s])=>{
+    if(s.total===0)return;
+    const sessionPct=Math.round((s.correct/s.total)*100);
+    if(data[ch]!==undefined){data[ch]=Math.round(sessionPct*0.6+data[ch]*0.4);}
+    else{data[ch]=sessionPct;}
+  });
+  saveAllMastery(data);
+  renderMasteryBars();
+}
+
+window.addEventListener('DOMContentLoaded', renderMasteryBars);
+</script>
+</body>
+</html>
