@@ -90,7 +90,7 @@
   .card-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
   .chip{font-size:10px;padding:2px 9px;border-radius:100px;font-weight:600;background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--border);}
   [data-theme="light"] .chip{background:rgba(0,0,0,.03);}
-  .card-progress{display:flex;align-items:center;gap:10px;}
+  .card-progress{display:flex;align-items:center;gap:10px;padding-right:32px;}
   .card-bar-track{flex:1;height:3px;background:var(--progress-track);border-radius:100px;overflow:hidden;}
   .card-bar-fill{height:100%;border-radius:100px;transition:width .5s ease;}
   .card-pct{font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;min-width:28px;text-align:right;}
@@ -129,7 +129,7 @@
   }
 </style>
 </head>
-<body data-theme="light">
+<body>
 
 <nav>
   <div class="nav-logo">Constance</div>
@@ -149,7 +149,7 @@
     <div class="hero-left">
       <div class="brand"><div class="brand-dot"></div>Programme PASS · LAS — S'avancer stratégiquement cet été 2026</div>
       <h1>Commence<br><em>avant les autres.</em></h1>
-      <p class="hero-sub">12 matières du PASS en un seul endroit — définitions claires, exemples médicaux, pièges classiques et quiz interactifs. Créée par Constance — entrée en PASS à Nantes, classée dans les premiers. Ce n'est que le début...<br>J'ai particulièrement aimé m'avancer stratégiquement pendant l'été. Je te partage mes fiches, gratuitement.</p>
+      <p class="hero-sub">12 matières du PASS en un seul endroit — définitions claires, exemples médicaux, pièges classiques et quiz interactifs. Créée par Constance — entrée en PASS à Nantes, très bien classée dans ses colles. Direction Paris à la rentrée... ce n'est que le début.</p>
     </div>
     <div class="hero-stats">
       <div class="global-stat-card">
@@ -232,12 +232,10 @@
 <div class="section-wrap" id="matieres-section">
   <div class="section-header">
     <div class="section-title">Matières PASS</div>
-    <div class="section-count">12 disponibles</div>
+    <div class="section-count">12 matières disponibles</div>
   </div>
-
-  <!-- Bloc 1 : Sciences fondamentales -->
-  <div class="section-divider"><div class="section-divider-label">Sciences fondamentales</div><div class="section-divider-line"></div></div>
-  <div class="matieres-grid" style="margin-bottom:32px;">
+  </div>
+    <div class="matieres-grid" id="matieres-section">
 
     <a class="matiere-card available" href="passbiolcell.html">
       <div class="card-top"><div class="card-icon" style="background:rgba(124,58,237,.12)">🔬</div><span class="card-badge badge-done">Disponible</span></div>
@@ -293,12 +291,6 @@
       <div class="card-arrow">→</div>
     </a>
 
-  </div>
-
-  <!-- Bloc 2 : Chimie & Physique -->
-  <div class="section-divider"><div class="section-divider-label">Chimie & Physique</div><div class="section-divider-line"></div></div>
-  <div class="matieres-grid" style="margin-bottom:32px;">
-
     <a class="matiere-card available" href="passchimiegen.html">
       <div class="card-top"><div class="card-icon" style="background:rgba(129,140,248,.12)">⚛️</div><span class="card-badge badge-done">Disponible</span></div>
       <div class="card-title">Chimie Générale</div>
@@ -335,12 +327,6 @@
       <div class="card-arrow">→</div>
     </a>
 
-  </div>
-
-  <!-- Bloc 3 : Morphologie & Anatomie -->
-  <div class="section-divider"><div class="section-divider-label">Morphologie & Anatomie</div><div class="section-divider-line"></div></div>
-  <div class="matieres-grid">
-
     <a class="matiere-card available" href="passanatomie.html">
       <div class="card-top"><div class="card-icon" style="background:rgba(244,114,182,.12)">🫀</div><span class="card-badge badge-done">Disponible</span></div>
       <div class="card-title">Anatomie</div>
@@ -369,9 +355,8 @@
     </a>
 
   </div>
-</div>
 
-<!-- QCM CTA -->
+  <!-- QCM CTA -->
 <div class="section-wrap" style="padding-top:0">
   <a class="qcm-cta" href="passqcmglobal.html">
     <div style="flex:1;">
@@ -402,10 +387,7 @@
 </footer>
 
 <script>
-function toggleTheme(){
-  const h=document.documentElement,b=document.getElementById('themeBtn');
-  if(h.dataset.theme==='dark'){h.dataset.theme='light';b.textContent='🌙 Mode sombre';}
-  else{h.dataset.theme='dark';b.textContent='☀️ Mode clair';}
+function toggleTheme(){var h=document.documentElement,b=document.getElementById('themeBtn');if(h.dataset.theme==='dark'){h.dataset.theme='light';b.textContent='🌙 Mode sombre';}else{h.dataset.theme='dark';b.textContent='☀️ Mode clair';}
 }
 
 const MATIERES=[
