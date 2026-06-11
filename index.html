@@ -6,43 +6,21 @@
 <title>Constance — PASS</title>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
 <style>
-  /* NAV */
+  [data-theme="dark"]{--bg:#0a0a0f;--surface:#13131a;--surface2:#0f0f18;--border:#1e1e2e;--text:#e2e8f0;--muted:#64748b;--muted2:#334155;--accent:#6ee7b7;--accent2:#818cf8;--accent3:#f472b6;--warn:#fbbf24;--toggle-bg:#1e1e2e;--hover:#1a1a2e;--card-done:rgba(110,231,183,0.06);--card-done-border:rgba(110,231,183,0.2);--card-soon:rgba(255,255,255,0.02);--card-soon-border:#1e1e2e;--progress-track:rgba(255,255,255,0.06);}
+  [data-theme="light"]{--bg:#f8f7f4;--surface:#fff;--surface2:#f0ede8;--border:#e8e0d4;--text:#1e1b18;--muted:#78716c;--muted2:#d4c9bc;--accent:#059669;--accent2:#6366f1;--accent3:#db2777;--warn:#d97706;--toggle-bg:#e8e0d4;--hover:#f5f0e8;--card-done:rgba(5,150,105,0.05);--card-done-border:rgba(5,150,105,0.2);--card-soon:rgba(0,0,0,0.02);--card-soon-border:#e8e0d4;--progress-track:rgba(0,0,0,0.07);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
   nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);backdrop-filter:blur(12px);background:rgba(10,10,15,0.85);}
   [data-theme="light"] nav{background:rgba(248,247,244,0.88);}
   .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:400;color:var(--accent);letter-spacing:.06em;}
-  .nav-links{display:flex;gap:1.8rem;list-style:none;}
-  .nav-links a{text-decoration:none;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+  .nav-links{display:flex;gap:2rem;list-style:none;}
+  .nav-links a{text-decoration:none;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);transition:color .2s;position:relative;padding-bottom:2px;}
+  .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--accent);transition:width .25s;}
   .nav-links a:hover{color:var(--text);}
-  /* FOOTER */
-  .site-footer{border-top:1px solid var(--border);padding:24px 52px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:400;color:var(--accent);}
-  .footer-copy{font-size:11px;color:var(--muted);}
-  @media(max-width:640px){nav{padding:.9rem 1.2rem;}.nav-links{display:none;}.site-footer{padding:20px;flex-direction:column;text-align:center;}}
-  [data-theme="dark"]{
-    --bg:#0a0a0f;--surface:#13131a;--surface2:#0f0f18;--border:#1e1e2e;
-    --text:#e2e8f0;--muted:#64748b;--muted2:#334155;
-    --accent:#6ee7b7;--accent2:#818cf8;--accent3:#f472b6;--warn:#fbbf24;
-    --toggle-bg:#1e1e2e;--hover:#1a1a2e;
-    --card-done:rgba(110,231,183,0.06);--card-done-border:rgba(110,231,183,0.2);
-    --card-soon:rgba(255,255,255,0.02);--card-soon-border:#1e1e2e;
-    --progress-track:rgba(255,255,255,0.06);
-  }
-  [data-theme="light"]{
-    --bg:#f8f7f4;--surface:#fff;--surface2:#f0ede8;--border:#e8e0d4;
-    --text:#1e1b18;--muted:#78716c;--muted2:#d4c9bc;
-    --accent:#059669;--accent2:#6366f1;--accent3:#db2777;--warn:#d97706;
-    --toggle-bg:#e8e0d4;--hover:#f5f0e8;
-    --card-done:rgba(5,150,105,0.05);--card-done-border:rgba(5,150,105,0.2);
-    --card-soon:rgba(0,0,0,0.02);--card-soon-border:#e8e0d4;
-    --progress-track:rgba(0,0,0,0.07);
-  }
-
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
-
-  /* THEME TOGGLE */
-  .theme-toggle{position:fixed;top:20px;right:24px;z-index:100;background:var(--toggle-bg);border:1px solid var(--border);border-radius:100px;padding:7px 15px;cursor:pointer;font-size:12px;color:var(--muted);font-family:'Source Serif 4',serif;font-weight:600;display:flex;align-items:center;gap:7px;transition:all .2s;user-select:none;}
+  .nav-links a:hover::after{width:100%;}
+  .theme-toggle{background:var(--toggle-bg);border:1px solid var(--border);border-radius:100px;padding:7px 15px;cursor:pointer;font-size:12px;color:var(--muted);font-family:'Source Serif 4',serif;font-weight:600;display:flex;align-items:center;gap:7px;transition:all .2s;user-select:none;}
   .theme-toggle:hover{border-color:var(--accent);color:var(--text);}
+  @media(max-width:640px){nav{padding:.9rem 1.2rem;}.nav-links{display:none;}}
 
   /* HERO */
   .hero{padding:100px 52px 56px;border-bottom:1px solid var(--border);max-width:1200px;margin:0 auto;}
@@ -53,8 +31,6 @@
   h1{font-family:'Libre Baskerville',serif;font-size:clamp(36px,5.5vw,64px);font-weight:700;line-height:1.05;letter-spacing:-.02em;}
   h1 em{font-style:italic;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
   .hero-sub{margin-top:16px;color:var(--muted);font-size:15px;line-height:1.75;max-width:480px;}
-
-  /* GLOBAL STATS */
   .hero-stats{display:flex;flex-direction:column;gap:12px;min-width:220px;}
   .global-stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:16px 20px;}
   .global-stat-label{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
@@ -63,54 +39,75 @@
   .global-bar-track{height:4px;background:var(--progress-track);border-radius:100px;overflow:hidden;margin-top:10px;}
   .global-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:100px;transition:width .6s ease;}
 
-  /* SECTION LABEL */
+  /* SECTIONS */
   .section-wrap{max-width:1200px;margin:0 auto;padding:48px 52px;}
   .section-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:24px;}
   .section-title{font-family:'Libre Baskerville',serif;font-size:18px;font-weight:700;color:var(--text);}
   .section-count{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.06em;}
+  .section-divider{display:flex;align-items:center;gap:14px;margin:8px 0 20px;}
+  .section-divider-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);white-space:nowrap;}
+  .section-divider-line{flex:1;height:1px;background:var(--border);}
+
+  /* BREAKDOWN */
+  .bd-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;}
+  .bd-icon{font-size:16px;width:22px;flex-shrink:0;text-align:center;}
+  .bd-name{font-size:12px;font-weight:600;color:var(--text);width:130px;flex-shrink:0;}
+  .bd-bar-wrap{flex:1;}
+  .bd-bar-track{height:5px;background:var(--progress-track);border-radius:100px;overflow:hidden;}
+  .bd-bar-fill{height:100%;border-radius:100px;transition:width .6s ease;}
+  .bd-pct{font-size:11px;font-weight:700;width:34px;text-align:right;flex-shrink:0;}
+
+  /* RÉVISIONS */
+  .rev-encadre{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px 28px;}
+  .rev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:20px;}
+  .rev-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px 18px;text-decoration:none;display:block;transition:border-color .2s;}
+  .rev-card:hover{border-color:var(--accent);}
+  .rev-card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+  .rev-card-left{display:flex;align-items:center;gap:10px;}
+  .rev-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .rev-title{font-family:'Libre Baskerville',serif;font-size:14px;font-weight:700;color:var(--text);}
+  .rev-sub{font-size:11px;color:var(--muted);}
+  .rev-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
+  .rev-chip{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:600;border:1px solid;}
+  .rev-bar-track{height:3px;background:var(--progress-track);border-radius:100px;overflow:hidden;}
+  .rev-bar-fill{height:100%;border-radius:100px;transition:width .5s;}
 
   /* MATIÈRES GRID */
   .matieres-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;}
-
   .matiere-card{border-radius:16px;padding:22px 24px;text-decoration:none;display:block;transition:all .22s;position:relative;overflow:hidden;}
-  .matiere-card.available{background:var(--surface);border:1px solid var(--border);cursor:pointer;}
+  .matiere-card.available{background:var(--surface);border:1px solid var(--border);}
   .matiere-card.available:hover{border-color:var(--card-done-border);background:var(--hover);transform:translateY(-1px);}
-  .matiere-card.soon{background:var(--card-soon);border:1px solid var(--card-soon-border);cursor:default;opacity:.6;}
-
+  .matiere-card.soon{background:var(--card-soon);border:1px solid var(--card-soon-border);opacity:.6;cursor:default;}
   .card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
   .card-icon{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
   .card-badge{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:3px 10px;border-radius:100px;}
   .badge-done{background:rgba(110,231,183,.12);color:var(--accent);}
+  [data-theme="light"] .badge-done{background:rgba(5,150,105,.1);}
   .badge-soon{background:rgba(255,255,255,.06);color:var(--muted);}
   [data-theme="light"] .badge-soon{background:rgba(0,0,0,.05);}
-
   .card-title{font-family:'Libre Baskerville',serif;font-size:17px;font-weight:700;color:var(--text);margin-bottom:4px;}
   .card-desc{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:14px;}
   .card-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
   .chip{font-size:10px;padding:2px 9px;border-radius:100px;font-weight:600;background:rgba(255,255,255,.04);color:var(--muted);border:1px solid var(--border);}
   [data-theme="light"] .chip{background:rgba(0,0,0,.03);}
-
-  /* PROGRESS par matière */
   .card-progress{display:flex;align-items:center;gap:10px;}
   .card-bar-track{flex:1;height:3px;background:var(--progress-track);border-radius:100px;overflow:hidden;}
   .card-bar-fill{height:100%;border-radius:100px;transition:width .5s ease;}
   .card-pct{font-size:11px;font-weight:700;color:var(--muted);flex-shrink:0;min-width:28px;text-align:right;}
-
   .card-arrow{position:absolute;bottom:22px;right:22px;font-size:16px;color:var(--muted);transition:transform .2s,color .2s;}
   .matiere-card.available:hover .card-arrow{transform:translateX(3px);color:var(--accent);}
 
   /* QCM CTA */
-  .qcm-cta{margin-top:14px;background:linear-gradient(135deg,rgba(129,140,248,.08),rgba(110,231,183,.06));border:1px solid rgba(129,140,248,.2);border-radius:16px;padding:28px 30px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;cursor:pointer;transition:all .2s;text-decoration:none;}
+  .qcm-cta{background:linear-gradient(135deg,rgba(129,140,248,.08),rgba(110,231,183,.06));border:1px solid rgba(129,140,248,.2);border-radius:16px;padding:28px 30px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;text-decoration:none;transition:all .2s;}
   .qcm-cta:hover{border-color:rgba(129,140,248,.4);transform:translateY(-1px);}
-  .qcm-left{flex:1;}
   .qcm-tag{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--accent2);margin-bottom:10px;}
   .qcm-title{font-family:'Libre Baskerville',serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:6px;}
   .qcm-desc{font-size:13px;color:var(--muted);line-height:1.6;}
   .qcm-btn{background:var(--accent2);color:#fff;border:none;border-radius:10px;padding:12px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Source Serif 4',serif;letter-spacing:.03em;transition:opacity .2s;white-space:nowrap;}
   .qcm-btn:hover{opacity:.85;}
 
-  /* CONSEILS SECTION */
-  .conseils-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:0;}
+  /* CONSEILS */
+  .conseils-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;}
   .conseil-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
   .conseil-icon{font-size:20px;margin-bottom:8px;}
   .conseil-title{font-family:'Libre Baskerville',serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;}
@@ -118,40 +115,42 @@
 
   /* FOOTER */
   footer{border-top:1px solid var(--border);padding:28px 52px;max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-  .footer-brand{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.08em;}
-  .footer-note{font-size:11px;color:var(--muted2);}
-  [data-theme="light"] .footer-note{color:var(--muted);}
+  .footer-brand{font-size:12px;font-weight:700;color:var(--muted);}
+  .footer-note{font-size:11px;color:var(--muted);}
 
   @media(max-width:640px){
-    .hero{padding:60px 20px 40px;}
+    .hero{padding:72px 20px 40px;}
     .section-wrap{padding:36px 20px;}
-    footer{padding:24px 20px;}
-    .theme-toggle{top:14px;right:14px;}
+    footer{padding:24px 20px;flex-direction:column;text-align:center;}
     .hero-stats{flex-direction:row;flex-wrap:wrap;}
     .global-stat-card{flex:1;min-width:140px;}
     .qcm-cta{flex-direction:column;}
+    .bd-name{width:100px;}
   }
 </style>
 </head>
-<body>
+<body data-theme="light">
 
 <nav>
   <div class="nav-logo">Constance</div>
   <ul class="nav-links">
-    <li><a href="https://www.instagram.com/constance.cgh" target="_blank">@constance.cgh</a></li>
-    <li><a href="https://www.tiktok.com/@constance.cgh" target="_blank">TikTok</a></li>
+    <li><a href="#matieres-section">Matières</a></li>
+    <li><a href="passqcmglobal.html">QCM</a></li>
+    <li><a href="#breakdown-section">Progression</a></li>
+    <li><a href="https://www.instagram.com/constance.cgh" target="_blank">Instagram ↗</a></li>
+    <li><a href="https://www.tiktok.com/@constance.cgh" target="_blank">TikTok ↗</a></li>
   </ul>
-  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
+  <a href="https://www.instagram.com/constance.cgh" target="_blank" class="nav-insta-btn">Instagram ↗</a>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Mode sombre</button>
 </nav>
-
 
 <!-- HERO -->
 <div class="hero">
   <div class="hero-top">
     <div class="hero-left">
-      <div class="brand"><div class="brand-dot"></div>Bachibak · PASS</div>
+      <div class="brand"><div class="brand-dot"></div>Programme PASS — S'avancer stratégiquement cet été</div>
       <h1>Prépare ton<br><em>concours.</em></h1>
-      <p class="hero-sub">Toutes les matières du PASS en un seul endroit — définitions claires, exemples médicaux, pièges classiques et quiz interactifs. Gratuit, pour toujours.</p>
+      <p class="hero-sub">12 matières du PASS en un seul endroit — définitions claires, exemples médicaux, pièges classiques et quiz interactifs. Créé par quelqu'un qui l'a fait. Gratuit, pour toujours.</p>
     </div>
     <div class="hero-stats">
       <div class="global-stat-card">
@@ -162,219 +161,224 @@
       </div>
       <div class="global-stat-card">
         <div class="global-stat-label">Matières disponibles</div>
-        <div class="global-stat-value">3</div>
-        <div class="global-stat-sub">sur 7 au total</div>
+        <div class="global-stat-value">12</div>
+        <div class="global-stat-sub">toutes les matières disponibles 🎉</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- MATIÈRES -->
-<div class="section-wrap">
+<!-- BREAKDOWN -->
+<div class="section-wrap" id="breakdown-section" style="padding-top:40px;padding-bottom:0;">
+  <div class="section-header" style="margin-bottom:20px;">
+    <div class="section-title">Ma maîtrise par matière</div>
+    <div class="section-count" id="breakdown-count"></div>
+  </div>
+  <div id="matieres-breakdown" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:6px 32px;"></div>
+</div>
+
+<!-- RÉVISIONS LYCÉE -->
+<div class="section-wrap" style="padding-bottom:0;">
+  <div class="rev-encadre">
+    <div class="section-header" style="margin-bottom:0;">
+      <div>
+        <div class="section-title">📚 Révisions lycée → PASS</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:4px;">Programme de Terminale à consolider avant le concours</div>
+      </div>
+    </div>
+    <div class="rev-grid">
+      <a class="rev-card" href="passrevisionphysique.html">
+        <div class="rev-card-top">
+          <div class="rev-card-left">
+            <div class="rev-icon" style="background:rgba(129,140,248,.12)">⚡</div>
+            <div>
+              <div class="rev-title">Physique</div>
+              <div class="rev-sub">7 chapitres</div>
+            </div>
+          </div>
+          <span style="font-size:13px;font-weight:700;color:#818cf8" id="rev-phys-pct">0/7</span>
+        </div>
+        <div class="rev-chips">
+          <span class="rev-chip" style="color:#818cf8;border-color:rgba(129,140,248,.2);background:rgba(129,140,248,.07)">Thermodynamique</span>
+          <span class="rev-chip" style="color:#818cf8;border-color:rgba(129,140,248,.2);background:rgba(129,140,248,.07)">Ondes</span>
+          <span class="rev-chip" style="color:#818cf8;border-color:rgba(129,140,248,.2);background:rgba(129,140,248,.07)">Radioactivité</span>
+          <span class="rev-chip" style="color:#818cf8;border-color:rgba(129,140,248,.2);background:rgba(129,140,248,.07)">+4</span>
+        </div>
+        <div class="rev-bar-track"><div class="rev-bar-fill" id="rev-phys-bar" style="width:0%;background:linear-gradient(90deg,#818cf8,#a78bfa)"></div></div>
+      </a>
+      <a class="rev-card" href="passrevisionchimie.html">
+        <div class="rev-card-top">
+          <div class="rev-card-left">
+            <div class="rev-icon" style="background:rgba(52,211,153,.12)">🧪</div>
+            <div>
+              <div class="rev-title">Chimie</div>
+              <div class="rev-sub">6 chapitres</div>
+            </div>
+          </div>
+          <span style="font-size:13px;font-weight:700;color:#34d399" id="rev-chim-pct">0/6</span>
+        </div>
+        <div class="rev-chips">
+          <span class="rev-chip" style="color:#059669;border-color:rgba(52,211,153,.2);background:rgba(52,211,153,.07)">Acides-Bases</span>
+          <span class="rev-chip" style="color:#059669;border-color:rgba(52,211,153,.2);background:rgba(52,211,153,.07)">Titrage</span>
+          <span class="rev-chip" style="color:#059669;border-color:rgba(52,211,153,.2);background:rgba(52,211,153,.07)">Cinétique</span>
+          <span class="rev-chip" style="color:#059669;border-color:rgba(52,211,153,.2);background:rgba(52,211,153,.07)">+3</span>
+        </div>
+        <div class="rev-bar-track"><div class="rev-bar-fill" id="rev-chim-bar" style="width:0%;background:linear-gradient(90deg,#34d399,#059669)"></div></div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- MATIÈRES PASS -->
+<div class="section-wrap" id="matieres-section">
   <div class="section-header">
-    <div class="section-title">Matières</div>
-    <div class="section-count">3 disponibles · 4 à venir</div>
+    <div class="section-title">Matières PASS</div>
+    <div class="section-count">12 disponibles</div>
   </div>
 
-  <div class="matieres-grid">
+  <!-- Bloc 1 : Sciences fondamentales -->
+  <div class="section-divider"><div class="section-divider-label">Sciences fondamentales</div><div class="section-divider-line"></div></div>
+  <div class="matieres-grid" style="margin-bottom:32px;">
 
-    <!-- ANATOMIE — disponible -->
-    <a class="matiere-card available" href="passanatomie.html">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(244,114,182,.12)">🫀</div>
-        <span class="card-badge badge-done">Disponible</span>
-      </div>
-      <div class="card-title">Anatomie</div>
-      <div class="card-desc">Cardiovasculaire, respiratoire, système nerveux, rein, digestif, rachis.</div>
-      <div class="card-chips">
-        <span class="chip">6 chapitres</span>
-        <span class="chip">Quiz</span>
-        <span class="chip">Pièges</span>
-      </div>
-      <div class="card-progress">
-        <div class="card-bar-track"><div class="card-bar-fill" style="width:0%;background:linear-gradient(90deg,#f472b6,#818cf8)"></div></div>
-        <div class="card-pct">0%</div>
-      </div>
+    <a class="matiere-card available" href="passbiolcell.html">
+      <div class="card-top"><div class="card-icon" style="background:rgba(124,58,237,.12)">🔬</div><span class="card-badge badge-done">Disponible</span></div>
+      <div class="card-title">Biologie Cellulaire</div>
+      <div class="card-desc">Cellule eucaryote, membrane plasmique, noyau, organites, mitochondrie, division, signalisation.</div>
+      <div class="card-chips"><span class="chip">5 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-biolcell" style="width:0%;background:linear-gradient(90deg,#7c3aed,#db2777)"></div></div><div class="card-pct" id="pct-biolcell">0%</div></div>
       <div class="card-arrow">→</div>
     </a>
 
-    <!-- PHYSIQUE — disponible -->
+    <a class="matiere-card available" href="passbiolmol.html">
+      <div class="card-top"><div class="card-icon" style="background:rgba(2,132,199,.12)">🧬</div><span class="card-badge badge-done">Disponible</span></div>
+      <div class="card-title">Biologie Moléculaire</div>
+      <div class="card-desc">Génome, transcription, traduction, cycle cellulaire, oncogénèse, techniques.</div>
+      <div class="card-chips"><span class="chip">5 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-biolmol" style="width:0%;background:linear-gradient(90deg,#0284c7,#6366f1)"></div></div><div class="card-pct" id="pct-biolmol">0%</div></div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="matiere-card available" href="passbiochimie.html">
+      <div class="card-top"><div class="card-icon" style="background:rgba(217,119,6,.12)">⚗️</div><span class="card-badge badge-done">Disponible</span></div>
+      <div class="card-title">Biochimie</div>
+      <div class="card-desc">Glucides, lipides, acides aminés, protéines, enzymes, ADN & ARN.</div>
+      <div class="card-chips"><span class="chip">6 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-biochimie" style="width:0%;background:linear-gradient(90deg,#d97706,#f59e0b)"></div></div><div class="card-pct" id="pct-biochimie">0%</div></div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="matiere-card available" href="passhistologie.html">
+      <div class="card-top"><div class="card-icon" style="background:rgba(219,39,119,.12)">🩺</div><span class="card-badge badge-done">Disponible</span></div>
+      <div class="card-title">Histologie</div>
+      <div class="card-desc">Tissus épithéliaux, conjonctifs, musculaires, nerveux, sang et hématopoïèse.</div>
+      <div class="card-chips"><span class="chip">5 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-histologie" style="width:0%;background:linear-gradient(90deg,#db2777,#7c3aed)"></div></div><div class="card-pct" id="pct-histologie">0%</div></div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="matiere-card available" href="passphysio.html">
+      <div class="card-top"><div class="card-icon" style="background:rgba(5,150,105,.12)">💓</div><span class="card-badge badge-done">Disponible</span></div>
+      <div class="card-title">Physiologie</div>
+      <div class="card-desc">Cardiaque, respiratoire, rénale, digestive et endocrinienne.</div>
+      <div class="card-chips"><span class="chip">5 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-physio" style="width:0%;background:linear-gradient(90deg,#059669,#0284c7)"></div></div><div class="card-pct" id="pct-physio">0%</div></div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="matiere-card available" href="passpharma.html">
+      <div class="card-top"><div class="card-icon" style="background:rgba(234,88,12,.12)">💊</div><span class="card-badge badge-done">Disponible</span></div>
+      <div class="card-title">Médicaments & Pharmacologie</div>
+      <div class="card-desc">PK/PD, antihypertenseurs, anticoagulants, analgésiques, antibiotiques.</div>
+      <div class="card-chips"><span class="chip">5 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-pharma" style="width:0%;background:linear-gradient(90deg,#ea580c,#dc2626)"></div></div><div class="card-pct" id="pct-pharma">0%</div></div>
+      <div class="card-arrow">→</div>
+    </a>
+
+  </div>
+
+  <!-- Bloc 2 : Chimie & Physique -->
+  <div class="section-divider"><div class="section-divider-label">Chimie & Physique</div><div class="section-divider-line"></div></div>
+  <div class="matieres-grid" style="margin-bottom:32px;">
+
+    <a class="matiere-card available" href="passchimiegen.html">
+      <div class="card-top"><div class="card-icon" style="background:rgba(129,140,248,.12)">⚛️</div><span class="card-badge badge-done">Disponible</span></div>
+      <div class="card-title">Chimie Générale</div>
+      <div class="card-desc">Atome, liaisons chimiques, thermochimie, acides-bases.</div>
+      <div class="card-chips"><span class="chip">4 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-chimiegen" style="width:0%;background:linear-gradient(90deg,#818cf8,#a78bfa)"></div></div><div class="card-pct" id="pct-chimiegen">0%</div></div>
+      <div class="card-arrow">→</div>
+    </a>
+
+    <a class="matiere-card available" href="passchimieorga.html">
+      <div class="card-top"><div class="card-icon" style="background:rgba(22,163,74,.12)">🧪</div><span class="card-badge badge-done">Disponible</span></div>
+      <div class="card-title">Chimie Organique</div>
+      <div class="card-desc">Représentation, stéréochimie, réactions, groupes fonctionnels.</div>
+      <div class="card-chips"><span class="chip">4 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-chimieorga" style="width:0%;background:linear-gradient(90deg,#16a34a,#4ade80)"></div></div><div class="card-pct" id="pct-chimieorga">0%</div></div>
+      <div class="card-arrow">→</div>
+    </a>
+
     <a class="matiere-card available" href="passphysique.html">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(96,165,250,.12)">⚙️</div>
-        <span class="card-badge badge-done">Disponible</span>
-      </div>
+      <div class="card-top"><div class="card-icon" style="background:rgba(96,165,250,.12)">⚙️</div><span class="card-badge badge-done">Disponible</span></div>
       <div class="card-title">Physique</div>
       <div class="card-desc">Mécanique, fluides, thermodynamique, ondes, optique.</div>
-      <div class="card-chips">
-        <span class="chip">5 chapitres</span>
-        <span class="chip">Quiz</span>
-        <span class="chip">Pièges</span>
-      </div>
-      <div class="card-progress">
-        <div class="card-bar-track"><div class="card-bar-fill" style="width:0%;background:linear-gradient(90deg,#60a5fa,#a78bfa)"></div></div>
-        <div class="card-pct">0%</div>
-      </div>
+      <div class="card-chips"><span class="chip">5 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-physique" style="width:0%;background:linear-gradient(90deg,#60a5fa,#a78bfa)"></div></div><div class="card-pct" id="pct-physique">0%</div></div>
       <div class="card-arrow">→</div>
     </a>
 
-    <!-- BIOPHYSIQUE — disponible -->
     <a class="matiere-card available" href="passbiophysique.html">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(52,211,153,.12)">🧬</div>
-        <span class="card-badge badge-done">Disponible</span>
-      </div>
+      <div class="card-top"><div class="card-icon" style="background:rgba(52,211,153,.12)">📡</div><span class="card-badge badge-done">Disponible</span></div>
       <div class="card-title">Biophysique</div>
       <div class="card-desc">Transport membranaire, hémodynamique, radioactivité, imagerie, bioélectricité.</div>
-      <div class="card-chips">
-        <span class="chip">5 chapitres</span>
-        <span class="chip">Quiz</span>
-        <span class="chip">Pièges</span>
-      </div>
-      <div class="card-progress">
-        <div class="card-bar-track"><div class="card-bar-fill" style="width:0%;background:linear-gradient(90deg,#34d399,#6ee7b7)"></div></div>
-        <div class="card-pct">0%</div>
-      </div>
+      <div class="card-chips"><span class="chip">5 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-biophysique" style="width:0%;background:linear-gradient(90deg,#34d399,#6ee7b7)"></div></div><div class="card-pct" id="pct-biophysique">0%</div></div>
       <div class="card-arrow">→</div>
     </a>
 
-    <!-- BIOCHIMIE — coming soon -->
-    <div class="matiere-card soon">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(251,191,36,.08)">⚗️</div>
-        <span class="card-badge badge-soon">Bientôt</span>
-      </div>
-      <div class="card-title">Biochimie</div>
-      <div class="card-desc">Acides aminés, protéines, enzymes, métabolisme glucidique et lipidique.</div>
-      <div class="card-chips">
-        <span class="chip">6 chapitres</span>
-        <span class="chip">En cours</span>
-      </div>
-    </div>
+  </div>
 
-    <!-- BIO CELLULAIRE — coming soon -->
-    <div class="matiere-card soon">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(129,140,248,.08)">🔬</div>
-        <span class="card-badge badge-soon">Bientôt</span>
-      </div>
-      <div class="card-title">Biologie Cellulaire</div>
-      <div class="card-desc">Structure cellulaire, cycle cellulaire, signalisation, mitose et méiose.</div>
-      <div class="card-chips">
-        <span class="chip">5 chapitres</span>
-        <span class="chip">En cours</span>
-      </div>
-    </div>
+  <!-- Bloc 3 : Morphologie & Anatomie -->
+  <div class="section-divider"><div class="section-divider-label">Morphologie & Anatomie</div><div class="section-divider-line"></div></div>
+  <div class="matieres-grid">
 
-    <!-- CHIMIE — coming soon -->
-    <div class="matiere-card soon">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(244,114,182,.08)">🧪</div>
-        <span class="card-badge badge-soon">Bientôt</span>
-      </div>
-      <div class="card-title">Chimie</div>
-      <div class="card-desc">Chimie organique, liaisons, réactivité, acides-bases, thermochimie.</div>
-      <div class="card-chips">
-        <span class="chip">5 chapitres</span>
-        <span class="chip">En cours</span>
-      </div>
-    </div>
-
-    <!-- STATISTIQUES — coming soon -->
-    <div class="matiere-card soon">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(110,231,183,.06)">📊</div>
-        <span class="card-badge badge-soon">Bientôt</span>
-      </div>
-      <div class="card-title">Statistiques & Santé publique</div>
-      <div class="card-desc">Épidémiologie, probabilités, tests statistiques, interprétation médicale.</div>
-      <div class="card-chips">
-        <span class="chip">4 chapitres</span>
-        <span class="chip">En cours</span>
-      </div>
-    </div>
-
-
-    <!-- Biologie moléculaire -->
-    <a class="matiere-card soon" href="#">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(251,191,36,.12)">🧬</div>
-        <span class="card-badge badge-soon">Bientôt</span>
-      </div>
-      <div class="card-title">Biologie moléculaire</div>
-      <div class="card-desc">ADN, réplication, transcription, traduction, régulation génique.</div>
-      <div class="card-chips">
-        <span class="chip">6 chapitres</span>
-        <span class="chip">En cours</span>
-      </div>
+    <a class="matiere-card available" href="passanatomie.html">
+      <div class="card-top"><div class="card-icon" style="background:rgba(244,114,182,.12)">🫀</div><span class="card-badge badge-done">Disponible</span></div>
+      <div class="card-title">Anatomie</div>
+      <div class="card-desc">Cardiovasculaire, respiratoire, système nerveux, rein, digestif, rachis.</div>
+      <div class="card-chips"><span class="chip">6 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-anatomie" style="width:0%;background:linear-gradient(90deg,#f472b6,#818cf8)"></div></div><div class="card-pct" id="pct-anatomie">0%</div></div>
+      <div class="card-arrow">→</div>
     </a>
 
-    <!-- Médicaments -->
-    <a class="matiere-card soon" href="#">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(248,113,113,.12)">💊</div>
-        <span class="card-badge badge-soon">Bientôt</span>
-      </div>
-      <div class="card-title">Médicaments & Pharmacologie</div>
-      <div class="card-desc">PK/PD, grandes familles médicamenteuses, interactions, effets indésirables.</div>
-      <div class="card-chips">
-        <span class="chip">5 chapitres</span>
-        <span class="chip">En cours</span>
-      </div>
+    <a class="matiere-card available" href="passbiorepr.html">
+      <div class="card-top"><div class="card-icon" style="background:rgba(190,24,93,.12)">🤰</div><span class="card-badge badge-done">Disponible</span></div>
+      <div class="card-title">Biologie de la Reproduction</div>
+      <div class="card-desc">Gamétogenèse, fécondation, embryogenèse, grossesse, placenta, pathologies.</div>
+      <div class="card-chips"><span class="chip">5 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-biorepr" style="width:0%;background:linear-gradient(90deg,#be185d,#7c3aed)"></div></div><div class="card-pct" id="pct-biorepr">0%</div></div>
+      <div class="card-arrow">→</div>
     </a>
 
-    <!-- Physiologie -->
-    <a class="matiere-card soon" href="#">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(52,211,153,.12)">💓</div>
-        <span class="card-badge badge-soon">Bientôt</span>
-      </div>
-      <div class="card-title">Physiologie</div>
-      <div class="card-desc">Fonctionnement des grands systèmes — cardiovasculaire, respiratoire, rénal, nerveux.</div>
-      <div class="card-chips">
-        <span class="chip">6 chapitres</span>
-        <span class="chip">En cours</span>
-      </div>
-    </a>
-
-    <!-- Histologie -->
-    <a class="matiere-card soon" href="#">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(129,140,248,.12)">🔬</div>
-        <span class="card-badge badge-soon">Bientôt</span>
-      </div>
-      <div class="card-title">Histologie</div>
-      <div class="card-desc">Tissus épithéliaux, conjonctifs, musculaires, nerveux — structure et fonction.</div>
-      <div class="card-chips">
-        <span class="chip">5 chapitres</span>
-        <span class="chip">En cours</span>
-      </div>
-    </a>
-
-    <!-- Biologie de la reproduction -->
-    <a class="matiere-card soon" href="#">
-      <div class="card-top">
-        <div class="card-icon" style="background:rgba(244,114,182,.12)">🤰</div>
-        <span class="card-badge badge-soon">Bientôt</span>
-      </div>
-      <div class="card-title">Biologie de la reproduction</div>
-      <div class="card-desc">Gamétogenèse, fécondation, embryogenèse, développement fœtal, placenta.</div>
-      <div class="card-chips">
-        <span class="chip">5 chapitres</span>
-        <span class="chip">En cours</span>
-      </div>
+    <a class="matiere-card available" href="passstatspub.html">
+      <div class="card-top"><div class="card-icon" style="background:rgba(22,163,74,.12)">📊</div><span class="card-badge badge-done">Disponible</span></div>
+      <div class="card-title">Statistiques & Santé Publique</div>
+      <div class="card-desc">Épidémiologie, biostatistiques, prévention, lecture critique d'article, One Health.</div>
+      <div class="card-chips"><span class="chip">5 chapitres</span><span class="chip">Quiz</span><span class="chip">Pièges</span></div>
+      <div class="card-progress"><div class="card-bar-track"><div class="card-bar-fill" id="prog-stats" style="width:0%;background:linear-gradient(90deg,#16a34a,#0284c7)"></div></div><div class="card-pct" id="pct-stats">0%</div></div>
+      <div class="card-arrow">→</div>
     </a>
 
   </div>
 </div>
 
-<!-- QCM IA -->
+<!-- QCM CTA -->
 <div class="section-wrap" style="padding-top:0">
-  <a class="qcm-cta" href="passphysiqueqcm.html">
-    <div class="qcm-left">
+  <a class="qcm-cta" href="passqcmglobal.html">
+    <div style="flex:1;">
       <div class="qcm-tag">🤖 Propulsé par l'IA</div>
       <div class="qcm-title">Entraînement QCM toutes matières</div>
-      <div class="qcm-desc">Des questions générées à la volée sur les chapitres de ton choix. Jamais les mêmes questions, explication détaillée à chaque réponse, score global suivi.</div>
+      <div class="qcm-desc">Des questions générées à la volée sur les chapitres de ton choix. Jamais les mêmes, explication détaillée, score suivi.</div>
     </div>
     <button class="qcm-btn">Commencer →</button>
   </a>
@@ -382,46 +386,20 @@
 
 <!-- CONSEILS -->
 <div class="section-wrap" style="padding-top:0">
-  <div class="section-header">
-    <div class="section-title">Méthode de travail</div>
-  </div>
+  <div class="section-header"><div class="section-title">Méthode de travail</div></div>
   <div class="conseils-grid">
-    <div class="conseil-card">
-      <div class="conseil-icon">🎯</div>
-      <div class="conseil-title">Définition avant formule</div>
-      <div class="conseil-text">Comprendre ce que mesure une grandeur avant de l'utiliser dans un calcul. Le sens avant le symbole.</div>
-    </div>
-    <div class="conseil-card">
-      <div class="conseil-icon">🏥</div>
-      <div class="conseil-title">Toujours l'exemple médical</div>
-      <div class="conseil-text">Chaque notion a une application clinique. Relier la physique à la médecine aide à mémoriser et à donner du sens.</div>
-    </div>
-    <div class="conseil-card">
-      <div class="conseil-icon">⚠️</div>
-      <div class="conseil-title">Apprendre les pièges</div>
-      <div class="conseil-text">Les QCM PASS testent souvent les erreurs classiques. Connaître les pièges, c'est gagner des points sans effort supplémentaire.</div>
-    </div>
-    <div class="conseil-card">
-      <div class="conseil-icon">🔁</div>
-      <div class="conseil-title">Répétition espacée</div>
-      <div class="conseil-text">Revoir une notion à J+1, J+3, J+7. La mémoire à long terme se construit avec la répétition, pas la relecture continue.</div>
-    </div>
-    <div class="conseil-card">
-      <div class="conseil-icon">📍</div>
-      <div class="conseil-title">Adapter à ta fac</div>
-      <div class="conseil-text">Ce programme couvre le tronc commun national. Dès que tu connais ta fac, consulte les annales pour identifier les thèmes prioritaires chez toi.</div>
-    </div>
-    <div class="conseil-card">
-      <div class="conseil-icon">✅</div>
-      <div class="conseil-title">Cocher = valider vraiment</div>
-      <div class="conseil-text">Ne coche une notion que si tu peux l'expliquer à voix haute sans regarder. Pas si tu l'as juste lue une fois.</div>
-    </div>
+    <div class="conseil-card"><div class="conseil-icon">🎯</div><div class="conseil-title">Définition avant formule</div><div class="conseil-text">Comprendre ce que mesure une grandeur avant de l'utiliser. Le sens avant le symbole.</div></div>
+    <div class="conseil-card"><div class="conseil-icon">🏥</div><div class="conseil-title">Toujours l'exemple médical</div><div class="conseil-text">Chaque notion a une application clinique. Relier la science à la médecine aide à mémoriser.</div></div>
+    <div class="conseil-card"><div class="conseil-icon">⚠️</div><div class="conseil-title">Apprendre les pièges</div><div class="conseil-text">Les QCM PASS testent les erreurs classiques. Connaître les pièges, c'est gagner des points.</div></div>
+    <div class="conseil-card"><div class="conseil-icon">🔁</div><div class="conseil-title">Répétition espacée</div><div class="conseil-text">Revoir à J+1, J+3, J+7. La mémoire à long terme se construit avec la répétition.</div></div>
+    <div class="conseil-card"><div class="conseil-icon">📍</div><div class="conseil-title">Adapter à ta fac</div><div class="conseil-text">Ce programme couvre le tronc commun. Consulte les annales de ta fac pour les priorités locales.</div></div>
+    <div class="conseil-card"><div class="conseil-icon">✅</div><div class="conseil-title">Cocher = valider vraiment</div><div class="conseil-text">Ne coche que si tu peux expliquer à voix haute sans regarder. Pas si tu l'as juste lue.</div></div>
   </div>
 </div>
 
-<footer class="site-footer">
-  <div class="footer-logo">Constance</div>
-  <div class="footer-copy">© Constance | @constance.cgh · Programme PASS gratuit · Tous droits réservés</div>
+<footer>
+  <div class="footer-brand">Constance — @constance.cgh</div>
+  <div class="footer-note">© 2026 · Programme PASS gratuit · Tous droits réservés</div>
 </footer>
 
 <script>
@@ -430,6 +408,100 @@ function toggleTheme(){
   if(h.dataset.theme==='dark'){h.dataset.theme='light';b.textContent='🌙 Mode sombre';}
   else{h.dataset.theme='dark';b.textContent='☀️ Mode clair';}
 }
+
+const MATIERES=[
+  {id:"stats", name:"Santé Publique", icon:"📊", color:"#16a34a",
+   keys:["stats_epi_mastery","stats_biostat_mastery","stats_prev_mastery","stats_lca_mastery","stats_sante_mastery"]},
+  {id:"biorepr",  name:"Bio. Reproduction",icon:"🤰", color:"#be185d",
+   keys:["biorepr_gamet_mastery","biorepr_fecon_mastery","biorepr_embryo_mastery","biorepr_gross_mastery","biorepr_patho_mastery"]},
+  {id:"pharma",    name:"Pharmacologie",    icon:"💊", color:"#ea580c",
+   keys:["pharma_pk_mastery","pharma_pd_mastery","pharma_cardio_mastery","pharma_neuro_mastery","pharma_abc_mastery"]},
+  {id:"biolcell",  name:"Bio. Cellulaire",  icon:"🔬", color:"#7c3aed",
+   keys:["biolcell_cellule_mastery","biolcell_organites_mastery","biolcell_cycle_mastery","biolcell_signal_mastery","biolcell_immun_mastery"]},
+  {id:"biolmol",   name:"Bio. Moléculaire", icon:"🧬", color:"#0284c7",
+   keys:["biolmol_genome_mastery","biolmol_transcr_mastery","biolmol_trad_mastery","biolmol_cycle_mastery","biolmol_tech_mastery"]},
+  {id:"biochimie", name:"Biochimie",        icon:"⚗️", color:"#d97706",
+   keys:["biochimie_gluci_mastery","biochimie_lipides_mastery","biochimie_aa_mastery","biochimie_prot_mastery","biochimie_enz_mastery","biochimie_adn_mastery"]},
+  {id:"histologie",name:"Histologie",       icon:"🩺", color:"#db2777",
+   keys:["histo_epithel_mastery","histo_conj_mastery","histo_musc_mastery","histo_nerv_mastery","histo_sang_mastery"]},
+  {id:"physio",    name:"Physiologie",      icon:"💓", color:"#059669",
+   keys:["physio_cardio_mastery","physio_respir_mastery","physio_rein_mastery","physio_digest_mastery","physio_endo_mastery"]},
+  {id:"chimiegen", name:"Chimie Générale",  icon:"⚛️", color:"#818cf8",
+   keys:["chimgen_atome_mastery","chimgen_liaisons_mastery","chimgen_thermo_mastery","chimgen_ab_mastery"]},
+  {id:"chimieorga",name:"Chimie Organique", icon:"🧪", color:"#16a34a",
+   keys:["chimorga_repr_mastery","chimorga_stereo_mastery","chimorga_react_mastery","chimorga_fonct_mastery"]},
+  {id:"physique",  name:"Physique",         icon:"⚙️", color:"#60a5fa",
+   keys:["mecanique_mastery","fluides_mastery","thermo_mastery","ondes_mastery","optique_mastery"]},
+  {id:"biophysique",name:"Biophysique",     icon:"📡", color:"#34d399",
+   keys:["bio_transport_mastery","bio_hemo_mastery","bio_radio_mastery","bio_imagerie_mastery","bio_bioelec_mastery"]},
+  {id:"anatomie",  name:"Anatomie",         icon:"🫀", color:"#f472b6",
+   keys:["anat_cardio_mastery","anat_respi_mastery","anat_sn_mastery","anat_rein_mastery","anat_diges_mastery","anat_rachis_mastery"]},
+];
+
+function getOk(key){
+  try{
+    const d=JSON.parse(localStorage.getItem(key)||'{}');
+    const v=Object.values(d);
+    if(!v.length)return{ok:0,total:0};
+    return{ok:v.filter(x=>x==='ok').length,total:v.length};
+  }catch(e){return{ok:0,total:0};}
+}
+
+function renderProgress(){
+  let gOk=0,gTotal=0;
+  const bd=document.getElementById('matieres-breakdown');
+  let rows='';
+
+  MATIERES.forEach(function(m){
+    let mOk=0,mTotal=0;
+    m.keys.forEach(function(k){
+      const r=getOk(k);
+      mOk+=r.ok; mTotal+=r.total;
+    });
+    const pct=mTotal>0?Math.round(mOk/mTotal*100):0;
+    gOk+=mOk; gTotal+=mTotal;
+
+    // Barre sur la carte
+    const bar=document.getElementById('prog-'+m.id);
+    const pctEl=document.getElementById('pct-'+m.id);
+    if(bar)bar.style.width=pct+'%';
+    if(pctEl)pctEl.textContent=pct+'%';
+
+    // Ligne dans le breakdown — toujours affichée, même à 0%
+    rows+='<div class="bd-row">'
+      +'<div class="bd-icon">'+m.icon+'</div>'
+      +'<div class="bd-name">'+m.name+'</div>'
+      +'<div class="bd-bar-wrap"><div class="bd-bar-track"><div class="bd-bar-fill" style="width:'+pct+'%;background:'+m.color+'"></div></div></div>'
+      +'<div class="bd-pct" style="color:'+m.color+'">'+pct+'%</div>'
+      +'</div>';
+  });
+
+  if(bd)bd.innerHTML=rows;
+
+  const globalPct=gTotal>0?Math.round(gOk/gTotal*100):0;
+  const gEl=document.getElementById('globalPct');
+  const gSub=document.getElementById('globalSub');
+  const gBar=document.getElementById('globalBar');
+  const gCnt=document.getElementById('breakdown-count');
+  if(gEl)gEl.textContent=globalPct+'%';
+  if(gSub)gSub.textContent=gOk+' notion'+(gOk>1?'s':'')+' validée'+(gOk>1?'s':'')+' sur '+gTotal;
+  if(gBar)gBar.style.width=globalPct+'%';
+  if(gCnt)gCnt.textContent=gOk>0?(gOk+'/'+gTotal+' notions validées'):'';
+}
+
+window.addEventListener('DOMContentLoaded',function(){
+  renderProgress();
+  // Révisions physique
+  const dp=JSON.parse(localStorage.getItem('revision_physique_done')||'[]');
+  const bp=document.getElementById('rev-phys-bar'),pp=document.getElementById('rev-phys-pct');
+  if(bp)bp.style.width=Math.round(dp.length/7*100)+'%';
+  if(pp)pp.textContent=dp.length+'/7';
+  // Révisions chimie
+  const dc=JSON.parse(localStorage.getItem('revision_chimie_done')||'[]');
+  const bc=document.getElementById('rev-chim-bar'),pc=document.getElementById('rev-chim-pct');
+  if(bc)bc.style.width=Math.round(dc.length/6*100)+'%';
+  if(pc)pc.textContent=dc.length+'/6';
+});
 </script>
 </body>
 </html>
